@@ -17,6 +17,67 @@ import java.util.Map.Entry;
 
 public class GenerateOutput {
 
+//====================================================== Add you user stories here ======================================================
+
+		/**
+		 * Author: Kunj Desai 
+		 * ID:US02 
+		 * Name: Birth before marriage 
+		 * Description: Birth should occur before marriage of an individual 
+		 * Date created: Feb 21,  202011:05:39 PM
+		 * 
+		 * @throws ParseException
+		 */
+		public static boolean us02_birth_b4_marriage() throws ParseException {
+			
+			boolean flag = true;
+			String spouseID = null;
+			for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+					.hasNext();) {
+				Entry<String, IndividualEntry> indMapElement = iteratorInd.next();
+				String keyInd = indMapElement.getKey();
+
+				IndividualEntry indValue = indMapElement.getValue();
+				Date birt = dateFormatGiven.parse(indValue.getBirthday());
+				for(String id: indValue.getSpous())
+				{
+					spouseID= id.replaceAll("\\s", "");
+				}
+				
+				
+				if(!indValue.getSpous().isEmpty())
+				{
+					for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+							.hasNext();) {
+						Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+						
+						String keyFam = famMapElement.getKey();
+						FamilyEntry valueFam = famMapElement.getValue();
+						String marriageDate = null;
+						
+						if (valueFam.getMarried() != null) {
+							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
+							marriageDate = dateFormat.format(marriageD);
+						}
+						
+						String birthDate = dateFormat.format(birt);
+						
+						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
+						{
+							System.out.println(keyInd+" has birth date: "+birthDate+" after marriage date: "+marriageDate);
+							flag = false;
+						}
+					}
+				}
+			}
+			if(flag)
+				return true;
+			else
+				return false;
+		}
+		
+//====================================================== End of user stories ======================================================
+
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
 	private static HashMap<String, IndividualEntry> hind = new HashMap<>();
 	private static HashMap<String, FamilyEntry> hfam = new HashMap<>();
@@ -211,7 +272,13 @@ public class GenerateOutput {
 			}
 
 			System.out.println();
-
+			//====================================================== Check all user stories here ======================================================			
+			System.out.println("The function for birth date before marriage date returns: " + us02_birth_b4_marriage());
+			//======================================================   End of all user stories   ======================================================
+			System.out.println();
+			
+			
+			
 			System.out.println("Individual");
 			System.out.format("%-10s%-20s%-10s%-15s%-10s%-15s%-15s%-20s%-20s\n", "ID", "Name", "Gender", "Birthday",
 					"Age", "Alive", "Death", "Child", "Spouse");
@@ -281,59 +348,9 @@ public class GenerateOutput {
 			}
 
 			System.out.println("");
-			System.out.println("The function for birth date before marriage date returns: " + us02_birth_b4_date());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-
-//====================================================== Add you user stories here ======================================================
-
-	/**
-	 * Author: Kunj Desai ID:US02 Name: Birth before marriage Description: Birth
-	 * should occur before marriage of an individual Date created: Feb 21,
-	 * 202011:05:39 PM
-	 * 
-	 * @throws ParseException
-	 */
-	public static boolean us02_birth_b4_date() throws ParseException {
-
-		HashMap<Date, String> dateSpouse = new HashMap<Date, String>();
-		for (Iterator<Entry<String, IndividualEntry>> iterator = hind.entrySet().iterator(); iterator.hasNext();) {
-			Entry<String, IndividualEntry> mapElement = iterator.next();
-			IndividualEntry valueInd = mapElement.getValue();
-
-			Date birt = dateFormatGiven.parse(valueInd.getBirthday());
-			for (String famId : valueInd.getSpous()) {
-				famId = famId.replaceAll("\\s+", "");
-				dateSpouse.put(birt, famId);
-			}
-
-		}
-
-		for (Entry<Date, String> dateSpouseElem : dateSpouse.entrySet()) {
-			Date birthDate = dateSpouseElem.getKey();
-			String valueSpouseId = dateSpouseElem.getValue();
-			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
-					.hasNext();) {
-				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
-				String keyFam = mapElement.getKey();
-				FamilyEntry valueFam = mapElement.getValue();
-				Date marriageDate = null;
-				if (valueFam.getMarried() != null) {
-					marriageDate = dateFormatGiven.parse(valueFam.getMarried());
-				}
-
-				if (keyFam.equals(valueSpouseId) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null)) {
-					return false;
-				}
-			}
-
-		}
-
-		return true;
-	}
-
-//====================================================== End of user stories ======================================================
 
 }
