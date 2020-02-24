@@ -277,6 +277,7 @@ public class GenerateOutput {
 			}
 
 			System.out.println();
+			System.out.flush();
 			//====================================================== Check all user stories here ======================================================			
 			 if(us02_birth_b4_marriage())
 			 {
@@ -288,12 +289,14 @@ public class GenerateOutput {
 				 for(String failString: failures)
 				 {
 					 System.err.println(failString);
+					 System.err.flush();
 				 }
 				 //System.exit(0);
+				
 			 }
 				 
 			//======================================================   End of all user stories   ======================================================
-			
+			System.out.println();
 			
 			
 			System.out.println("Individual");
