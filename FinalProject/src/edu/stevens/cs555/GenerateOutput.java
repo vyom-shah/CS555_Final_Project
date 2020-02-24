@@ -316,14 +316,14 @@ public class GenerateOutput {
 
 			System.out.println();
 			//====================================================== Check all user stories here ======================================================			
+
 			 if(!us02_birth_b4_marriage() && !us04_marriage_b4_divorce())
 			 {
 				 System.out.println("There are following errors: ");
 				 for(String failString: failures)
 				 {
 					 System.out.println(failString);
-				 }
-				 
+         }
 			 }
 			 else
 			 {
