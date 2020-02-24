@@ -18,9 +18,7 @@ import java.util.Map.Entry;
 
 
 public class GenerateOutput {
-
 //====================================================== Add you user stories here ======================================================
-
 		/**
 		 * Author: Kunj Desai 
 		 * ID:US02 
@@ -41,11 +39,11 @@ public class GenerateOutput {
 
 				IndividualEntry indValue = indMapElement.getValue();
 				Date birt = dateFormatGiven.parse(indValue.getBirthday());
+				
 				for(String id: indValue.getSpous())
 				{
 					spouseID= id.replaceAll("\\s", "");
 				}
-				
 				
 				if(!indValue.getSpous().isEmpty())
 				{
@@ -63,7 +61,6 @@ public class GenerateOutput {
 						}
 						
 						String birthDate = dateFormat.format(birt);
-						
 						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
 						{
 							String failStr = "For "+keyInd+" birth date: "+birthDate+" occurs after marriage date: "+marriageDate;
