@@ -58,8 +58,7 @@ public class GenerateOutput {
 						String marriageDate = null;
 						
 						if (valueFam.getMarried() != null) {
-							//Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
-							Date marriageD = dateFormatGiven.parse("1 APR 1968");
+							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							marriageDate = dateFormat.format(marriageD);
 						}
 						
@@ -277,19 +276,18 @@ public class GenerateOutput {
 			}
 
 			System.out.println();
-			System.out.flush();
 			//====================================================== Check all user stories here ======================================================			
 			 if(us02_birth_b4_marriage())
 			 {
-				 System.out.println("All user stories passed succesfully");
+				 System.out.println("All user stories passed succesfully!");
 			 }
 			 else
 			 {
 				 System.out.println("There are following errors: ");
 				 for(String failString: failures)
 				 {
-					 System.err.println(failString);
-					 System.err.flush();
+					 System.out.println(failString);
+					 
 				 }
 				 //System.exit(0);
 				
