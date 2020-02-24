@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+
+
 public class GenerateOutput {
 
 //====================================================== Add you user stories here ======================================================
@@ -56,7 +58,8 @@ public class GenerateOutput {
 						String marriageDate = null;
 						
 						if (valueFam.getMarried() != null) {
-							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
+							//Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
+							Date marriageD = dateFormatGiven.parse("1 APR 1968");
 							marriageDate = dateFormat.format(marriageD);
 						}
 						
@@ -64,7 +67,8 @@ public class GenerateOutput {
 						
 						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
 						{
-							System.out.println(keyInd+" has birth date: "+birthDate+" after marriage date: "+marriageDate);
+							String failStr = keyInd+" has birth date: "+birthDate+" after marriage date: "+marriageDate;
+							failures.add(failStr);
 							flag = false;
 						}
 					}
@@ -94,6 +98,7 @@ public class GenerateOutput {
 	private static SimpleDateFormat dateFormatGiven = new SimpleDateFormat("dd MMM yyyy");
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+	private static ArrayList<String> failures = new ArrayList<String>();
 	public static void main(String[] args) throws IOException, ParseException {
 
 		try {
@@ -273,9 +278,21 @@ public class GenerateOutput {
 
 			System.out.println();
 			//====================================================== Check all user stories here ======================================================			
-			System.out.println("The function for birth date before marriage date returns: " + us02_birth_b4_marriage());
+			 if(us02_birth_b4_marriage())
+			 {
+				 System.out.println("All user stories passed succesfully");
+			 }
+			 else
+			 {
+				 System.out.println("There are following errors: ");
+				 for(String failString: failures)
+				 {
+					 System.err.println(failString);
+				 }
+				 //System.exit(0);
+			 }
+				 
 			//======================================================   End of all user stories   ======================================================
-			System.out.println();
 			
 			
 			
@@ -348,6 +365,7 @@ public class GenerateOutput {
 			}
 
 			System.out.println("");
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
