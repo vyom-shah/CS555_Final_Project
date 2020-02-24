@@ -118,7 +118,6 @@ public class GenerateOutput {
 				return false;
 			
 		}
-		
 //====================================================== End of user stories ======================================================
 
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
