@@ -58,8 +58,7 @@ public class GenerateOutput {
 						String marriageDate = null;
 						
 						if (valueFam.getMarried() != null) {
-							//Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
-							Date marriageD = dateFormatGiven.parse("1 APR 1968");
+							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							marriageDate = dateFormat.format(marriageD);
 						}
 						
@@ -67,7 +66,7 @@ public class GenerateOutput {
 						
 						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
 						{
-							String failStr = keyInd+" has birth date: "+birthDate+" after marriage date: "+marriageDate;
+							String failStr = "For "+keyInd+" birth date: "+birthDate+" occurs after marriage date: "+marriageDate;
 							failures.add(failStr);
 							flag = false;
 						}
@@ -80,6 +79,48 @@ public class GenerateOutput {
 				return false;
 		}
 		
+		/**
+			 * Author: Kunj Desai
+			 * ID: US04
+			 * Name: Marriage before divorce
+			 * Description: Marriage should occur before divorce of spouses, and divorce can only occur after marriage
+			 * Date created: Feb 24, 202012:14:12 AM
+		 * @throws ParseException 
+		 */
+		public static boolean us04_marriage_b4_divorce() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+
+				String married = "NA";
+				if (valueFam.getMarried() != null) {
+					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
+					married = dateFormat.format(marriageDate);
+				}
+				String divorce = "NA";
+				if (valueFam.getDivorced() != null) {
+					Date divorceDate = dateFormatGiven.parse(valueFam.getDivorced());
+					divorce = dateFormat.format(divorceDate);
+				}
+				
+				if(!divorce.equals("NA") || divorce.compareTo(married) < 0 )
+				{
+					String failStr = "For "+valueFam.getH_id()+" and "+valueFam.getW_id()+ "divorce date: "+divorce+ " occurs before marriage date:"+ married;
+					failures.add(failStr);
+					flag = false;
+				}
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;
+			
+		}
 //====================================================== End of user stories ======================================================
 
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
@@ -278,23 +319,22 @@ public class GenerateOutput {
 
 			System.out.println();
 			//====================================================== Check all user stories here ======================================================			
-			 if(us02_birth_b4_marriage())
-			 {
-				 System.out.println("All user stories passed succesfully");
-			 }
-			 else
+			 if(!us02_birth_b4_marriage() && !us04_marriage_b4_divorce())
 			 {
 				 System.out.println("There are following errors: ");
 				 for(String failString: failures)
 				 {
-					 System.err.println(failString);
+					 System.out.println(failString);
 				 }
-				 //System.exit(0);
-			 }
 				 
+			 }
+			 else
+			 {
+				 System.out.println("All user stories passed successfully!");
+			 }
+			  
 			//======================================================   End of all user stories   ======================================================
-			
-			
+			System.out.println();
 			
 			System.out.println("Individual");
 			System.out.format("%-10s%-20s%-10s%-15s%-10s%-15s%-15s%-20s%-20s\n", "ID", "Name", "Gender", "Birthday",
@@ -343,22 +383,22 @@ public class GenerateOutput {
 
 				FamilyEntry valueFam = mapElement.getValue();
 
-				String Married = "NA";
+				String married = "NA";
 				if (valueFam.getMarried() != null) {
 					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
-					Married = dateFormat.format(marriageDate);
+					married = dateFormat.format(marriageDate);
 				}
 				String divorce = "NA";
 				if (valueFam.getDivorced() != null) {
-					Date divorceDate = dateFormatGiven.parse(valueFam.getMarried());
+					Date divorceDate = dateFormatGiven.parse(valueFam.getDivorced());
 					divorce = dateFormat.format(divorceDate);
 				}
 				if (valueFam.getChild().isEmpty()) {
-					System.out.format("%-10s%-15s%-10s%-15s%-25s%-10s%-20s%-15s\n", keyFam, Married, divorce,
+					System.out.format("%-10s%-15s%-10s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
 							valueFam.getH_id(), hind.get(valueFam.getH_id().trim()).getName(), valueFam.getW_id(),
 							hind.get(valueFam.getW_id().trim()).getName(), "NA");
 				} else {
-					System.out.format("%-10s%-15s%-10s%-15s%-25s%-10s%-20s%-15s\n", keyFam, Married, divorce,
+					System.out.format("%-10s%-15s%-10s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
 							valueFam.getH_id(), hind.get(valueFam.getH_id().trim()).getName(), valueFam.getW_id(),
 							hind.get(valueFam.getW_id().trim()).getName(), valueFam.getChild());
 				}
