@@ -118,19 +118,6 @@ public class GenerateOutput {
 				return false;
 			
 		}
-		
-		
-				/**
-				 * Author: Vyom Shah  
-				 * ID:US22
-				 * Name:Unique ids  
-				 * Description: All individual IDs should be unique and all family IDs should be unique 
-				 * Date created: Feb 25, 202011:32:00 AM
-				 * 
-				 * @throws ParseException
-				 */
-
-		public 
 //====================================================== End of user stories ======================================================
 
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
@@ -328,22 +315,6 @@ public class GenerateOutput {
 			}
 
 			System.out.println();
-			//====================================================== Check all user stories here ======================================================			
-
-			 if(!us02_birth_b4_marriage() && !us04_marriage_b4_divorce())
-			 {
-				 System.out.println("There are following errors: ");
-				 for(String failString: failures)
-				 {
-					 System.out.println(failString);
-         }
-			 }
-			 else
-			 {
-				 System.out.println("All user stories passed successfully!");
-			 }
-			  
-			//======================================================   End of all user stories   ======================================================
 			System.out.println();
 			
 			System.out.println("Individual");
@@ -415,6 +386,23 @@ public class GenerateOutput {
 			}
 
 			System.out.println("");
+			
+			//====================================================== Check all user stories here ======================================================			
+			 if(!us02_birth_b4_marriage() && !us04_marriage_b4_divorce())
+			 {
+				 System.out.println("There are following errors: ");
+				 for(String failString: failures)
+				 {
+					 System.out.println(failString);
+				 }
+				 
+			 }
+			 else
+			 {
+				 System.out.println("All user stories passed successfully!");
+			 }
+			  
+			//======================================================   End of all user stories   ======================================================
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
