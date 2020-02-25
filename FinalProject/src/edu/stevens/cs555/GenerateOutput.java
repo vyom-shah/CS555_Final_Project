@@ -119,8 +119,6 @@ public class GenerateOutput {
 			
 		}
 		
-<<<<<<< Updated upstream
-=======
 		
 				/**
 				 * Author: Vyom Shah  
@@ -131,7 +129,8 @@ public class GenerateOutput {
 				 * 
 				 * @throws ParseException
 				 */
->>>>>>> Stashed changes
+
+		public 
 //====================================================== End of user stories ======================================================
 
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
