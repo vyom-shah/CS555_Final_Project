@@ -395,8 +395,7 @@ public class GenerateOutput {
 				 for(String failString: failures)
 				 {
 					 System.out.println(failString);
-				 }
-				 
+				 }			 
 			 }
 			 else
 			 {
