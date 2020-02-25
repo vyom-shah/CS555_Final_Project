@@ -49,8 +49,7 @@ public class GenerateOutput {
 				{
 					for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 							.hasNext();) {
-						Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
-						
+						Entry<String, FamilyEntry> famMapElement = iteratorFam.next();						
 						String keyFam = famMapElement.getKey();
 						FamilyEntry valueFam = famMapElement.getValue();
 						String marriageDate = null;
@@ -66,6 +65,7 @@ public class GenerateOutput {
 							String failStr = "For "+keyInd+" birth date: "+birthDate+" occurs after marriage date: "+marriageDate;
 							failures.add(failStr);
 							flag = false;
+							failuresFlag = true;
 						}
 					}
 				}
@@ -109,14 +109,14 @@ public class GenerateOutput {
 					String failStr = "For "+valueFam.getH_id()+" and "+valueFam.getW_id()+ "divorce date: "+divorce+ " occurs before marriage date:"+ married;
 					failures.add(failStr);
 					flag = false;
+					failuresFlag = true;
 				}
 			}
 			
 			if(flag)
 				return true;
 			else
-				return false;
-			
+				return false;			
 		}
 //====================================================== End of user stories ======================================================
 
@@ -131,7 +131,7 @@ public class GenerateOutput {
 	private static ArrayList<String> three = new ArrayList<>(Arrays.asList(""));
 	private static ArrayList<String> four = new ArrayList<>(Arrays.asList(""));
 
-	private static boolean inf = false, faf = false, birth = false, death = false, married = false, divorced = false;
+	private static boolean inf = false, faf = false, birth = false, death = false, married = false, divorced = false, failuresFlag = false;
 
 	private static SimpleDateFormat dateFormatGiven = new SimpleDateFormat("dd MMM yyyy");
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -388,7 +388,7 @@ public class GenerateOutput {
 			System.out.println("");
 			
 			//====================================================== Check all user stories here ======================================================			
-			 if(!us02_birth_b4_marriage() && !us04_marriage_b4_divorce())
+			 if(failuresFlag)
 			 {
 				 System.out.println("There are following errors: ");
 				 for(String failString: failures)
