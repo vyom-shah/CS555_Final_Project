@@ -315,7 +315,6 @@ public class GenerateOutput {
 			}
 
 			System.out.println();
-			
 			System.out.println();
 			
 			System.out.println("Individual");
