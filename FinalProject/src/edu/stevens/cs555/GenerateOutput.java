@@ -119,6 +119,19 @@ public class GenerateOutput {
 			
 		}
 		
+<<<<<<< Updated upstream
+=======
+		
+				/**
+				 * Author: Vyom Shah  
+				 * ID:US22
+				 * Name:Unique ids  
+				 * Description: All individual IDs should be unique and all family IDs should be unique 
+				 * Date created: Feb 25, 202011:32:00 AM
+				 * 
+				 * @throws ParseException
+				 */
+>>>>>>> Stashed changes
 //====================================================== End of user stories ======================================================
 
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
