@@ -62,7 +62,7 @@ public class GenerateOutput {
 						String birthDate = dateFormat.format(birt);
 						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
 						{
-							String failStr = "For "+keyInd+" birth date: "+birthDate+" occurs after marriage date: "+marriageDate;
+							String failStr = "User Story 02: For "+keyInd+" birth date: "+birthDate+" occurs after marriage date: "+marriageDate;
 							failures.add(failStr);
 							flag = false;
 							failuresFlag = true;
@@ -106,7 +106,7 @@ public class GenerateOutput {
 				
 				if(!divorce.equals("NA") || divorce.compareTo(married) < 0 )
 				{
-					String failStr = "For "+valueFam.getH_id()+" and "+valueFam.getW_id()+ "divorce date: "+divorce+ " occurs before marriage date:"+ married;
+					String failStr = "User Story 04: For"+valueFam.getH_id()+" and "+valueFam.getW_id()+ "divorce date: "+divorce+ " occurs before marriage date:"+ married;
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
@@ -388,7 +388,9 @@ public class GenerateOutput {
 			System.out.println("");
 			
 			//====================================================== Check all user stories here ======================================================			
-			 if(failuresFlag)
+			us02_birth_b4_marriage();
+			us04_marriage_b4_divorce();
+			if(failuresFlag)
 			 {
 				 System.out.println("There are following errors: ");
 				 for(String failString: failures)
