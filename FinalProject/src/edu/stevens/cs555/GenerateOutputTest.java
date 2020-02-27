@@ -33,5 +33,15 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test 
+	void test_us06_divorce_b4_death() {
+		try {
+			assertEquals(true, GenerateOutput.us06_divorce_b4_death(), "User story 06 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 }
