@@ -23,6 +23,9 @@ public class FamilyEntry {
 	public FamilyEntry(String fam) {
 		this.id = fam;
 	}
+	public String getId() {
+		return id;
+	}
 	//Setter and getter methods.
 	public String getMarried() {
 		return married;
