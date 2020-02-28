@@ -55,6 +55,12 @@ public class IndividualEntry {
 		this.setAge();
 		return age;
 	}
+	/**
+	 * ID: US27
+	 * Name: Include Individual age
+	 * Description: Include person's current age when listing individuals
+	 * Date created: Feb 17, 202012:14:12 AM
+	 */
 	public void setAge() throws ParseException {
 		if(birthday==null) {
 			this.age="NA";
