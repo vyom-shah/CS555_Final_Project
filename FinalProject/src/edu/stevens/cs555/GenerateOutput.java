@@ -20,13 +20,13 @@ import java.util.Map.Entry;
 public class GenerateOutput {
 //====================================================== Add you user stories here ======================================================
 		/**
-		 * Author: Kunj Desai 
-		 * ID:US02 
-		 * Name: Birth before marriage 
-		 * Description: Birth should occur before marriage of an individual 
-		 * Date created: Feb 21,  202011:05:39 PM
-		 * 
-		 * @throws ParseException
+			 * Author: Kunj Desai 
+			 * ID:US02 
+			 * Name: Birth before marriage 
+			 * Description: Birth should occur before marriage of an individual 
+			 * Date created: Feb 21,  202011:05:39 PM
+			 * 
+			 * @throws ParseException
 		 */
 		public static boolean us02_birth_b4_marriage() throws ParseException {
 			
@@ -82,23 +82,23 @@ public class GenerateOutput {
 			 * Name: Marriage before divorce
 			 * Description: Marriage should occur before divorce of spouses, and divorce can only occur after marriage
 			 * Date created: Feb 24, 202012:14:12 AM
-		 * @throws ParseException 
+			 * @throws ParseException 
 		 */
 		public static boolean us04_marriage_b4_divorce() throws ParseException
 		{
 			boolean flag = true;
+			String married = "NA";
+			String divorce = "NA";
 			
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
 				FamilyEntry valueFam = mapElement.getValue();
 
-				String married = "NA";
 				if (valueFam.getMarried() != null) {
 					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
 					married = dateFormat.format(marriageDate);
-				}
-				String divorce = "NA";
+				}				
 				if (valueFam.getDivorced() != null) {
 					Date divorceDate = dateFormatGiven.parse(valueFam.getDivorced());
 					divorce = dateFormat.format(divorceDate);
@@ -106,7 +106,7 @@ public class GenerateOutput {
 				
 				if(!divorce.equals("NA") || divorce.compareTo(married) < 0 )
 				{
-					String failStr = "User Story 04: For"+valueFam.getH_id()+" and "+valueFam.getW_id()+ "divorce date: "+divorce+ " occurs before marriage date:"+ married;
+					String failStr = "User Story 04: For "+valueFam.getH_id()+" and "+valueFam.getW_id()+ "Marriage date: "+married+ " occurs after divorce date:"+ divorce;
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
@@ -118,8 +118,7 @@ public class GenerateOutput {
 			else
 				return false;			
 		}
-<<<<<<< Updated upstream
-=======
+
 		
 	/**
 		 * Author: Vyom Shah
@@ -164,6 +163,7 @@ public class GenerateOutput {
 			return errorcode;
 		}
 			
+
 
 		/**
 			 * Author: Kunj Desai
@@ -216,7 +216,7 @@ public class GenerateOutput {
 			else
 				return false;
 		}
->>>>>>> Stashed changes
+
 //====================================================== End of user stories ======================================================
 
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
@@ -489,12 +489,13 @@ public class GenerateOutput {
 			//====================================================== Check all user stories here ======================================================			
 			us02_birth_b4_marriage();
 			us04_marriage_b4_divorce();
-<<<<<<< Updated upstream
-=======
+      
+      
 			us22_unique_ids();
 			us06_divorce_b4_death();
 			
->>>>>>> Stashed changes
+			us06_divorce_b4_death();
+			
 			if(failuresFlag)
 			 {
 				 System.out.println("There are following errors: ");
