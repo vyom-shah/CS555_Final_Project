@@ -79,4 +79,23 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void test_us07_less_than_150yrs() {
+		try {
+			assertEquals(true, GenerateOutput.us07_less_than_150yrs(), "User story 07 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void test_us08_birth_before_marriage() {
+		try {
+			assertEquals(true, GenerateOutput.us07_less_than_150yrs(), "User story 08 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
