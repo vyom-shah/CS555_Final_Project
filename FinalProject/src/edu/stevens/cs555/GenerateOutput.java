@@ -40,7 +40,6 @@ public class GenerateOutput {
 				String keyInd = indMapElement.getKey();
 
 				IndividualEntry indValue = indMapElement.getValue();
-				Date birt = dateFormatGiven.parse(indValue.getBirthday());
 				String spouseID = null;
 				for(String id: indValue.getSpous())
 				{
@@ -54,17 +53,21 @@ public class GenerateOutput {
 						Entry<String, FamilyEntry> famMapElement = iteratorFam.next();						
 						String keyFam = famMapElement.getKey();
 						FamilyEntry valueFam = famMapElement.getValue();
-						String marriageDate = null;
+						String marriageDate = null, birthDate = null;
 						
 						if (valueFam.getMarried() != null) {
 							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							marriageDate = dateFormat.format(marriageD);
 						}
-						
-						String birthDate = dateFormat.format(birt);
-						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
+						if(indValue.getBirthday() != null)
 						{
-							String failStr = "User Story 02: For "+keyInd+" birth date: "+birthDate+" occurs after marriage date: "+marriageDate;
+							Date birt = dateFormatGiven.parse(indValue.getBirthday());
+							birthDate = dateFormat.format(birt);
+						}
+						
+						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null || birthDate == null))
+						{
+							String failStr = "ERROR: INDIVIDUAL: US02: "+keyInd+": Birth date "+birthDate+" occurs after marriage date "+marriageDate;
 							failures.add(failStr);
 							flag = false;
 							failuresFlag = true;
@@ -93,8 +96,8 @@ public class GenerateOutput {
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				String keyFam = mapElement.getKey();
 				FamilyEntry valueFam = mapElement.getValue();
-
 				String married = "NA";
 				String divorce = "NA";
 				if (valueFam.getMarried() != null) {
@@ -108,7 +111,7 @@ public class GenerateOutput {
 				
 				if(!divorce.equals("NA") || divorce.compareTo(married) < 0 )
 				{
-					String failStr = "User Story 04: For "+valueFam.getH_id()+"and "+valueFam.getW_id()+ "marriage date: "+married+ " occurs after divorce date:"+ divorce;
+					String failStr = "ERROR: FAMILY: US04: "+ keyFam + ": Marriage date "+married+ " occurs after divorce date "+ divorce;
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
@@ -141,7 +144,7 @@ public class GenerateOutput {
 				for(int i=0;i<dupInd.size();i++) {
 					IndividualEntry ind1=dupInd.get(i);
 					IndividualEntry ind2=indMap.get((dupInd).get(i).getId());
-					String failStr="User story 22: Individual"+ind1.getId()+"-"+ind1.getName()+" has the same ID as " + ind2.getId()+" "+ind2.getName();
+					String failStr="ERROR: INDIVIDUAL: US22: "+ind1.getId()+": "+ind1.getName()+": has the same ID as " + ind2.getId()+": "+ind2.getName();
 					failures.add(failStr);
 					errorcode=false;
 					failuresFlag=true;
@@ -151,7 +154,7 @@ public class GenerateOutput {
 				for(int i=0;i<dupFam.size();i++) {
 					FamilyEntry fam1=dupFam.get(i);
 					FamilyEntry fam2=famMap.get(dupFam.get(i).getId());
-					String failStr="User story 22: Family"+fam1.getId()+" has the same ID as " + fam2.getId();
+					String failStr="ERROR: FAMILY: US22:"+fam1.getId()+": has the same ID as " + fam2.getId();
 					failures.add(failStr);
 					errorcode=false;
 					failuresFlag=true;
@@ -201,7 +204,7 @@ public class GenerateOutput {
 							{
 								if(!set.contains(indId))
 								{
-									String failStr = "User Story 06: For "+ indId  +" divorce date: "+divorce+ " occurs after death date: "+ death;
+									String failStr = "ERROR: INDIVIDUAL: US06: "+ indId  +": Divorce date "+divorce+ " occurs after death date "+ death;
 									failures.add(failStr);
 									flag = false;
 									failuresFlag = true;
@@ -238,7 +241,11 @@ public class GenerateOutput {
 				String keyInd = indMapElement.getKey();
 
 				IndividualEntry indValue = indMapElement.getValue();
-				Date birt = dateFormatGiven.parse(indValue.getBirthday());
+				Date birt = null;
+				if(indValue.getBirthday() != null)
+				{
+					birt = dateFormatGiven.parse(indValue.getBirthday());
+				}
 				String spouseID = null;
 				for(String id: indValue.getSpous())
 				{
@@ -253,7 +260,7 @@ public class GenerateOutput {
 						String keyFam = famMapElement.getKey();
 						FamilyEntry valueFam = famMapElement.getValue();
 						int years = 0;
-						if (valueFam.getMarried() != null) {
+						if (valueFam.getMarried() != null || indValue.getBirthday() != null) {
 							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							long diffInMillies = Math.abs(marriageD.getTime() - birt.getTime());
 							long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -262,7 +269,7 @@ public class GenerateOutput {
 						
 						if(keyFam.equals(spouseID) && years < 14)
 						{
-							String failStr = "User Story 10: For "+keyInd+" marrige occured before the age of 14.";
+							String failStr = "ERROR: INDIVIDUAL: US10: "+keyInd+": Marrige occured before the age of 14.";
 							failures.add(failStr);
 							flag = false;
 							failuresFlag = true;
@@ -275,7 +282,8 @@ public class GenerateOutput {
 			else
 				return false;
 		}
-				/**
+				
+		/**
 		 * Author: Dhruval Thakkar
 			 * ID: US03
 			 * Name: Birth before Death
@@ -305,7 +313,7 @@ public class GenerateOutput {
 				
 				if(!death.equals("NA") || death.compareTo(birth) < 0 )
 				{
-					String failStr = "User Story 03: For "+valueFam.getId()+ "birth date: "+birth+ " occurs after death date:"+ death;
+					String failStr = "ERROR: INDIVIDUAL: US03: "+valueFam.getId()+ ": Birth date "+birth+ " occurs after death date "+ death;
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
@@ -334,7 +342,7 @@ public class GenerateOutput {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
 				FamilyEntry valueFam = mapElement.getValue();
 
-				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorFam.hasNext();) {
+				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd.hasNext();) {
 					Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
 					IndividualEntry valueInd = mapElement1.getValue();
 
@@ -354,7 +362,7 @@ public class GenerateOutput {
 					}
 					if(!death.equals("NA") || death.compareTo(married) < 0 )
 					{
-						String failStr = "User Story 03: For "+valueInd.getId() + "marriage date: "+married+ " occurs after death date:"+ death;	
+						String failStr = "ERROR: INDIVIDUAL: US05: "+valueInd.getId() + ": Marriage date "+married+ " occurs after death date "+ death;	
 						failures.add(failStr);
 						flag = false;
 						failuresFlag = true;
@@ -696,9 +704,13 @@ public class GenerateOutput {
 				String indId = mapElement.getKey();
 
 				IndividualEntry indValue = mapElement.getValue();
-				Date birt = dateFormatGiven.parse(indValue.getBirthday());
-
-				String birthdate = dateFormat.format(birt);
+				
+				String birthdate = "NA";
+				if(indValue.getBirthday() != null)
+				{
+					Date birt = dateFormatGiven.parse(indValue.getBirthday());
+					birthdate = dateFormat.format(birt);
+				}
 				String Death = "NA";
 				if (indValue.getDeath() != null) {
 					Date deat = dateFormatGiven.parse(indValue.getDeath());
@@ -763,11 +775,16 @@ public class GenerateOutput {
 			us22_unique_ids();
 			us06_divorce_b4_death();	
 			us10_marriage_after_14();
+
 			us07_less_than_150yrs();
 			us08_birth_before_marriage();
+
+			us03_birth_before_death();
+			us05_marriage_before_death();
+			
+
 			if(failuresFlag)
 			 {
-				 System.out.println("There are following errors: ");
 				 for(String failString: failures)
 				 {
 					 System.out.println(failString);
@@ -781,6 +798,8 @@ public class GenerateOutput {
 				 System.out.println("User story number 06 passed successfully!");
 				 System.out.println("User story number 27 passed successfully!");
 				 System.out.println("User story number 10 passed successfully!");
+				 System.out.println("User story number 03 passed successfully!");
+				 System.out.println("User story number 05 passed successfully!");
 			 }
 			  
 			//======================================================   End of all user stories   ======================================================
