@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class GenerateOutput {
 //====================================================== Add you user stories here ======================================================
@@ -178,7 +179,6 @@ public class GenerateOutput {
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
-				String famID = mapElement.getKey();
 				FamilyEntry valueFam = mapElement.getValue();
 				String husbandID = null, wifeID = null, divorce = "NA";
 				if (valueFam.getDivorced() != null) {
@@ -219,11 +219,67 @@ public class GenerateOutput {
 				return false;
 		}
 
+		/**
+		 * 
+			 * Author: Kunj Desai
+			 * ID: US10
+			 * Name: Marriage after 14
+			 * Description: Marriage should be at least 14 years after birth of both spouses (parents must be at least 14 years old)
+			 * Date created: Mar 2, 20201:48:55 AM
+		 * @throws ParseException 
+		 */
+		public static boolean us10_marriage_after_14() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+					.hasNext();) {
+				Entry<String, IndividualEntry> indMapElement = iteratorInd.next();
+				String keyInd = indMapElement.getKey();
+
+				IndividualEntry indValue = indMapElement.getValue();
+				Date birt = dateFormatGiven.parse(indValue.getBirthday());
+				String spouseID = null;
+				for(String id: indValue.getSpous())
+				{
+					spouseID= id.replaceAll("\\s", "");
+				}
+				
+				if(!indValue.getSpous().isEmpty())
+				{
+					for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+							.hasNext();) {
+						Entry<String, FamilyEntry> famMapElement = iteratorFam.next();						
+						String keyFam = famMapElement.getKey();
+						FamilyEntry valueFam = famMapElement.getValue();
+						int years = 0;
+						if (valueFam.getMarried() != null) {
+							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
+							long diffInMillies = Math.abs(marriageD.getTime() - birt.getTime());
+							long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+							years=(int)diff/365;
+						}
+						
+						if(keyFam.equals(spouseID) && years < 14)
+						{
+							String failStr = "User Story 10: For "+keyInd+" marrige occured before the age of 14.";
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
+						}
+					}
+				}
+			}
+			if(flag)
+				return true;
+			else
+				return false;
+		}
 //====================================================== End of user stories ======================================================
 
 	/**
-	 * Please update the GEDCOM file path at line number: 260
-	 * Please update the .txt file path at line number: 262 and 304	
+	 * Please update the GEDCOM file path at line number: 310
+	 * Please update the .txt file path at line number: 312 and 354	
 	 */
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
 	private static HashMap<String, IndividualEntry> hind = new HashMap<>();
@@ -496,7 +552,8 @@ public class GenerateOutput {
 			us02_birth_b4_marriage();
 			us04_marriage_b4_divorce();
 			us22_unique_ids();
-			us06_divorce_b4_death();			
+			us06_divorce_b4_death();	
+			us10_marriage_after_14();
 			if(failuresFlag)
 			 {
 				 System.out.println("There are following errors: ");
@@ -512,6 +569,7 @@ public class GenerateOutput {
 				 System.out.println("user story number 22 passed successfully!");
 				 System.out.println("User story number 06 passed successfully!");
 				 System.out.println("User story number 27 passed successfully!");
+				 System.out.println("User story number 10 passed successfully!");
 			 }
 			  
 			//======================================================   End of all user stories   ======================================================

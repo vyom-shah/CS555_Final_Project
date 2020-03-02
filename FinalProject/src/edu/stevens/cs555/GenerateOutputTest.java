@@ -43,7 +43,6 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
-
 	
 	@Test 
 	void test_us06_divorce_b4_death() {
@@ -53,7 +52,15 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Test 
+	void test_us10_marriage_after_14() {
+		try {
+			assertEquals(true, GenerateOutput.us10_marriage_after_14(), "User story 10 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 }
