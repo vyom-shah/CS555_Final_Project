@@ -275,6 +275,98 @@ public class GenerateOutput {
 			else
 				return false;
 		}
+				/**
+		 * Author: Dhruval Thakkar
+			 * ID: US03
+			 * Name: Birth before Death
+			 * Description: Birth should be before death of an individual if individual is dead. 
+			 * Date created: Feb 24, 202012:14:12 AM
+			 * @throws ParseException 
+		 */
+		public static boolean us03_birth_before_death() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, IndividualEntry>> iteratorFam = hind.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, IndividualEntry> mapElement = iteratorFam.next();
+				IndividualEntry valueFam = mapElement.getValue();
+
+				String birth = "NA";
+				String death = "NA";
+				if (valueFam.getBirthday() != null) {
+					Date birthDate = dateFormatGiven.parse(valueFam.getBirthday());
+					birth = dateFormat.format(birthDate);
+				}				
+				if (valueFam.getDeath() != null) {
+					Date deathDate = dateFormatGiven.parse(valueFam.getDeath());
+					death = dateFormat.format(deathDate);
+				}
+				
+				if(!death.equals("NA") || death.compareTo(birth) < 0 )
+				{
+					String failStr = "User Story 03: For "+valueFam.getId()+ "birth date: "+birth+ " occurs after death date:"+ death;
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
+				/**
+		 * Author: Dhruval Thakkar
+			 * ID: US05
+			 * Name: Marriage before death
+			 * Description: Marriage should occur before death.
+			 * Date created: Mar 02, 202012:14:12 AM
+			 * @throws ParseException 
+		 */
+		public static boolean us05_marriage_before_death() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+
+				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorFam.hasNext();) {
+					Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
+					IndividualEntry valueInd = mapElement1.getValue();
+
+					String married = "NA";
+					String death = "NA";
+					if (valueFam.getMarried() != null) {
+						Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
+						married = dateFormat.format(marriageDate);
+					}				
+					if (valueFam.getH_id().equals(valueInd.getId()) && valueInd.getDeath() != null) {
+						Date deathDate = dateFormatGiven.parse(valueInd.getBirthday());
+						death = dateFormat.format(deathDate);
+					}
+					if	(valueFam.getW_id().equals(valueInd.getId()) && valueInd.getBirthday() != null) {
+						Date deathDate = dateFormatGiven.parse(valueInd.getBirthday());
+						death = dateFormat.format(deathDate);
+					}
+					if(!death.equals("NA") || death.compareTo(married) < 0 )
+					{
+						String failStr = "User Story 03: For "+valueInd.getId() + "marriage date: "+married+ " occurs after death date:"+ death;	
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					}
+				}
+			}
+			if(flag)
+				return true;
+			else
+				return false;
+
+		}
 //====================================================== End of user stories ======================================================
 
 	/**

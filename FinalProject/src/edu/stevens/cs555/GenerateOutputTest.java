@@ -62,5 +62,21 @@ class GenerateOutputTest {
 		}
 	}
 
+	@Test
+	void test_us03_birth_before_death() {
+		try {
+			assertEquals(true, GenerateOutput.us03_birth_before_death(), "User story 03 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 
+	@Test
+	void test_us05_marriage_before_death() {
+		try {
+			assertEquals(true, GenerateOutput.us05_marriage_before_death(), "User story 05 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
