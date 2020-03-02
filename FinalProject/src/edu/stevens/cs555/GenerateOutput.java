@@ -367,6 +367,123 @@ public class GenerateOutput {
 				return false;
 
 		}
+
+		/**
+	 * Author: Yash Navadiya ID: US07 Name: Less than 150 years old Description:
+	 * Death should be less than 150 years after birth for dead people, and current
+	 * date should be less than 150 years after birth for all living people Date
+	 * created: Feb 27, 20205:05:02 PM
+	 * 
+	 * @throws ParseException
+	 */
+
+	public static boolean us07_less_than_150yrs() throws ParseException {
+		boolean flag = true;
+		Map<String, IndividualEntry> map = new HashMap<String, IndividualEntry>(hind);
+		Iterator<Map.Entry<String, IndividualEntry>> entries = map.entrySet().iterator();
+		while (entries.hasNext()) {
+			Map.Entry<String, IndividualEntry> entry = entries.next();
+			IndividualEntry indi = entry.getValue();
+
+			Date bdate = dateFormatGiven.parse(indi.getBirthday());
+			String birth = dateFormat.format(bdate);
+			int birthyear = Integer.parseInt(birth.split("-")[0]);
+
+			// Check if the person is alive or not . If it is , compare birth date and
+			// todays date.
+			// If not, compare the birth date with death date of that person.
+
+			if (indi.getDeath() == null) {
+				// use calendar to get the date of today
+				Calendar ca = Calendar.getInstance();
+				int year = ca.get(Calendar.YEAR);
+				int diff = year - birthyear;
+				if (diff > 150) {
+					String failStr = " Individual: " + indi.getId() + " - " + indi.getName()
+							+ " is greater than 150 years old.\nDOB: " + indi.getBirthday();
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			} else {
+				Date ddate = dateFormatGiven.parse(indi.getDeath());
+				String deat = dateFormat.format(ddate);
+
+				int deathyear = Integer.parseInt(deat.split("-")[0]);
+				int diff = deathyear - birthyear;
+				if (diff > 150) {
+					String failStr = "Individual: " + indi.getId() + " - " + indi.getName()
+							+ " The difference between their birthdate and the death is greater than 150 years.\n DOB: "
+							+ indi.getBirthday() + " DOD: " + indi.getDeath();
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+		}
+		if (flag)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Author: Yash Navadiya ID: US08 Name: Birth before marriage of parents
+	 * Description:Children should be born after marriage of parents (and not more
+	 * than 9 months after their divorce) created: Feb 27, 20209:25:02 PM
+	 * 
+	 * @throws ParseException
+	 */
+
+	public static boolean us08_birth_before_marriage() throws ParseException {
+		boolean flag = true;
+
+		Date divorceDate = null;
+		Date birthDate = null;
+		Map<String, IndividualEntry> indMap = new HashMap<String, IndividualEntry>(hind);
+		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+
+		Iterator<Map.Entry<String, FamilyEntry>> famEntries = famMap.entrySet().iterator();
+		while (famEntries.hasNext()) {
+			Map.Entry<String, FamilyEntry> famEntry = famEntries.next();
+			FamilyEntry fam = famEntry.getValue();
+
+			Date marriageDate = dateFormatGiven.parse(fam.getMarried());
+
+			if (fam.getChild() != null) {
+				for (Iterator<String> it = fam.getChild().iterator(); it.hasNext();) {
+					IndividualEntry indi = hind.get(it.next().trim());
+
+					birthDate = dateFormatGiven.parse(indi.getBirthday());
+					if (birthDate.before(marriageDate)) {
+						String failStr = "Family ID: " + fam.getId() + "\nIndividual: " + indi.getId() + ": "
+								+ indi.getName() + " Has been born before parents' marriage\nDOB: " + indi.getBirthday()
+								+ " Parents Marriage Date: " + fam.getMarried();
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					}
+					if (fam.getDivorced() != null) {
+						divorceDate = dateFormat.parse(fam.getDivorced());
+						if (birthDate.after(divorceDate)) {
+							String failStr = "Family ID: " + fam.getId() + "\nIndividual: " + indi.getId() + ": "
+									+ indi.getName() + " Has been born after parents' divorce\nDOB: "
+									+ indi.getBirthday() + " Parents Divorce Date: " + fam.getDivorced();
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
+						}
+					}
+				}
+			}
+		}
+		if (flag)
+			return true;
+		else
+			return false;
+
+	}
+
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -646,6 +763,8 @@ public class GenerateOutput {
 			us22_unique_ids();
 			us06_divorce_b4_death();	
 			us10_marriage_after_14();
+			us07_less_than_150yrs();
+			us08_birth_before_marriage();
 			if(failuresFlag)
 			 {
 				 System.out.println("There are following errors: ");
