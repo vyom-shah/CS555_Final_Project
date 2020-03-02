@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 
 
@@ -31,7 +34,7 @@ public class GenerateOutput {
 		public static boolean us02_birth_b4_marriage() throws ParseException {
 			
 			boolean flag = true;
-			String spouseID = null;
+			
 			for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
 					.hasNext();) {
 				Entry<String, IndividualEntry> indMapElement = iteratorInd.next();
@@ -39,7 +42,7 @@ public class GenerateOutput {
 
 				IndividualEntry indValue = indMapElement.getValue();
 				Date birt = dateFormatGiven.parse(indValue.getBirthday());
-				
+				String spouseID = null;
 				for(String id: indValue.getSpous())
 				{
 					spouseID= id.replaceAll("\\s", "");
@@ -87,14 +90,15 @@ public class GenerateOutput {
 		public static boolean us04_marriage_b4_divorce() throws ParseException
 		{
 			boolean flag = true;
-			String married = "NA";
-			String divorce = "NA";
+
 			
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
 				FamilyEntry valueFam = mapElement.getValue();
 
+				String married = "NA";
+				String divorce = "NA";
 				if (valueFam.getMarried() != null) {
 					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
 					married = dateFormat.format(marriageDate);
@@ -106,7 +110,7 @@ public class GenerateOutput {
 				
 				if(!divorce.equals("NA") || divorce.compareTo(married) < 0 )
 				{
-					String failStr = "User Story 04: For "+valueFam.getH_id()+" and "+valueFam.getW_id()+ "Marriage date: "+married+ " occurs after divorce date:"+ divorce;
+					String failStr = "User Story 04: For "+valueFam.getH_id()+"and "+valueFam.getW_id()+ "marriage date: "+married+ " occurs after divorce date:"+ divorce;
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
@@ -176,13 +180,13 @@ public class GenerateOutput {
 		public static boolean us06_divorce_b4_death() throws ParseException
 		{
 			boolean flag = true;
-			String husbandID = null, wifeID = null, divorce = "NA",  death = "NA";
-			
+			Set<String> set = new HashSet<String>(); 
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				String famID = mapElement.getKey();
 				FamilyEntry valueFam = mapElement.getValue();
-				
+				String husbandID = null, wifeID = null, divorce = "NA";
 				if (valueFam.getDivorced() != null) {
 					Date divorceDate = dateFormatGiven.parse(valueFam.getDivorced());
 					divorce = dateFormat.format(divorceDate);
@@ -194,17 +198,21 @@ public class GenerateOutput {
 						Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
 						String indId = mapElement1.getKey();
 						IndividualEntry indValue = mapElement1.getValue();		
-
+						String  death = "NA";
 						if (indValue.getDeath() != null) {
 							Date deat = dateFormatGiven.parse(indValue.getDeath());
 							death = dateFormat.format(deat);
 							
-							if((indId.equals(husbandID)) || (indId.equals(wifeID)) && death.compareTo(divorce) < 0)
+							if((indId.equals(husbandID)&& death.compareTo(divorce) < 0) || (indId.equals(wifeID) && death.compareTo(divorce) < 0))
 							{
-								String failStr = "User Story 06: For "+ indId  +" death date: "+death+ " occurs after divorce date:"+ divorce;
-								failures.add(failStr);
-								flag = false;
-								failuresFlag = true;
+								if(!set.contains(indId))
+								{
+									String failStr = "User Story 06: For "+ indId  +" divorce date: "+divorce+ " occurs after death date: "+ death;
+									failures.add(failStr);
+									flag = false;
+									failuresFlag = true;
+									set.add(indId);
+								}
 							}
 						}
 					}				
@@ -219,6 +227,10 @@ public class GenerateOutput {
 
 //====================================================== End of user stories ======================================================
 
+	/**
+	 * Please update the GEDCOM file path at line number: 260
+	 * Please update the .txt file path at line number: 262 and 304	
+	 */
 	private static HashMap<String, ArrayList<String>> tagsmap = new HashMap<>();
 	private static HashMap<String, IndividualEntry> hind = new HashMap<>();
 	private static HashMap<String, FamilyEntry> hfam = new HashMap<>();
@@ -454,7 +466,7 @@ public class GenerateOutput {
 
 			System.out.println();
 			System.out.println("Family");
-			System.out.format("%-10s%-15s%-10s%-15s%-25s%-10s%-20s%-15s\n", "ID", "Married", "Divorced", "Husband ID",
+			System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", "ID", "Married", "Divorced", "Husband ID",
 					"Husband Name", "Wife ID", "Wife Name", "Children");
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
@@ -474,11 +486,11 @@ public class GenerateOutput {
 					divorce = dateFormat.format(divorceDate);
 				}
 				if (valueFam.getChild().isEmpty()) {
-					System.out.format("%-10s%-15s%-10s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
+					System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
 							valueFam.getH_id(), hind.get(valueFam.getH_id().trim()).getName(), valueFam.getW_id(),
 							hind.get(valueFam.getW_id().trim()).getName(), "NA");
 				} else {
-					System.out.format("%-10s%-15s%-10s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
+					System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
 							valueFam.getH_id(), hind.get(valueFam.getH_id().trim()).getName(), valueFam.getW_id(),
 							hind.get(valueFam.getW_id().trim()).getName(), valueFam.getChild());
 				}
@@ -489,13 +501,8 @@ public class GenerateOutput {
 			//====================================================== Check all user stories here ======================================================			
 			us02_birth_b4_marriage();
 			us04_marriage_b4_divorce();
-      
-      
 			us22_unique_ids();
-			us06_divorce_b4_death();
-			
-			us06_divorce_b4_death();
-			
+			us06_divorce_b4_death();			
 			if(failuresFlag)
 			 {
 				 System.out.println("There are following errors: ");
@@ -506,9 +513,10 @@ public class GenerateOutput {
 			 }
 			 else
 			 {
-				 System.out.println("user story number 02 passed successfully!");
-				 System.out.println("user story number 04 passed successfully!");
+				 System.out.println("User story number 02 passed successfully!");
+				 System.out.println("User story number 04 passed successfully!");
 				 System.out.println("user story number 22 passed successfully!");
+				 System.out.println("User story number 06 passed successfully!");
 				 System.out.println("User story number 27 passed successfully!");
 			 }
 			  
