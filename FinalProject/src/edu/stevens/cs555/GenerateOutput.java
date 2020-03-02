@@ -21,7 +21,7 @@ import java.util.Set;
 public class GenerateOutput {
 //====================================================== Add you user stories here ======================================================
 		/**
-			 * Author: Kunj Desai 
+		 * Author: Kunj Desai 
 			 * ID:US02 
 			 * Name: Birth before marriage 
 			 * Description: Birth should occur before marriage of an individual 
@@ -78,7 +78,7 @@ public class GenerateOutput {
 		}
 		
 		/**
-			 * Author: Kunj Desai
+		 * Author: Kunj Desai
 			 * ID: US04
 			 * Name: Marriage before divorce
 			 * Description: Marriage should occur before divorce of spouses, and divorce can only occur after marriage
@@ -119,7 +119,6 @@ public class GenerateOutput {
 			else
 				return false;			
 		}
-
 		
 	/**
 		 * Author: Vyom Shah
@@ -164,8 +163,6 @@ public class GenerateOutput {
 			return errorcode;
 		}
 			
-
-
 		/**
 		 * Author: Kunj Desai
 			 * ID: US06
