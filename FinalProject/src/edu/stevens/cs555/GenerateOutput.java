@@ -18,8 +18,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-
-
 public class GenerateOutput {
 //====================================================== Add you user stories here ======================================================
 		/**
@@ -90,7 +88,6 @@ public class GenerateOutput {
 		public static boolean us04_marriage_b4_divorce() throws ParseException
 		{
 			boolean flag = true;
-
 			
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
@@ -170,7 +167,7 @@ public class GenerateOutput {
 
 
 		/**
-			 * Author: Kunj Desai
+		 * Author: Kunj Desai
 			 * ID: US06
 			 * Name: Divorce before death
 			 * Description: Divorce can only occur before death of both spouses
