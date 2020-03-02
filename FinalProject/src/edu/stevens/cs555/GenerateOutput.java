@@ -307,7 +307,7 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = "/Users/kunj/Downloads/test.ged";
+			String intitalInputFile = "/Users/kunj/Desktop/Stevens/CS555_Final_Project/GEDCOM/us_02_04_06_10.ged";
 			File outputFile = new File(intitalInputFile);
 			FileWriter fw = new FileWriter("/Users/kunj/Downloads/test.txt");
 
