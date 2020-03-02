@@ -40,7 +40,6 @@ public class GenerateOutput {
 				String keyInd = indMapElement.getKey();
 
 				IndividualEntry indValue = indMapElement.getValue();
-				Date birt = dateFormatGiven.parse(indValue.getBirthday());
 				String spouseID = null;
 				for(String id: indValue.getSpous())
 				{
@@ -54,15 +53,19 @@ public class GenerateOutput {
 						Entry<String, FamilyEntry> famMapElement = iteratorFam.next();						
 						String keyFam = famMapElement.getKey();
 						FamilyEntry valueFam = famMapElement.getValue();
-						String marriageDate = null;
+						String marriageDate = null, birthDate = null;
 						
 						if (valueFam.getMarried() != null) {
 							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							marriageDate = dateFormat.format(marriageD);
 						}
+						if(indValue.getBirthday() != null)
+						{
+							Date birt = dateFormatGiven.parse(indValue.getBirthday());
+							birthDate = dateFormat.format(birt);
+						}
 						
-						String birthDate = dateFormat.format(birt);
-						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
+						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null || birthDate == null))
 						{
 							String failStr = "ERROR: INDIVIDUAL: US02: "+keyInd+": Birth date "+birthDate+" occurs after marriage date "+marriageDate;
 							failures.add(failStr);
@@ -238,7 +241,11 @@ public class GenerateOutput {
 				String keyInd = indMapElement.getKey();
 
 				IndividualEntry indValue = indMapElement.getValue();
-				Date birt = dateFormatGiven.parse(indValue.getBirthday());
+				Date birt = null;
+				if(indValue.getBirthday() != null)
+				{
+					birt = dateFormatGiven.parse(indValue.getBirthday());
+				}
 				String spouseID = null;
 				for(String id: indValue.getSpous())
 				{
@@ -253,7 +260,7 @@ public class GenerateOutput {
 						String keyFam = famMapElement.getKey();
 						FamilyEntry valueFam = famMapElement.getValue();
 						int years = 0;
-						if (valueFam.getMarried() != null) {
+						if (valueFam.getMarried() != null || indValue.getBirthday() != null) {
 							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							long diffInMillies = Math.abs(marriageD.getTime() - birt.getTime());
 							long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -579,9 +586,13 @@ public class GenerateOutput {
 				String indId = mapElement.getKey();
 
 				IndividualEntry indValue = mapElement.getValue();
-				Date birt = dateFormatGiven.parse(indValue.getBirthday());
-
-				String birthdate = dateFormat.format(birt);
+				
+				String birthdate = "NA";
+				if(indValue.getBirthday() != null)
+				{
+					Date birt = dateFormatGiven.parse(indValue.getBirthday());
+					birthdate = dateFormat.format(birt);
+				}
 				String Death = "NA";
 				if (indValue.getDeath() != null) {
 					Date deat = dateFormatGiven.parse(indValue.getDeath());
