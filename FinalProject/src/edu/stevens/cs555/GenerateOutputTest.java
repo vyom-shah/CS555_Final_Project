@@ -33,6 +33,17 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void test_us22_unique_id() {
+		try {
+			assertEquals(true,GenerateOutput.us22_unique_ids(),"User story 22 failed!");
+		}
+		catch( ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
 	
 	@Test 
 	void test_us06_divorce_b4_death() {
@@ -43,5 +54,6 @@ class GenerateOutputTest {
 		}
 	}
 	
+
 
 }

@@ -122,7 +122,53 @@ public class GenerateOutput {
 			else
 				return false;			
 		}
+
 		
+	/**
+		 * Author: Vyom Shah
+		 * ID: US22
+		 * Name: Unique Ids
+		 * Description: There should be no two same ids
+		 * Date created: Feb 26, 202012:14:12 AM
+	 * @throws ParseException 
+	 */
+		public static boolean us22_unique_ids() throws ParseException
+		{
+			boolean errorcode=true;
+			Map<String, IndividualEntry> indMap=new HashMap<String, IndividualEntry>(hind);
+			Map<String,FamilyEntry> famMap=new HashMap<String, FamilyEntry>(hfam);
+			final ArrayList<IndividualEntry> dupInd = new ArrayList<IndividualEntry>();
+			final ArrayList<FamilyEntry> dupFam = new ArrayList<FamilyEntry>();
+			
+			if(!dupInd.isEmpty()) {
+				for(int i=0;i<dupInd.size();i++) {
+					IndividualEntry ind1=dupInd.get(i);
+					IndividualEntry ind2=indMap.get((dupInd).get(i).getId());
+					String failStr="User story 22: Individual"+ind1.getId()+"-"+ind1.getName()+" has the same ID as " + ind2.getId()+" "+ind2.getName();
+					failures.add(failStr);
+					errorcode=false;
+					failuresFlag=true;
+					}
+			}
+			if(!dupInd.isEmpty()) {
+				for(int i=0;i<dupFam.size();i++) {
+					FamilyEntry fam1=dupFam.get(i);
+					FamilyEntry fam2=famMap.get(dupFam.get(i).getId());
+					String failStr="User story 22: Family"+fam1.getId()+" has the same ID as " + fam2.getId();
+					failures.add(failStr);
+					errorcode=false;
+					failuresFlag=true;
+				}
+				if(errorcode)
+					return true;
+				else
+					return false;
+			}			
+			return errorcode;
+		}
+			
+
+
 		/**
 			 * Author: Kunj Desai
 			 * ID: US06
@@ -178,6 +224,7 @@ public class GenerateOutput {
 			else
 				return false;
 		}
+
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -454,14 +501,8 @@ public class GenerateOutput {
 			//====================================================== Check all user stories here ======================================================			
 			us02_birth_b4_marriage();
 			us04_marriage_b4_divorce();
-<<<<<<< Updated upstream
-=======
-      
-      
 			us22_unique_ids();
->>>>>>> Stashed changes
-			us06_divorce_b4_death();
-			
+			us06_divorce_b4_death();			
 			if(failuresFlag)
 			 {
 				 System.out.println("There are following errors: ");
@@ -472,15 +513,11 @@ public class GenerateOutput {
 			 }
 			 else
 			 {
-<<<<<<< Updated upstream
-				 System.out.println("All user stories passed successfully!");
-=======
 				 System.out.println("User story number 02 passed successfully!");
 				 System.out.println("User story number 04 passed successfully!");
 				 System.out.println("user story number 22 passed successfully!");
 				 System.out.println("User story number 06 passed successfully!");
 				 System.out.println("User story number 27 passed successfully!");
->>>>>>> Stashed changes
 			 }
 			  
 			//======================================================   End of all user stories   ======================================================
