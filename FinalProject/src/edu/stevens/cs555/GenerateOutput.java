@@ -64,7 +64,7 @@ public class GenerateOutput {
 						String birthDate = dateFormat.format(birt);
 						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null))
 						{
-							String failStr = "User Story 02: For "+keyInd+" birth date: "+birthDate+" occurs after marriage date: "+marriageDate;
+							String failStr = "ERROR: INDIVIDUAL: US02: "+keyInd+": Birth date "+birthDate+" occurs after marriage date "+marriageDate;
 							failures.add(failStr);
 							flag = false;
 							failuresFlag = true;
@@ -93,8 +93,8 @@ public class GenerateOutput {
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				String keyFam = mapElement.getKey();
 				FamilyEntry valueFam = mapElement.getValue();
-
 				String married = "NA";
 				String divorce = "NA";
 				if (valueFam.getMarried() != null) {
@@ -108,7 +108,7 @@ public class GenerateOutput {
 				
 				if(!divorce.equals("NA") || divorce.compareTo(married) < 0 )
 				{
-					String failStr = "User Story 04: For "+valueFam.getH_id()+"and "+valueFam.getW_id()+ "marriage date: "+married+ " occurs after divorce date:"+ divorce;
+					String failStr = "ERROR: FAMILY: US04: "+ keyFam + ": Marriage date "+married+ " occurs after divorce date "+ divorce;
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
@@ -141,7 +141,7 @@ public class GenerateOutput {
 				for(int i=0;i<dupInd.size();i++) {
 					IndividualEntry ind1=dupInd.get(i);
 					IndividualEntry ind2=indMap.get((dupInd).get(i).getId());
-					String failStr="User story 22: Individual"+ind1.getId()+"-"+ind1.getName()+" has the same ID as " + ind2.getId()+" "+ind2.getName();
+					String failStr="ERROR: INDIVIDUAL: US22: "+ind1.getId()+": "+ind1.getName()+": has the same ID as " + ind2.getId()+": "+ind2.getName();
 					failures.add(failStr);
 					errorcode=false;
 					failuresFlag=true;
@@ -151,7 +151,7 @@ public class GenerateOutput {
 				for(int i=0;i<dupFam.size();i++) {
 					FamilyEntry fam1=dupFam.get(i);
 					FamilyEntry fam2=famMap.get(dupFam.get(i).getId());
-					String failStr="User story 22: Family"+fam1.getId()+" has the same ID as " + fam2.getId();
+					String failStr="ERROR: FAMILY: US22:"+fam1.getId()+": has the same ID as " + fam2.getId();
 					failures.add(failStr);
 					errorcode=false;
 					failuresFlag=true;
@@ -201,7 +201,7 @@ public class GenerateOutput {
 							{
 								if(!set.contains(indId))
 								{
-									String failStr = "User Story 06: For "+ indId  +" divorce date: "+divorce+ " occurs after death date: "+ death;
+									String failStr = "ERROR: INDIVIDUAL: US06: "+ indId  +": Divorce date "+divorce+ " occurs after death date "+ death;
 									failures.add(failStr);
 									flag = false;
 									failuresFlag = true;
@@ -262,7 +262,7 @@ public class GenerateOutput {
 						
 						if(keyFam.equals(spouseID) && years < 14)
 						{
-							String failStr = "User Story 10: For "+keyInd+" marrige occured before the age of 14.";
+							String failStr = "ERROR: INDIVIDUAL: US10: "+keyInd+": Marrige occured before the age of 14.";
 							failures.add(failStr);
 							flag = false;
 							failuresFlag = true;
@@ -305,7 +305,7 @@ public class GenerateOutput {
 				
 				if(!death.equals("NA") || death.compareTo(birth) < 0 )
 				{
-					String failStr = "User Story 03: For "+valueFam.getId()+ "birth date: "+birth+ " occurs after death date:"+ death;
+					String failStr = "ERROR: INDIVIDUAL: US03: "+valueFam.getId()+ ": Birth date "+birth+ " occurs after death date "+ death;
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
@@ -334,7 +334,7 @@ public class GenerateOutput {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
 				FamilyEntry valueFam = mapElement.getValue();
 
-				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorFam.hasNext();) {
+				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd.hasNext();) {
 					Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
 					IndividualEntry valueInd = mapElement1.getValue();
 
@@ -354,7 +354,7 @@ public class GenerateOutput {
 					}
 					if(!death.equals("NA") || death.compareTo(married) < 0 )
 					{
-						String failStr = "User Story 03: For "+valueInd.getId() + "marriage date: "+married+ " occurs after death date:"+ death;	
+						String failStr = "ERROR: INDIVIDUAL: US05: "+valueInd.getId() + ": Marriage date "+married+ " occurs after death date "+ death;	
 						failures.add(failStr);
 						flag = false;
 						failuresFlag = true;
@@ -646,9 +646,11 @@ public class GenerateOutput {
 			us22_unique_ids();
 			us06_divorce_b4_death();	
 			us10_marriage_after_14();
+			us03_birth_before_death();
+			us05_marriage_before_death();
+			
 			if(failuresFlag)
 			 {
-				 System.out.println("There are following errors: ");
 				 for(String failString: failures)
 				 {
 					 System.out.println(failString);
@@ -662,6 +664,8 @@ public class GenerateOutput {
 				 System.out.println("User story number 06 passed successfully!");
 				 System.out.println("User story number 27 passed successfully!");
 				 System.out.println("User story number 10 passed successfully!");
+				 System.out.println("User story number 03 passed successfully!");
+				 System.out.println("User story number 05 passed successfully!");
 			 }
 			  
 			//======================================================   End of all user stories   ======================================================
