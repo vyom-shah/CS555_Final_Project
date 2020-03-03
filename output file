@@ -68,6 +68,8 @@ ID        Name                Gender    Birthday       Age       Alive          
 
 ERROR: INDIVIDUAL: US22: @I1@: Tom /Smith/: has the same ID as @I1@: Sara /Geller/
 
+(I1 and I6 has same id- so skipped I6 and program halt because Family Entry can't be made with conflicting Individual ID's)
+
 US 07 and US 08
 
 Individual
