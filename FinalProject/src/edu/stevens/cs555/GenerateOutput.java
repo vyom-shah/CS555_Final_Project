@@ -734,7 +734,20 @@ public class GenerateOutput {
 							indValue.getChild(), indValue.getSpous());
 				}
 			}
-
+			/*
+			As we are using Hashmap Duplicate entries cannot be stored and will confilcts
+			So to test US22- We need to halt the code before second table (that is Family Table) creation 
+			In individual table the duplicate entry has been skipped.
+			Map<String, IndividualEntry> indMap=new HashMap<String, IndividualEntry>(hind);
+			final ArrayList<IndividualEntry> dupInd = new ArrayList<IndividualEntry>();
+			if(!dupInd.isEmpty()) {
+				for(int i=0;i<dupInd.size();i++) {
+					IndividualEntry ind1=dupInd.get(i);
+					IndividualEntry ind2=indMap.get((dupInd).get(i).getId());
+					System.out.println("ERROR: INDIVIDUAL: US22: "+ind1.getId()+": "+ind1.getName()+": has the same ID as " + ind2.getId()+": "+ind2.getName());
+					}
+			}
+			*/
 			System.out.println();
 			System.out.println("Family");
 			System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", "ID", "Married", "Divorced", "Husband ID",
