@@ -347,22 +347,29 @@ public class GenerateOutput {
 					Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
 					IndividualEntry valueInd = mapElement1.getValue();
 
+					String husbandID = valueFam.getH_id().replaceAll("\\s", "");
+					String wifeID = valueFam.getW_id().replaceAll("\\s", "");
+					
 					String married = "NA";
 					String death = "NA";
 
 					if (valueFam.getMarried() != null) {
 						Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
 						married = dateFormat.format(marriageDate);
-					}				
-					if (valueFam.getH_id().equals(valueInd.getId()) && valueInd.getDeath() != null) {
+					}	
+					if (valueInd.getDeath()!= null) {
 						Date deathDate = dateFormatGiven.parse(valueInd.getDeath());
 						death = dateFormat.format(deathDate);
 					}
-					if	(valueFam.getW_id().equals(valueInd.getId()) && valueInd.getDeath() != null) {
-						Date deathDate = dateFormatGiven.parse(valueInd.getDeath());
-						death = dateFormat.format(deathDate);
-					}
-					if(!death.equals("NA") || death.compareTo(married) < 0 )
+//					if (valueFam.getH_id().equals(valueInd.getId()) && valueInd.getDeath() != null) {
+//						Date deathDate = dateFormatGiven.parse(valueInd.getDeath());
+//						death = dateFormat.format(deathDate);
+//					}
+//					if	(valueFam.getW_id().equals(valueInd.getId()) && valueInd.getDeath() != null) {
+//						Date deathDate = dateFormatGiven.parse(valueInd.getDeath());
+//						death = dateFormat.format(deathDate);
+//					}
+					if((husbandID.equals(valueInd.getId()) || wifeID.equals(valueInd.getId())) && (married.compareTo(death) < 0 || married == null) && (!death.equals("NA")))
 					{
 						String failStr = "ERROR: INDIVIDUAL: US05: "+valueInd.getId() + ": Marriage date "+married+ " occurs after death date "+ death;	
 						failures.add(failStr);
