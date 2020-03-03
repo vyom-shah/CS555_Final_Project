@@ -488,7 +488,7 @@ public class GenerateOutput {
 						failuresFlag = true;
 					}
 					if (fam.getDivorced() != null) {
-						divorceDate = dateFormat.parse(fam.getDivorced());
+						divorceDate = dateFormatGiven.parse(fam.getDivorced());
 						if (birthDate.after(divorceDate)) {
 							String failStr = "Family ID: " + fam.getId() + "\nIndividual: " + indi.getId() + ": "
 									+ indi.getName() + " Has been born after parents' divorce\nDOB: "
@@ -540,9 +540,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = "/Users/kunj/Downloads/US_0305.ged";
+			String intitalInputFile = "C:\\Users\\Nihir\\Downloads\\sprint-1.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter("/Users/kunj/Downloads/test.txt");
+			FileWriter fw = new FileWriter("C:\\Users\\Nihir\\Desktop\\cs555\\test.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -584,7 +584,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = "/Users/kunj/Downloads/test.txt";
+			String textInputFile = "C:\\Users\\Nihir\\Desktop\\cs555\\test.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
@@ -789,7 +789,8 @@ public class GenerateOutput {
 					System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
 							valueFam.getH_id(), hind.get(valueFam.getH_id().trim()).getName(), valueFam.getW_id(),
 							hind.get(valueFam.getW_id().trim()).getName(), "NA");
-				} else {
+				}
+				else {
 					System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", keyFam, married, divorce,
 							valueFam.getH_id(), hind.get(valueFam.getH_id().trim()).getName(), valueFam.getW_id(),
 							hind.get(valueFam.getW_id().trim()).getName(), valueFam.getChild());
