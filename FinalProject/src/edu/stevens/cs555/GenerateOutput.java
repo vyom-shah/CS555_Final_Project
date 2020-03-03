@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -348,16 +349,17 @@ public class GenerateOutput {
 
 					String married = "NA";
 					String death = "NA";
+
 					if (valueFam.getMarried() != null) {
 						Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
 						married = dateFormat.format(marriageDate);
 					}				
 					if (valueFam.getH_id().equals(valueInd.getId()) && valueInd.getDeath() != null) {
-						Date deathDate = dateFormatGiven.parse(valueInd.getBirthday());
+						Date deathDate = dateFormatGiven.parse(valueInd.getDeath());
 						death = dateFormat.format(deathDate);
 					}
-					if	(valueFam.getW_id().equals(valueInd.getId()) && valueInd.getBirthday() != null) {
-						Date deathDate = dateFormatGiven.parse(valueInd.getBirthday());
+					if	(valueFam.getW_id().equals(valueInd.getId()) && valueInd.getDeath() != null) {
+						Date deathDate = dateFormatGiven.parse(valueInd.getDeath());
 						death = dateFormat.format(deathDate);
 					}
 					if(!death.equals("NA") || death.compareTo(married) < 0 )
@@ -392,10 +394,16 @@ public class GenerateOutput {
 		while (entries.hasNext()) {
 			Map.Entry<String, IndividualEntry> entry = entries.next();
 			IndividualEntry indi = entry.getValue();
-
-			Date bdate = dateFormatGiven.parse(indi.getBirthday());
-			String birth = dateFormat.format(bdate);
-			int birthyear = Integer.parseInt(birth.split("-")[0]);
+			
+			int birthyear = 0;
+			if(indi.getBirthday() != null)
+			{
+				Date bdate = dateFormatGiven.parse(indi.getBirthday());
+				String birth = dateFormat.format(bdate);
+				birthyear = Integer.parseInt(birth.split("-")[0]);
+			}
+			
+			
 
 			// Check if the person is alive or not . If it is , compare birth date and
 			// todays date.
@@ -420,8 +428,8 @@ public class GenerateOutput {
 				int deathyear = Integer.parseInt(deat.split("-")[0]);
 				int diff = deathyear - birthyear;
 				if (diff > 150) {
-					String failStr = "Individual: " + indi.getId() + " - " + indi.getName()
-							+ " The difference between their birthdate and the death is greater than 150 years.\n DOB: "
+					String failStr = "ERROR: Individual: US07: " + indi.getId() + ": " + indi.getName()
+							+ " The difference between their birthdate and the death is greater than 150 years. DOB: "
 							+ indi.getBirthday() + " DOD: " + indi.getDeath();
 					failures.add(failStr);
 					flag = false;
@@ -462,10 +470,11 @@ public class GenerateOutput {
 				for (Iterator<String> it = fam.getChild().iterator(); it.hasNext();) {
 					IndividualEntry indi = hind.get(it.next().trim());
 
-					birthDate = dateFormatGiven.parse(indi.getBirthday());
+					if(indi.getBirthday() != null)
+						birthDate = dateFormatGiven.parse(indi.getBirthday());
 					if (birthDate.before(marriageDate)) {
-						String failStr = "Family ID: " + fam.getId() + "\nIndividual: " + indi.getId() + ": "
-								+ indi.getName() + " Has been born before parents' marriage\nDOB: " + indi.getBirthday()
+						String failStr = "ERROR: Family: US08: " + fam.getId() + ": Individual: " + indi.getId() + ": "
+								+ indi.getName() + " Has been born before parents' marriage DOB: " + indi.getBirthday()
 								+ " Parents Marriage Date: " + fam.getMarried();
 						failures.add(failStr);
 						flag = false;
@@ -524,7 +533,7 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = "/Users/kunj/Desktop/Stevens/CS555_Final_Project/GEDCOM/us_02_04_06_10.ged";
+			String intitalInputFile = "/Users/kunj/Downloads/US_0305.ged";
 			File outputFile = new File(intitalInputFile);
 			FileWriter fw = new FileWriter("/Users/kunj/Downloads/test.txt");
 
