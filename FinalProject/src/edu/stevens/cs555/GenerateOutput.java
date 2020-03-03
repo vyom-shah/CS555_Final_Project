@@ -422,8 +422,8 @@ public class GenerateOutput {
 				int year = ca.get(Calendar.YEAR);
 				int diff = year - birthyear;
 				if (diff > 150) {
-					String failStr = " Individual: " + indi.getId() + " - " + indi.getName()
-							+ " is greater than 150 years old.\nDOB: " + indi.getBirthday();
+					String failStr =  "ERROR: Individual: US07: "+ indi.getId() + " - " + indi.getName()
+							+ " is greater than 150 years old.DOB: " + indi.getBirthday();
 					failures.add(failStr);
 					flag = false;
 					failuresFlag = true;
