@@ -1,0 +1,230 @@
+0|HEAD|Y|
+1|SOUR|N|Family Echo 
+2|WWW|N|http://www.familyecho.com/ 
+1|FILE|N|My Family 
+1|DATE|N|3 MAR 2020 
+1|DEST|N|ANSTFILE 
+1|GEDC|N|
+2|VERS|N|5.5.1 
+2|FORM|N|LINEAGE-LINKED 
+1|SUBM|N|@I1@ 
+2|NAME|N|Dhruval 
+1|SUBN|N|
+1|CHAR|N|UTF-8 
+0|INDI|Y|@I1@
+1|NAME|Y|Ted /Monster/ 
+2|GIVN|N|Ted 
+2|SURN|N|Monster 
+2|_MARNM|N|Monster 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|6 AUG 1990 
+1|FAMS|Y|@F1@ 
+1|FAMC|Y|@F2@ 
+0|INDI|Y|@I2@
+1|NAME|Y|George /Linus/ 
+2|GIVN|N|George 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|10 JAN 1968 
+1|FAMS|Y|@F2@ 
+0|INDI|Y|@I3@
+1|NAME|Y|Violet /Green/ 
+2|GIVN|N|Violet 
+2|SURN|N|Green 
+2|_MARNM|N|Green 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|17 OCT 1968 
+1|FAMS|Y|@F2@ 
+1|FAMC|Y|@F3@ 
+0|INDI|Y|@I4@
+1|NAME|Y|Phoebe /Cox/ 
+2|GIVN|N|Phoebe 
+2|SURN|N|Cox 
+2|_MARNM|N|Cox 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|14 MAY 1989 
+1|DEAT|Y|Y 
+2|DATE|Y|1 MAR 2000 
+1|FAMS|Y|@F1@ 
+0|INDI|Y|@I5@
+1|NAME|Y|Matt /Green/ 
+2|GIVN|N|Matt 
+2|SURN|N|Green 
+2|_MARNM|N|Green 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|17 OCT 1935 
+1|DEAT|Y|Y 
+2|DATE|Y|1 APR 1979 
+1|FAMS|Y|@F3@ 
+1|FAMC|Y|@F4@ 
+0|INDI|Y|@I6@
+1|NAME|Y|Sophie /Kyle/ 
+2|GIVN|N|Sophie 
+2|SURN|N|Kyle 
+2|_MARNM|N|Green 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|16 NOV 1944 
+1|FAMS|Y|@F3@ 
+1|FAMS|Y|@F5@ 
+0|INDI|Y|@I7@
+1|NAME|Y|Llyod /Tatum/ 
+2|GIVN|N|Llyod 
+2|SURN|N|Tatum 
+2|_MARNM|N|Tatum 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|12 APR 1948 
+1|FAMS|Y|@F5@ 
+0|INDI|Y|@I8@
+1|NAME|Y|Duke /Tatum/ 
+2|GIVN|N|Duke 
+2|SURN|N|Tatum 
+2|_MARNM|N|Tatum 
+1|SEX|Y|F 
+1|DEAT|Y|Y 
+2|DATE|Y|9 JUN 1987 
+1|FAMC|Y|@F5@ 
+0|INDI|Y|@I9@
+1|NAME|Y|Lorry /Linus/ 
+2|GIVN|N|Lorry 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|6 AUG 1993 
+1|FAMS|Y|@F6@ 
+1|FAMC|Y|@F2@ 
+0|INDI|Y|@I10@
+1|NAME|Y|Hueng /Green/ 
+2|GIVN|N|Hueng 
+2|SURN|N|Green 
+2|_MARNM|N|Green 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|10 NOV 1900 
+1|DEAT|Y|Y 
+2|DATE|Y|5 AUG 1970 
+1|FAMS|Y|@F4@ 
+0|INDI|Y|@I11@
+1|NAME|Y|Cheng /Green/ 
+2|GIVN|N|Cheng 
+2|SURN|N|Green 
+2|_MARNM|N|Green 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|10 NOV 1900 
+1|FAMS|Y|@F4@ 
+0|INDI|Y|@I12@
+1|NAME|Y|Blue /Green/ 
+2|GIVN|N|Blue 
+2|SURN|N|Green 
+2|_MARNM|N|Green 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|5 MAY 1850 
+1|FAMC|Y|@F4@ 
+0|INDI|Y|@I13@
+1|NAME|Y|Noops /Linus/ 
+2|GIVN|N|Noops 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|11 MAY 1997 
+1|FAMS|Y|@F6@ 
+0|INDI|Y|@I14@
+1|NAME|Y|Killer /Linus/ 
+2|GIVN|N|Killer 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|12 DEC 2007 
+1|FAMS|Y|@F7@ 
+1|FAMC|Y|@F6@ 
+0|INDI|Y|@I15@
+1|NAME|Y|Mitro /Linus/ 
+2|GIVN|N|Mitro 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|9 OCT 2007 
+1|FAMS|Y|@F7@ 
+0|INDI|Y|@I16@
+1|NAME|Y|Vyom /Linus/ 
+2|GIVN|N|Vyom 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|14 APR 2017 
+1|FAMC|Y|@F7@ 
+0|FAM|Y|@F1@
+1|HUSB|Y|@I1@ 
+1|WIFE|Y|@I4@ 
+1|MARR|Y|
+2|DATE|Y|7 MAY 1988 
+2|PLAC|N|Los Angles 
+1|DIV|Y|
+2|DATE|Y|8 SEP 2002 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F2@
+1|HUSB|Y|@I2@ 
+1|WIFE|Y|@I3@ 
+1|CHIL|Y|@I1@ 
+1|CHIL|Y|@I9@ 
+1|MARR|Y|
+2|DATE|Y|31 DEC 1987 
+2|PLAC|N|Paris 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F3@
+1|HUSB|Y|@I5@ 
+1|WIFE|Y|@I6@ 
+1|CHIL|Y|@I3@ 
+1|MARR|Y|
+2|DATE|Y|2 SEP 1974 
+2|PLAC|N|Milan 
+1|EVEN|N|
+2|TYPE|N|Ending 
+1|_CURRENT|N|N 
+0|FAM|Y|@F5@
+1|HUSB|Y|@I1@ 
+1|WIFE|Y|@I9@ 
+1|CHIL|Y|@I8@ 
+1|MARR|Y|
+2|DATE|Y|5 FEB 1979 
+2|PLAC|N|Peru 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F4@
+1|HUSB|Y|@I10@ 
+1|WIFE|Y|@I11@ 
+1|CHIL|Y|@I5@ 
+1|CHIL|Y|@I12@ 
+1|MARR|Y|
+2|DATE|Y|8 SEP 1920 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F6@
+1|HUSB|Y|@I13@ 
+1|WIFE|Y|@I9@ 
+1|CHIL|Y|@I14@ 
+1|MARR|Y|
+2|DATE|Y|14 OCT 2004 
+1|DIV|Y|
+2|DATE|Y|6 FEB 2000 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F7@
+1|HUSB|Y|@I14@ 
+1|WIFE|Y|@I15@ 
+1|CHIL|Y|@I16@ 
+1|MARR|Y|
+2|DATE|Y|6 FEB 2010 
+1|_CURRENT|N|Y 
+0|TRLR|Y|
