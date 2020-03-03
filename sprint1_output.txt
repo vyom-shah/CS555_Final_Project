@@ -1,0 +1,55 @@
+
+Individual
+ID        Name                Gender    Birthday       Age       Alive          Death          Child               Spouse              
+@I1@      Ted /Monster/       M         1990-08-06     29        True           NA             [@F2@ ]             [@F1@ ]             
+@I3@      Violet /Green/      F         1968-10-17     51        True           NA             [@F3@ ]             [@F2@ ]             
+@I2@      George /Linus/      M         1968-01-10     52        True           NA             NA                  [@F2@ ]             
+@I5@      Matt /Green/        M         1935-10-17     43        False          1979-04-01     [@F4@ ]             [@F3@ ]             
+@I4@      Phoebe /Cox/        F         1989-05-14     10        False          2000-03-01     NA                  [@F1@ ]             
+@I7@      Llyod /Tatum/       M         1948-04-12     71        True           NA             NA                  [@F5@ ]             
+@I6@      Sophie /Kyle/       F         1944-11-16     75        True           NA             NA                  [@F5@ , @F3@ ]      
+@I9@      Lorry /Linus/       F         1993-08-06     26        True           NA             [@F2@ ]             [@F6@ ]             
+@I8@      Duke /Tatum/        F         NA             NA        False          1987-06-09     [@F5@ ]             NA                  
+@I11@     Cheng /Green/       F         1900-11-10     119       True           NA             NA                  [@F4@ ]             
+@I12@     Blue /Green/        M         1850-05-05     169       True           NA             [@F4@ ]             NA                  
+@I13@     Noops /Linus/       M         1997-05-11     22        True           NA             NA                  [@F6@ ]             
+@I14@     Killer /Linus/      M         2007-12-12     12        True           NA             [@F6@ ]             [@F7@ ]             
+@I15@     Mitro /Linus/       F         2007-10-09     12        True           NA             NA                  [@F7@ ]             
+@I10@     Hueng /Green/       M         1900-11-10     69        False          1970-08-05     NA                  [@F4@ ]             
+
+Family
+ID        Married        Divorced       Husband ID     Husband Name             Wife ID   Wife Name           Children       
+@F7@      2010-02-06     NA             @I14@          Killer /Linus/           @I15@     Mitro /Linus/       [@I16@ ]       
+@F2@      1987-12-31     NA             @I2@           George /Linus/           @I3@      Violet /Green/      [@I9@ , @I1@ ] 
+@F1@      1988-05-07     2002-09-08     @I1@           Ted /Monster/            @I4@      Phoebe /Cox/        NA             
+@F4@      1920-09-08     NA             @I10@          Hueng /Green/            @I11@     Cheng /Green/       [@I5@ , @I12@ ]
+@F3@      1974-09-02     NA             @I5@           Matt /Green/             @I6@      Sophie /Kyle/       [@I3@ ]        
+@F6@      2004-10-14     2000-02-06     @I13@          Noops /Linus/            @I9@      Lorry /Linus/       [@I14@ ]       
+@F5@      1979-02-05     NA             @I1@           Ted /Monster/            @I9@      Lorry /Linus/       [@I8@ ]        
+
+ERROR: INDIVIDUAL: US22: @I1@: Tom /Smith/: has the same ID as @I1@: Vyom /Linus/
+ERROR: INDIVIDUAL: US02: @I1@: Birth date 1990-08-06 occurs after marriage date 1988-05-07
+ERROR: INDIVIDUAL: US02: @I4@: Birth date 1989-05-14 occurs after marriage date 1988-05-07
+ERROR: FAMILY: US04: @F1@: Marriage date 1988-05-07 occurs after divorce date 2002-09-08
+ERROR: FAMILY: US04: @F6@: Marriage date 2004-10-14 occurs after divorce date 2000-02-06
+ERROR: INDIVIDUAL: US06: @I4@: Divorce date 2002-09-08 occurs after death date 2000-03-01
+ERROR: INDIVIDUAL: US10: @I1@: Marrige occured before the age of 14.
+ERROR: INDIVIDUAL: US10: @I4@: Marrige occured before the age of 14.
+ERROR: INDIVIDUAL: US10: @I9@: Marrige occured before the age of 14.
+ERROR: INDIVIDUAL: US10: @I13@: Marrige occured before the age of 14.
+ERROR: INDIVIDUAL: US10: @I14@: Marrige occured before the age of 14.
+ERROR: INDIVIDUAL: US10: @I15@: Marrige occured before the age of 14.
+ERROR: Individual: US07: @I8@: Duke /Tatum/  The difference between their birthdate and the death is greater than 150 years. DOB: null DOD: 9 JUN 1987 
+ERROR: Individual: US07: @I12@ - Blue /Green/  is greater than 150 years old.DOB: 5 MAY 1850 
+ERROR: Family: US08: @F4@: Individual: @I12@: Blue /Green/  Has been born before parents' marriage DOB: 5 MAY 1850  Parents Marriage Date: 8 SEP 1920 
+ERROR: Family: US08: @F3@: Individual: @I3@: Violet /Green/  Has been born before parents' marriage DOB: 17 OCT 1968  Parents Marriage Date: 2 SEP 1974 
+ERROR: Family: US08: Family ID: @F6@Individual: @I14@: Killer /Linus/  Has been born after parents' divorce
+ERROR: INDIVIDUAL: US03: @I5@: Birth date 1935-10-17 occurs after death date 1979-04-01
+ERROR: INDIVIDUAL: US03: @I4@: Birth date 1989-05-14 occurs after death date 2000-03-01
+ERROR: INDIVIDUAL: US03: @I8@: Birth date NA occurs after death date 1987-06-09
+ERROR: INDIVIDUAL: US03: @I10@: Birth date 1900-11-10 occurs after death date 1970-08-05
+ERROR: INDIVIDUAL: US05: @I4@: Marriage date 1988-05-07 occurs after death date 2000-03-01
+ERROR: INDIVIDUAL: US05: @I10@: Marriage date 1920-09-08 occurs after death date 1970-08-05
+ERROR: INDIVIDUAL: US05: @I5@: Marriage date 1974-09-02 occurs after death date 1979-04-01
+ERROR: Family: US16: Ted /Monster/  and George /Linus/  does not have same last name!
+ERROR: Family: US18: Ted /Monster/ should not marry his sibling Lorry /Linus/
