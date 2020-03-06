@@ -113,4 +113,12 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us15_fewer_than_15_siblings() {
+		try {
+			assertEquals(true, GenerateOutput.us15_fewer_than_15_siblings(), "User story 15 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
