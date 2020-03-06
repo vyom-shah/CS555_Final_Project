@@ -2,7 +2,7 @@
 1|SOUR|N|Family Echo 
 2|WWW|N|http://www.familyecho.com/ 
 1|FILE|N|My Family 
-1|DATE|N|3 MAR 2020 
+1|DATE|N|6 MAR 2020 
 1|DEST|N|ANSTFILE 
 1|GEDC|N|
 2|VERS|N|5.5.1 
@@ -167,6 +167,132 @@
 1|BIRT|Y|
 2|DATE|Y|14 APR 2017 
 1|FAMC|Y|@F7@ 
+0|INDI|Y|@I17@
+1|NAME|Y|Shane /Linus/ 
+2|GIVN|N|Shane 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|6 SEP 2013 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I18@
+1|NAME|Y|Lina /Linus/ 
+2|GIVN|N|Lina 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I19@
+1|NAME|Y|Sabrina /Linus/ 
+2|GIVN|N|Sabrina 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|17 JAN 2009 
+1|DEAT|Y|Y 
+2|DATE|Y|1 MAR 2000 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I20@
+1|NAME|Y|Chase /Linus/ 
+2|GIVN|N|Chase 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|6 AUG 2008 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I21@
+1|NAME|Y|Brooke /Linus/ 
+2|GIVN|N|Brooke 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|24 DEC 2004 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I22@
+1|NAME|Y|Venessa /Linus/ 
+2|GIVN|N|Venessa 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|30 NOV 2016 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I23@
+1|NAME|Y|Chloe /Linus/ 
+2|GIVN|N|Chloe 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|10 OCT 2010 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I24@
+1|NAME|Y|Susane /Linus/ 
+2|GIVN|N|Susane 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|7 JUL 2014 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I25@
+1|NAME|Y|House /Linus/ 
+2|GIVN|N|House 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|7 JUL 2014 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I26@
+1|NAME|Y|Voctoria /Linus/ 
+2|GIVN|N|Voctoria 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|7 JUL 2014 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I27@
+1|NAME|Y|Wally /Linus/ 
+2|GIVN|N|Wally 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|1 MAR 2015 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I28@
+1|NAME|Y|Misty /Linus/ 
+2|GIVN|N|Misty 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|1 MAR 2015 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I29@
+1|NAME|Y|Drake /Linus/ 
+2|GIVN|N|Drake 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|11 MAY 2009 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I30@
+1|NAME|Y|Wuhan /Linus/ 
+2|GIVN|N|Wuhan 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|18 SEP 2019 
+1|FAMC|Y|@F7@ 
 0|FAM|Y|@F1@
 1|HUSB|Y|@I1@ 
 1|WIFE|Y|@I4@ 
@@ -196,8 +322,8 @@
 2|TYPE|N|Ending 
 1|_CURRENT|N|N 
 0|FAM|Y|@F5@
-1|HUSB|Y|@I1@ 
-1|WIFE|Y|@I9@ 
+1|HUSB|Y|@I7@ 
+1|WIFE|Y|@I6@ 
 1|CHIL|Y|@I8@ 
 1|MARR|Y|
 2|DATE|Y|5 FEB 1979 
@@ -224,6 +350,20 @@
 1|HUSB|Y|@I14@ 
 1|WIFE|Y|@I15@ 
 1|CHIL|Y|@I16@ 
+1|CHIL|Y|@I17@ 
+1|CHIL|Y|@I18@ 
+1|CHIL|Y|@I19@ 
+1|CHIL|Y|@I20@ 
+1|CHIL|Y|@I21@ 
+1|CHIL|Y|@I22@ 
+1|CHIL|Y|@I23@ 
+1|CHIL|Y|@I24@ 
+1|CHIL|Y|@I25@ 
+1|CHIL|Y|@I26@ 
+1|CHIL|Y|@I27@ 
+1|CHIL|Y|@I28@ 
+1|CHIL|Y|@I29@ 
+1|CHIL|Y|@I30@ 
 1|MARR|Y|
 2|DATE|Y|6 FEB 2010 
 1|_CURRENT|N|Y 

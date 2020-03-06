@@ -572,6 +572,90 @@ public class GenerateOutput {
 		
 	}
 
+					
+		/**
+		 * Author: Dhruval Thakkar
+			 * ID: US15
+			 * Name: Fewer than 15 siblings
+			 * Description: There should be fewer than 15 siblings in a family 
+			 * Date created: March 04, 2020 05:10:52 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us15_fewer_than_15_siblings() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+
+				int sibling_Count = 0;
+				
+				if (valueFam.getChild() != null) {
+					for (String var : valueFam.getChild()) {
+						sibling_Count += 1;
+					}
+				}				
+				
+				if(sibling_Count >= 15)
+				{
+					String failStr = "ERROR: FAMILY: US15: "+valueFam.getId()+ ": has "+sibling_Count+ " number of siblings in the family";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
+		/**
+		 * Author: Dhruval Thakkar
+			 * ID: US20
+			 * Name: Aunts and uncles
+			 * Description: Aunts and uncles should not marry their nieces or nephews 
+			 * Date created: March 04, 2020 07:30:10 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us20_aunts_and_uncles() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, IndividualEntry>> iteratorFam = hind.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, IndividualEntry> mapElement = iteratorFam.next();
+				IndividualEntry valueFam = mapElement.getValue();
+
+				String birth = "NA";
+				String death = "NA";
+				if (valueFam.getBirthday() != null) {
+					Date birthDate = dateFormatGiven.parse(valueFam.getBirthday());
+					birth = dateFormat.format(birthDate);
+				}				
+				if (valueFam.getDeath() != null) {
+					Date deathDate = dateFormatGiven.parse(valueFam.getDeath());
+					death = dateFormat.format(deathDate);
+				}
+				
+				if(!death.equals("NA") || death.compareTo(birth) < 0 )
+				{
+					String failStr = "ERROR: INDIVIDUAL: US03: "+valueFam.getId()+ ": Birth date "+birth+ " occurs after death date "+ death;
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -604,9 +688,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint-1.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint-1.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
+			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -648,7 +732,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = System.getProperty("user.dir")+"/GEDCOM/sprint.txt";
+			String textInputFile = System.getProperty("user.dir")+"/FinalProject/GEDCOM/sprint.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
@@ -872,11 +956,12 @@ public class GenerateOutput {
 
 			us07_less_than_150yrs();
 			us08_birth_before_marriage();
-
+			
 			us03_birth_before_death();
 			us05_marriage_before_death();
 			us16_Male_last_name();
 			us18_siblings_should_not_marry();
+			us15_fewer_than_15_siblings();
 
 			if(failuresFlag)
 			 {
