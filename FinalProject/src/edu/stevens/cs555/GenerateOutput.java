@@ -490,7 +490,7 @@ public class GenerateOutput {
 					if (fam.getDivorced() != null) {
 						divorceDate = dateFormatGiven.parse(fam.getDivorced());
 						if (birthDate.after(divorceDate)) {
-							String failStr =  "ERROR: Family: US08: "+"Family ID: " + fam.getId() + "Individual: " + indi.getId() + ": "
+							String failStr =  "ERROR: Family: US08: "+"Family ID: " + fam.getId() + " Individual: " + indi.getId() + ": "
 									+ indi.getName() + " Has been born after parents' divorce";
 									
 							failures.add(failStr);
@@ -561,7 +561,7 @@ public class GenerateOutput {
 				
 				if(indValue.getGender().trim().equals("M") && !indlastname.equals(famlastname)) {
 					flag=false;
-					String failStr =  "ERROR: Family: US16: "+indValue.getName().trim()+"  and "+hind.get(famValue.getH_id().trim()).getName()+" does not have same last name!";
+					String failStr =  "ERROR: Family: US16: "+famValue.getId()+": "+indValue.getName().trim()+"  and "+hind.get(famValue.getH_id().trim()).getName()+" does not have same last name!";
 					failures.add(failStr);
 					failuresFlag = true;
 				}
