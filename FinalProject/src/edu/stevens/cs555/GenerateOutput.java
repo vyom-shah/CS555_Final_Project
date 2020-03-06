@@ -422,7 +422,7 @@ public class GenerateOutput {
 				int year = ca.get(Calendar.YEAR);
 				int diff = year - birthyear;
 				if (diff > 150) {
-					String failStr =  "ERROR: Individual: US07: "+ indi.getId() + " - " + indi.getName()
+					String failStr =  "ERROR: INDIVIDUAL: US07: "+ indi.getId() + " - " + indi.getName()
 							+ " is greater than 150 years old.DOB: " + indi.getBirthday();
 					failures.add(failStr);
 					flag = false;
@@ -435,7 +435,7 @@ public class GenerateOutput {
 				int deathyear = Integer.parseInt(deat.split("-")[0]);
 				int diff = deathyear - birthyear;
 				if (diff > 150) {
-					String failStr = "ERROR: Individual: US07: " + indi.getId() + ": " + indi.getName()
+					String failStr = "ERROR: INDIVIDUAL: US07: " + indi.getId() + ": " + indi.getName()
 							+ " The difference between their birthdate and the death is greater than 150 years. DOB: "
 							+ indi.getBirthday() + " DOD: " + indi.getDeath();
 					failures.add(failStr);
@@ -480,7 +480,7 @@ public class GenerateOutput {
 					if(indi.getBirthday() != null)
 						birthDate = dateFormatGiven.parse(indi.getBirthday());
 					if (birthDate.before(marriageDate)) {
-						String failStr = "ERROR: Family: US08: " + fam.getId() + ": Individual: " + indi.getId() + ": "
+						String failStr = "ERROR: FAMILY: US08: " + fam.getId() + ": Individual: " + indi.getId() + ": "
 								+ indi.getName() + " Has been born before parents' marriage DOB: " + indi.getBirthday()
 								+ " Parents Marriage Date: " + fam.getMarried();
 						failures.add(failStr);
@@ -490,7 +490,7 @@ public class GenerateOutput {
 					if (fam.getDivorced() != null) {
 						divorceDate = dateFormatGiven.parse(fam.getDivorced());
 						if (birthDate.after(divorceDate)) {
-							String failStr =  "ERROR: Family: US08: "+"Family ID: " + fam.getId() + " Individual: " + indi.getId() + ": "
+							String failStr =  "ERROR: FAMILY: US08: "+"Family ID: " + fam.getId() + " Individual: " + indi.getId() + ": "
 									+ indi.getName() + " Has been born after parents' divorce";
 									
 							failures.add(failStr);
@@ -521,7 +521,7 @@ public class GenerateOutput {
 			if(hind.get(H_id).getChild().size()!=0 && hind.get(W_id).getChild().size()!=0) {
 				if(hind.get(H_id).getChild().equals(hind.get(W_id).getChild())) {
 					flag=false;
-					String failStr = "ERROR: Family: US18: "+hind.get(H_id).getName().trim()+" should not marry his sibling "+hind.get(W_id).getName().trim();
+					String failStr = "ERROR: FAMILY: US18: "+hind.get(H_id).getName().trim()+" should not marry his sibling "+hind.get(W_id).getName().trim();
 					failures.add(failStr);
 					failuresFlag = true;
 				}
@@ -561,7 +561,7 @@ public class GenerateOutput {
 				
 				if(indValue.getGender().trim().equals("M") && !indlastname.equals(famlastname)) {
 					flag=false;
-					String failStr =  "ERROR: Family: US16: "+famValue.getId()+": "+indValue.getName().trim()+"  and "+hind.get(famValue.getH_id().trim()).getName()+" does not have same last name!";
+					String failStr =  "ERROR: FAMILY: US16: "+famValue.getId()+": "+indValue.getName().trim()+"  and "+hind.get(famValue.getH_id().trim()).getName()+" does not have same last name!";
 					failures.add(failStr);
 					failuresFlag = true;
 				}
