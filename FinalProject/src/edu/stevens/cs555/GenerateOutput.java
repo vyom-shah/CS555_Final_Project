@@ -613,48 +613,7 @@ public class GenerateOutput {
 				return false;			
 		}
 
-		/**
-		 * Author: Dhruval Thakkar
-			 * ID: US20
-			 * Name: Aunts and uncles
-			 * Description: Aunts and uncles should not marry their nieces or nephews 
-			 * Date created: March 04, 2020 07:30:10 PM
-			 * @throws ParseException 
-		 */
-		public static boolean us20_aunts_and_uncles() throws ParseException
-		{
-			boolean flag = true;
-			
-			for (Iterator<Entry<String, IndividualEntry>> iteratorFam = hind.entrySet().iterator(); iteratorFam
-					.hasNext();) {
-				Entry<String, IndividualEntry> mapElement = iteratorFam.next();
-				IndividualEntry valueFam = mapElement.getValue();
-
-				String birth = "NA";
-				String death = "NA";
-				if (valueFam.getBirthday() != null) {
-					Date birthDate = dateFormatGiven.parse(valueFam.getBirthday());
-					birth = dateFormat.format(birthDate);
-				}				
-				if (valueFam.getDeath() != null) {
-					Date deathDate = dateFormatGiven.parse(valueFam.getDeath());
-					death = dateFormat.format(deathDate);
-				}
-				
-				if(!death.equals("NA") || death.compareTo(birth) < 0 )
-				{
-					String failStr = "ERROR: INDIVIDUAL: US03: "+valueFam.getId()+ ": Birth date "+birth+ " occurs after death date "+ death;
-					failures.add(failStr);
-					flag = false;
-					failuresFlag = true;
-				}
-			}
-			
-			if(flag)
-				return true;
-			else
-				return false;			
-		}
+		
 
 //====================================================== End of user stories ======================================================
 
