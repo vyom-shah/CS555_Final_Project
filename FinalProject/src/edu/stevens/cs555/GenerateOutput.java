@@ -66,7 +66,7 @@ public class GenerateOutput {
 							birthDate = dateFormat.format(birt);
 						}
 						
-						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null || birthDate == null))
+						if(keyFam.equals(spouseID) && (marriageDate == null || birthDate == null || marriageDate.compareTo(birthDate) < 0 ))
 						{
 							String failStr = "ERROR: INDIVIDUAL: US02: "+keyInd+": Birth date "+birthDate+" occurs after marriage date "+marriageDate;
 							failures.add(failStr);
@@ -261,7 +261,7 @@ public class GenerateOutput {
 						String keyFam = famMapElement.getKey();
 						FamilyEntry valueFam = famMapElement.getValue();
 						int years = 0;
-						if (valueFam.getMarried() != null || indValue.getBirthday() != null) {
+						if (valueFam.getMarried() != null && indValue.getBirthday() != null) {
 							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							long diffInMillies = Math.abs(marriageD.getTime() - birt.getTime());
 							long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -613,6 +613,74 @@ public class GenerateOutput {
 				return false;			
 		}
 
+		/**
+		 * Author: Dhruval Thakkar
+			 * ID: US20
+			 * Name: Aunts and uncles
+			 * Description: Aunts and uncles should not marry their nieces or nephews 
+			 * Date created: March 07, 2020 12:00:04 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us20_aunts_and_uncles() throws ParseException
+		{
+			boolean flag = true;
+					
+			for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+				.hasNext();) {
+				Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+				IndividualEntry valueInd = mapElement.getValue(); 
+				
+				for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+				.hasNext();) {
+					Entry<String, FamilyEntry> mapElement1 = iteratorFam.next();
+					FamilyEntry valueFam = mapElement1.getValue(); 
+
+					for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
+					.hasNext();) {
+						Entry<String, FamilyEntry> mapElement2 = iteratorFam1.next();
+						FamilyEntry valueFam1 = mapElement2.getValue();	
+						
+						String child1 = null;
+						
+						for (String child : valueInd.getChild()) {
+							child1 = child.replaceAll("\\s", "");;
+						}
+							String fam_id = valueFam.getId();
+							if(valueInd.getSpous() != null && fam_id.equals(child1)){
+								for (String vari : valueInd.getSpous()) {
+									String var = vari.replaceAll("\\s", "");
+					
+										if(valueFam.child.contains(valueFam1.getH_id()) && valueFam1.getId().equals(var)){
+											String failStr = "ERROR: FAMILY: US20: "+valueInd.getId()+ ": can not marry "+ valueInd.getSpous();
+											failures.add(failStr);
+											flag = false;
+											failuresFlag = true;
+										}
+
+										else if(valueFam.child.contains(valueFam1.getW_id()) && valueFam1.getId().equals(var) ){
+											String failStr = "ERROR: FAMILY: US20: "+valueInd.getId()+ ": can not marry "+ valueInd.getSpous();
+											failures.add(failStr);
+											flag = false;
+											failuresFlag = true;
+										}
+									
+								}
+							}
+						
+					
+					}
+	
+				}
+
+				
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
 		
 
 //====================================================== End of user stories ======================================================
@@ -647,7 +715,7 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint-1.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint-2.ged";
 			File outputFile = new File(intitalInputFile);
 			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
 
@@ -921,6 +989,7 @@ public class GenerateOutput {
 			us16_Male_last_name();
 			us18_siblings_should_not_marry();
 			us15_fewer_than_15_siblings();
+			us20_aunts_and_uncles();
 
 			if(failuresFlag)
 			 {
