@@ -129,4 +129,12 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us11_no_bigamy()  {
+		try {
+			assertEquals(true, GenerateOutput.us11_no_bigamy(), "User story 11 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }

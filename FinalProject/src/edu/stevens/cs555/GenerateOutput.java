@@ -681,7 +681,84 @@ public class GenerateOutput {
 			else
 				return false;			
 		}
-
+		
+		/**
+		 * 
+			 * Author: Kunj Desai
+			 * ID: US11
+			 * Name: No bigamy
+			 * Description: Marriage should not occur during marriage to another spouse
+			 * Date created: Mar 11, 20207:54:08 PM
+		 * @throws ParseException 
+		 */
+		public static boolean us11_no_bigamy() throws ParseException
+		{
+			boolean flag = true;
+			HashSet<String> familyWithConflicts = new HashSet<String>();
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				
+				String divorced = null, married = null;
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				String keyFam = mapElement.getKey();
+				FamilyEntry valueFam = mapElement.getValue();
+				
+				
+				if (valueFam.getMarried() != null) {
+					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
+					married = dateFormat.format(marriageDate);
+					
+					if (valueFam.getDivorced() != null) {
+						Date divorceDate = dateFormatGiven.parse(valueFam.getDivorced());
+						divorced = dateFormat.format(divorceDate);
+					}
+				}	
+				
+				for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
+						.hasNext();) {
+					
+					String married1 = null;
+					Entry<String, FamilyEntry> mapElement1 = iteratorFam1.next();
+					String keyFam1 = mapElement1.getKey();
+					FamilyEntry valueFam1 = mapElement1.getValue();
+					
+					if(!keyFam.equals(keyFam1))
+					{
+						if (valueFam1.getMarried() != null) {
+							Date marriageDate1 = dateFormatGiven.parse(valueFam1.getMarried());
+							married1 = dateFormat.format(marriageDate1);
+							
+						}	
+						if(valueFam.getH_id().equals(valueFam1.getH_id()) || valueFam.getW_id().equals(valueFam1.getW_id()))
+						{
+							String failStr = null;
+							if(divorced == null && married1 != null)
+							{
+								failStr = "ERROR: FAMILY: US11: "+ keyFam+": has conflicting marriage dates with "+keyFam1;
+								failures.add(failStr);
+								flag = false;
+								failuresFlag = true;
+							}
+							else if(divorced != null && married1.compareTo(divorced) < 0)
+							{
+								failStr = "ERROR: FAMILY: US11: "+ keyFam+": has conflicting marriage dates with "+keyFam1;
+								failures.add(failStr);
+								flag = false;
+								failuresFlag = true;
+							}
+						}
+					}
+					familyWithConflicts.add(keyFam);
+					familyWithConflicts.add(keyFam1);
+					
+				}	
+			
+			}
+			if(flag)
+				return true;
+			else
+				return false;
+		}
 		
 
 
@@ -717,9 +794,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint-2.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint-1.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
+			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -761,7 +838,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = System.getProperty("user.dir")+"/FinalProject/GEDCOM/sprint.txt";
+			String textInputFile = System.getProperty("user.dir")+"/GEDCOM/sprint.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
@@ -984,7 +1061,7 @@ public class GenerateOutput {
 			us10_marriage_after_14();
 
 			us07_less_than_150yrs();
-			us08_birth_before_marriage();
+			//us08_birth_before_marriage();
 			
 			us03_birth_before_death();
 			us05_marriage_before_death();
@@ -992,6 +1069,8 @@ public class GenerateOutput {
 			us18_siblings_should_not_marry();
 			us15_fewer_than_15_siblings();
 			us20_aunts_and_uncles();
+			
+			us11_no_bigamy();
 
 			if(failuresFlag)
 			 {
