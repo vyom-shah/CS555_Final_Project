@@ -121,4 +121,12 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us20_aunts_and_uncles()  {
+		try {
+			assertEquals(true, GenerateOutput.us20_aunts_and_uncles(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
