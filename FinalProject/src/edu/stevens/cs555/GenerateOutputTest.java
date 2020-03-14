@@ -129,4 +129,20 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us_35_recentbirth()  {
+		try {
+			assertEquals(true, GenerateOutput.us_35_recentbirth(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us_38_upcomingbirthdays() {
+		try {
+			assertEquals(true, GenerateOutput.us_38_upcomingbirthdays(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
