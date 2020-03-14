@@ -130,6 +130,7 @@ class GenerateOutputTest {
 		}
 	}
 	@Test
+
 	void test_us_35_recentbirth()  {
 		try {
 			assertEquals(true, GenerateOutput.us_35_recentbirth(), "User story 20 failed!");
@@ -137,10 +138,22 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
-	@Test
+		@Test
 	void test_us_38_upcomingbirthdays() {
 		try {
 			assertEquals(true, GenerateOutput.us_38_upcomingbirthdays(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+      
+      
+  @Test    
+  void test_us11_no_bigamy()  {
+		try {
+			assertEquals(true, GenerateOutput.us11_no_bigamy(), "User story 11 failed!");
+
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
