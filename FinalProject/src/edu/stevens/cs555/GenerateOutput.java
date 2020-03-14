@@ -681,6 +681,139 @@ public class GenerateOutput {
 			else
 				return false;			
 		}
+
+		/**
+		 * Author: Vyom Shah
+			 * ID: US35
+			 * Name: List Recent Births
+			 * Description: List all people in a GEDCOM file who were born in the last 30 days 
+			 * Date created: March 07, 2020 12:34:04 AM
+			 * @throws ParseException 
+		 */
+		public static boolean us_35_recentbirth() throws ParseException
+		{
+			boolean flag=true;
+			
+			Map<String, IndividualEntry> map=new HashMap<String, IndividualEntry>(hind);
+			Iterator<Map.Entry<String, IndividualEntry>> entries=map.entrySet().iterator();
+//			final SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy");
+			Date nowTime=new Date(System.currentTimeMillis());
+//			Calendar cal1=Calendar.getInstance();
+			Calendar cal2=Calendar.getInstance();
+			int diffDay=0;
+			int diffMonth=0;
+			int diffYear=0;
+			int birthyear = 0;
+			int birthmonth=0;
+			int birthdate=0;
+			while(entries.hasNext()) {
+				Map.Entry<String, IndividualEntry> entry=entries.next();
+				IndividualEntry indi=entry.getValue();
+//				Date =null;
+					
+				if(indi.getBirthday() != null)
+				{
+					Date bdate = dateFormatGiven.parse(indi.getBirthday());
+					String birth = dateFormat.format(bdate);
+					birthyear = Integer.parseInt(birth.split("-")[0]);
+					birthmonth = Integer.parseInt(birth.split("-")[1]);
+					birthdate=Integer.parseInt(birth.split("-")[2]);
+					
+				}
+				
+					
+					//dob = dateFormatGiven.parse(indi.getBirthday());
+					//Date ddate = dateFormatGiven.parse(indi.getDeath());
+					//String deat = dateFormat.format(ddate);
+					//dob= sdf.parse(indi.getBirthday());
+					//System.out.print();
+					//cal1.setTime(birthyear);
+					cal2.setTime(nowTime);
+					diffYear=birthyear-cal2.get(Calendar.YEAR);
+					if(diffYear==0) {
+						diffDay=birthdate-cal2.get(Calendar.DAY_OF_MONTH);
+						diffMonth=birthmonth-(cal2.get(Calendar.MONTH)+1);
+						
+					}
+				
+				if(diffYear==0 && diffMonth <= 1 && diffDay<30) {
+					String failStr = "ERROR: INDIVIDUAL: US35: "+indi.getId()+" - "+ indi.getName()+ "was born in last 30 days from today";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+			
+			
+			if(flag)
+				return true;
+			else
+				return false;
+		}
+
+		/**
+		 * Author: Vyom Shah
+			 * ID: US38
+			 * Name: List Upcoming Birthdays
+			 * Description: List all living people in a GEDCOM file whose birthdays occur in the next 30 days 
+			 * Date created: March 07, 2020 02:22:34 AM
+			 * @throws ParseException 
+		 */
+		public static boolean us_38_upcomingbirthdays() throws ParseException
+		{
+			boolean flag=true;
+			Map<String,IndividualEntry> map=new HashMap<String, IndividualEntry>(hind);
+			Iterator<Map.Entry<String, IndividualEntry>> entries=map.entrySet().iterator();
+			Date nowTime=new Date(System.currentTimeMillis());
+			
+			Calendar cal2=Calendar.getInstance();
+			int diffDay=0;
+			int diffMonth=0;
+			while(entries.hasNext()) {
+				Map.Entry<String, IndividualEntry> entry=entries.next();
+				IndividualEntry indi=entry.getValue();
+//				Date dob=null;
+//				int birthyear = 0;
+				int birthmonth=0;
+				int birthdate=0;
+				if(indi.getBirthday() != null)
+				{	
+					System.out.println(indi.getBirthday());
+					
+					Date bdate = dateFormatGiven.parse(indi.getBirthday());
+//					System.out.println(bdate);
+					String birth = dateFormat.format(bdate);
+//					System.out.println(birth);
+//					birthyear = Integer.parseInt(birth.split("-")[0]);
+//					System.out.println(birthyear);
+					birthmonth = Integer.parseInt(birth.split("-")[1]);
+//					System.out.println(birthmonth);
+					birthdate=Integer.parseInt(birth.split("-")[2]);
+//					System.out.println(birthdate);
+					
+					
+					
+				}
+				//dob=sdf.parse(indi.getBirthday());
+				//cal1.setTime(dob);
+				cal2.setTime(nowTime);
+//				System.out.println("-----"+nowTime);
+				diffDay=birthdate-cal2.get(Calendar.DAY_OF_MONTH);
+//				System.out.println("difference day"+birthdate + "- "+cal2.get(Calendar.DAY_OF_MONTH)+ "=="+diffDay);
+				
+				diffMonth=birthmonth-(cal2.get(Calendar.MONTH)+1);
+//				System.out.println("difference month"+birthmonth + "- "+(cal2.get(Calendar.MONTH)+1)+ "=="+diffMonth);
+//				System.out.println(" ");
+				if(diffMonth==0&&diffDay<30) {
+					String failStr = "ERROR: INDIVIDUAL: US38: "+indi.getId()+" - "+ indi.getName()+ "has a birthday less than 30 days from today";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+			
+			
+
 		
 		/**
 		 * 
@@ -754,11 +887,13 @@ public class GenerateOutput {
 				}	
 			
 			}
+
 			if(flag)
 				return true;
 			else
 				return false;
 		}
+
 		
 
 
@@ -1069,6 +1204,8 @@ public class GenerateOutput {
 			us18_siblings_should_not_marry();
 			us15_fewer_than_15_siblings();
 			us20_aunts_and_uncles();
+      us_35_recentbirth();
+			us_38_upcomingbirthdays();
 			
 			us11_no_bigamy();
 
@@ -1089,6 +1226,9 @@ public class GenerateOutput {
 				 System.out.println("User story number 10 passed successfully!");
 				 System.out.println("User story number 03 passed successfully!");
 				 System.out.println("User story number 05 passed successfully!");
+         System.out.println("User story number 35 passed successfully!");
+				 System.out.println("User story number 38 passed successfully!");
+         
 			 }
 			  
 			//======================================================   End of all user stories   ======================================================
