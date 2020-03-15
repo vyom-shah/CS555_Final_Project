@@ -146,7 +146,22 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
-	
+		@Test
+		void test_us13_sibling_spacing() {
+			try {
+				assertEquals(true, GenerateOutput.us13_sibling_spacing(), "User story 13 failed!");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		@Test
+		void test_us14_multiple_births() {
+			try {
+				assertEquals(true, GenerateOutput.us14_multiple_births(), "User story 14 failed!");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
       
       
   @Test    

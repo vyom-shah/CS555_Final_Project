@@ -811,8 +811,8 @@ public class GenerateOutput {
 					failuresFlag = true;
 				}
 			}
-			
-			
+			return flag;
+		}	
 
 		
 		/**
@@ -894,8 +894,103 @@ public class GenerateOutput {
 				return false;
 		}
 
+		/**
+		 * 
+			 * Author: Nihir Patel
+			 * ID: US13
+			 * Name: Sibling Spacing
+			 * Description: Birth dates of siblings should be more than 8 months apart or less than 2 days apart (twins may be born one day apart, e.g. 11:59 PM and 12:02 AM the following calendar day)
+			 * Date created: Mar 11, 20207:54:08 PM
+		 * @throws ParseException 
+		 */
+		public static boolean us13_sibling_spacing() throws ParseException
+		{
+			boolean flag = true;
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+				Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+				FamilyEntry famValue = famMapElement.getValue();
+				if(famValue.getChild().size()>=2) {
+					for (Iterator<String> it = famValue.getChild().iterator(); it.hasNext(); ) {
+						String child1=it.next().trim();
+						for (Iterator<String> it1 = famValue.getChild().iterator(); it1.hasNext(); ) {
+							String child2=it1.next().trim();
+							if(child1.equals(child2)) {
+								continue;
+							}
+							else {
+								if(hind.get(child1).getBirthday()==null || hind.get(child2).getBirthday()==null) {
+									continue;
+								}
+								Date bchild1=dateFormatGiven.parse(hind.get(child1).getBirthday());
+								Date bchild2=dateFormatGiven.parse(hind.get(child2).getBirthday());
+								long diffInMillies = Math.abs(bchild2.getTime() - bchild1.getTime());
+							    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+							    if(diff>1 && diff<(30.42*8)) {
+							    	flag=false;
+							    	String failStr =  "ERROR: FAMILY: US13: Birthdays of "+hind.get(child1).getName()+"  and "+hind.get(child2).getName()+" are more then 2 days and less then 8 months";
+									failures.add(failStr);
+									failuresFlag = true;
+							    }
+							}
+						}
+					}
+				}
+				
+			}
+			return flag;
+		}
+		/**
+		 * 
+			 * Author: Nihir Patel
+			 * ID: US14
+			 * Name: Multiple births
+			 * Description: No more than five siblings should be born at the same time
+			 * Date created: Mar 11, 20207:54:08 PM
+		 * @throws ParseException 
+		 */
+		public static boolean us14_multiple_births() throws ParseException
+		{
+			boolean flag = true;
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+				Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+				FamilyEntry famValue = famMapElement.getValue();
+				if(famValue.getChild().size()>=6) {
+					
+				outer:	for (Iterator<String> it = famValue.getChild().iterator(); it.hasNext(); ) {
+						int count=0;
+						String child1=it.next().trim();
+						for (Iterator<String> it1 = famValue.getChild().iterator(); it1.hasNext(); ) {
+							String child2=it1.next().trim();
+							if(child1.equals(child2)) {
+								continue;
+							}
+							else {
+								if(hind.get(child1).getBirthday()==null || hind.get(child2).getBirthday()==null) {
+									continue;
+								}
+								Date bchild1=dateFormatGiven.parse(hind.get(child1).getBirthday());
+								Date bchild2=dateFormatGiven.parse(hind.get(child2).getBirthday());
+								long diffInMillies = Math.abs(bchild2.getTime() - bchild1.getTime());
+							    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+							    if(diff<2) {
+							    	count+=1;
+							    	if(count>5) {
+							    		String failStr =  "ERROR: FAMILY: US14: More than five children were born at same time in family: "+famMapElement.getKey();
+							    		failures.add(failStr);
+									failuresFlag = true;
+									break outer;
+							    	}						    	
+							    }
+							}
+						}
+					}
+				}
+				
+			}
+			return flag;
+		}
 		
-
+		
 
 //====================================================== End of user stories ======================================================
 
@@ -1206,7 +1301,8 @@ public class GenerateOutput {
 			us20_aunts_and_uncles();
       us_35_recentbirth();
 			us_38_upcomingbirthdays();
-			
+			us13_sibling_spacing();
+			us14_multiple_births();
 			us11_no_bigamy();
 
 			if(failuresFlag)
