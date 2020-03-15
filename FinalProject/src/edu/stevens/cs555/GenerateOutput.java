@@ -698,7 +698,6 @@ public class GenerateOutput {
 			Iterator<Map.Entry<String, IndividualEntry>> entries=map.entrySet().iterator();
 //			final SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy");
 			Date nowTime=new Date(System.currentTimeMillis());
-//			Calendar cal1=Calendar.getInstance();
 			Calendar cal2=Calendar.getInstance();
 			int diffDay=0;
 			int diffMonth=0;
@@ -709,8 +708,6 @@ public class GenerateOutput {
 			while(entries.hasNext()) {
 				Map.Entry<String, IndividualEntry> entry=entries.next();
 				IndividualEntry indi=entry.getValue();
-//				Date =null;
-					
 				if(indi.getBirthday() != null)
 				{
 					Date bdate = dateFormatGiven.parse(indi.getBirthday());
@@ -719,9 +716,7 @@ public class GenerateOutput {
 					birthmonth = Integer.parseInt(birth.split("-")[1]);
 					birthdate=Integer.parseInt(birth.split("-")[2]);
 					
-				}
-				
-					
+				}	
 					//dob = dateFormatGiven.parse(indi.getBirthday());
 					//Date ddate = dateFormatGiven.parse(indi.getDeath());
 					//String deat = dateFormat.format(ddate);
