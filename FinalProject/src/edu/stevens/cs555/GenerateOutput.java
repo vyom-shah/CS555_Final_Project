@@ -772,8 +772,6 @@ public class GenerateOutput {
 			while(entries.hasNext()) {
 				Map.Entry<String, IndividualEntry> entry=entries.next();
 				IndividualEntry indi=entry.getValue();
-//				Date dob=null;
-//				int birthyear = 0;
 				int birthmonth=0;
 				int birthdate=0;
 				if(indi.getBirthday() != null)
@@ -781,29 +779,15 @@ public class GenerateOutput {
 					System.out.println(indi.getBirthday());
 					
 					Date bdate = dateFormatGiven.parse(indi.getBirthday());
-//					System.out.println(bdate);
 					String birth = dateFormat.format(bdate);
-//					System.out.println(birth);
-//					birthyear = Integer.parseInt(birth.split("-")[0]);
-//					System.out.println(birthyear);
 					birthmonth = Integer.parseInt(birth.split("-")[1]);
-//					System.out.println(birthmonth);
 					birthdate=Integer.parseInt(birth.split("-")[2]);
-//					System.out.println(birthdate);
-					
-					
 					
 				}
-				//dob=sdf.parse(indi.getBirthday());
-				//cal1.setTime(dob);
+
 				cal2.setTime(nowTime);
-//				System.out.println("-----"+nowTime);
 				diffDay=birthdate-cal2.get(Calendar.DAY_OF_MONTH);
-//				System.out.println("difference day"+birthdate + "- "+cal2.get(Calendar.DAY_OF_MONTH)+ "=="+diffDay);
-				
 				diffMonth=birthmonth-(cal2.get(Calendar.MONTH)+1);
-//				System.out.println("difference month"+birthmonth + "- "+(cal2.get(Calendar.MONTH)+1)+ "=="+diffMonth);
-//				System.out.println(" ");
 				if(diffMonth==0&&diffDay<30) {
 					String failStr = "ERROR: INDIVIDUAL: US38: "+indi.getId()+" - "+ indi.getName()+ "has a birthday less than 30 days from today";
 					failures.add(failStr);
