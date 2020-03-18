@@ -952,6 +952,7 @@ public class GenerateOutput {
 							    if(diff<2) {
 							    	count+=1;
 							    	if(count>5) {
+							    		flag=false;
 							    		String failStr =  "ERROR: FAMILY: US14: More than five children were born at same time in family: "+famMapElement.getKey();
 							    		failures.add(failStr);
 									failuresFlag = true;
