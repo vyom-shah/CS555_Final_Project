@@ -2,7 +2,7 @@
 1|SOUR|N|Family Echo 
 2|WWW|N|http://www.familyecho.com/ 
 1|FILE|N|My Family 
-1|DATE|N|6 MAR 2020 
+1|DATE|N|8 MAR 2020 
 1|DEST|N|ANSTFILE 
 1|GEDC|N|
 2|VERS|N|5.5.1 
@@ -165,7 +165,7 @@
 2|_MARNM|N|Linus 
 1|SEX|Y|M 
 1|BIRT|Y|
-2|DATE|Y|14 APR 2017 
+2|DATE|Y|17 JAN 2009 
 1|FAMC|Y|@F7@ 
 0|INDI|Y|@I17@
 1|NAME|Y|Shane /Linus/ 
@@ -182,6 +182,7 @@
 2|SURN|N|Linus 
 2|_MARNM|N|Linus 
 1|SEX|Y|F 
+1|FAMS|Y|@F8@ 
 1|FAMC|Y|@F7@ 
 0|INDI|Y|@I19@
 1|NAME|Y|Sabrina /Linus/ 
@@ -201,7 +202,8 @@
 2|_MARNM|N|Linus 
 1|SEX|Y|M 
 1|BIRT|Y|
-2|DATE|Y|6 AUG 2008 
+2|DATE|Y|17 JAN 2009 
+1|FAMS|Y|@F8@ 
 1|FAMC|Y|@F7@ 
 0|INDI|Y|@I21@
 1|NAME|Y|Brooke /Linus/ 
@@ -210,7 +212,8 @@
 2|_MARNM|N|Linus 
 1|SEX|Y|F 
 1|BIRT|Y|
-2|DATE|Y|24 DEC 2004 
+2|DATE|Y|17 JAN 2009y 
+1|FAMS|Y|@F9@ 
 1|FAMC|Y|@F7@ 
 0|INDI|Y|@I22@
 1|NAME|Y|Venessa /Linus/ 
@@ -228,7 +231,7 @@
 2|_MARNM|N|Linus 
 1|SEX|Y|F 
 1|BIRT|Y|
-2|DATE|Y|10 OCT 2010 
+2|DATE|Y|17 JAN 2009 
 1|FAMC|Y|@F7@ 
 0|INDI|Y|@I24@
 1|NAME|Y|Susane /Linus/ 
@@ -274,6 +277,7 @@
 1|SEX|Y|F 
 1|BIRT|Y|
 2|DATE|Y|1 MAR 2015 
+1|FAMS|Y|@F12@ 
 1|FAMC|Y|@F7@ 
 0|INDI|Y|@I29@
 1|NAME|Y|Drake /Linus/ 
@@ -282,7 +286,7 @@
 2|_MARNM|N|Linus 
 1|SEX|Y|M 
 1|BIRT|Y|
-2|DATE|Y|11 MAY 2009 
+2|DATE|Y|17 JAN 2009 
 1|FAMC|Y|@F7@ 
 0|INDI|Y|@I30@
 1|NAME|Y|Wuhan /Linus/ 
@@ -291,8 +295,44 @@
 2|_MARNM|N|Linus 
 1|SEX|Y|M 
 1|BIRT|Y|
-2|DATE|Y|18 SEP 2019 
+2|DATE|Y|17 JAN 2009 
 1|FAMC|Y|@F7@ 
+0|INDI|Y|@I31@
+1|NAME|Y|Oppo /Linus/ 
+2|GIVN|N|Oppo 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|7 MAR 2020 
+1|FAMS|Y|@F12@ 
+1|FAMC|Y|@F10@ 
+0|INDI|Y|@I32@
+1|NAME|Y|Belham /Fox/ 
+2|GIVN|N|Belham 
+2|SURN|N|Fox 
+2|_MARNM|N|Fox 
+1|SEX|Y|M 
+1|FAMS|Y|@F9@ 
+1|FAMC|Y|@F11@ 
+0|INDI|Y|@I33@
+1|NAME|Y|Mandy /Apel/ 
+2|GIVN|N|Mandy 
+2|SURN|N|Apel 
+2|_MARNM|N|Apel 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|4 AUG 1993 
+1|FAMS|Y|@F11@ 
+0|INDI|Y|@I34@
+1|NAME|Y|Megan /Fox/ 
+2|GIVN|N|Megan 
+2|SURN|N|Fox 
+2|_MARNM|N|Fox 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|2 JUN 1960 
+1|FAMS|Y|@F11@ 
 0|FAM|Y|@F1@
 1|HUSB|Y|@I1@ 
 1|WIFE|Y|@I4@ 
@@ -366,5 +406,30 @@
 1|CHIL|Y|@I30@ 
 1|MARR|Y|
 2|DATE|Y|6 FEB 2010 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F8@
+1|HUSB|Y|@I20@ 
+1|WIFE|Y|@I18@ 
+1|MARR|Y|
+2|DATE|Y|6 AUG 2000 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F9@
+1|HUSB|Y|@I32@ 
+1|WIFE|Y|@I21@ 
+1|MARR|Y|
+2|DATE|Y|6 AUG 2010 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F11@
+1|HUSB|Y|@I33@ 
+1|WIFE|Y|@I34@ 
+1|CHIL|Y|@I32@ 
+1|MARR|Y|
+2|DATE|Y|3 NOV 2000 
+1|_CURRENT|N|Y 
+0|FAM|Y|@F12@
+1|HUSB|Y|@I31@ 
+1|WIFE|Y|@I23@ 
+1|MARR|Y|
+2|DATE|Y|3 NOV 2019 
 1|_CURRENT|N|Y 
 0|TRLR|Y|
