@@ -37,7 +37,7 @@ class GenerateOutputTest {
 	@Test
 	void test_us22_unique_id() {
 		try {
-			assertEquals(true,GenerateOutput.us04_marriage_b4_divorce(),"User story 22 failed!");
+			assertEquals(true,GenerateOutput.us20_aunts_and_uncles(),"User story 22 failed!");
 		}
 		catch( ParseException e) {
 			e.printStackTrace();
