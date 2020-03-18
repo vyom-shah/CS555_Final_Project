@@ -1265,6 +1265,7 @@ public class GenerateOutput {
 			us02_birth_b4_marriage();           //KD
 			us04_marriage_b4_divorce();         //KD
 			us22_unique_ids(); 					//VS
+			
 			us16_Male_last_name(); 				//NP
 			us18_siblings_should_not_marry(); 	//NP No Error
 			us03_birth_before_death(); 			//DT
