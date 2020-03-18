@@ -538,6 +538,7 @@ public class GenerateOutput {
 		
 		return flag;
 	}
+	
 	/**
 	 * Author: Nihir Patel
 		 * ID: US16
