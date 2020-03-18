@@ -29,6 +29,17 @@
 1 SEX M
 1 BIRT
 2 DATE 10 JAN 1968
+
+0 @I234@ INDI
+1 NAME Kaka /Linus/
+2 GIVN Kaka
+2 SURN Linus
+2 _MARNM Linus
+1 SEX M
+1 BIRT
+2 DATE 27 FEB 2020
+
+
 1 FAMS @F2@
 0 @I3@ INDI
 1 NAME Violet /Green/
