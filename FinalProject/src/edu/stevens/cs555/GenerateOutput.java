@@ -1262,27 +1262,30 @@ public class GenerateOutput {
 
 			System.out.println("");
 			
-			//====================================================== Check all user stories here ======================================================			
-			us02_birth_b4_marriage();
-			us04_marriage_b4_divorce();
-			us22_unique_ids();
-			us06_divorce_b4_death();	
-			us10_marriage_after_14();
-
-			us07_less_than_150yrs();
-			//us08_birth_before_marriage();
+			//=====================================Sprint - 1 USER STORIES==================================
 			
-			us03_birth_before_death();
-			us05_marriage_before_death();
-			us16_Male_last_name();
-			us18_siblings_should_not_marry();
-			us15_fewer_than_15_siblings();
-			us20_aunts_and_uncles();
-      us_35_recentbirth();
-			us_38_upcomingbirthdays();
-			us13_sibling_spacing();
-			us14_multiple_births();
-			us11_no_bigamy();
+			us02_birth_b4_marriage();           //KD
+			us04_marriage_b4_divorce();         //KD
+			us22_unique_ids(); 					//VS No Error
+			us16_Male_last_name(); 				//NP
+			us18_siblings_should_not_marry(); 	//NP No Error
+			us03_birth_before_death(); 			//DT
+			us05_marriage_before_death(); 		//DT
+			us07_less_than_150yrs(); 			//YN
+			us08_birth_before_marriage(); 		//YN		
+			
+			//=====================================Sprint - 2 USER STORIES==================================
+			us06_divorce_b4_death(); 			//KD	
+			us10_marriage_after_14(); 			//KD
+			us_35_recentbirth();				//VS No Error
+			us_38_upcomingbirthdays(); 			//VS
+			us13_sibling_spacing(); 			//NP
+			us14_multiple_births();				//NP No Error
+			us15_fewer_than_15_siblings(); 		//DT
+			us20_aunts_and_uncles(); 			//DT
+			
+			//=====================================Sprint - 3 USER STORIES==================================
+			us11_no_bigamy(); 					//KD
 
 			if(failuresFlag)
 			 {
@@ -1293,16 +1296,7 @@ public class GenerateOutput {
 			 }
 			 else
 			 {
-				 System.out.println("User story number 02 passed successfully!");
-				 System.out.println("User story number 04 passed successfully!");
-				 System.out.println("user story number 22 passed successfully!");
-				 System.out.println("User story number 06 passed successfully!");
-				 System.out.println("User story number 27 passed successfully!");
-				 System.out.println("User story number 10 passed successfully!");
-				 System.out.println("User story number 03 passed successfully!");
-				 System.out.println("User story number 05 passed successfully!");
-         System.out.println("User story number 35 passed successfully!");
-				 System.out.println("User story number 38 passed successfully!");
+				 System.out.println("All user stories passed successfully!");
          
 			 }
 			  
