@@ -741,10 +741,7 @@ public class GenerateOutput {
 			}
 			
 			
-			if(flag)
-				return true;
-			else
-				return false;
+			return flag;
 		}
 
 		/**
@@ -772,7 +769,7 @@ public class GenerateOutput {
 				int birthdate=0;
 				if(indi.getBirthday() != null)
 				{	
-					System.out.println(indi.getBirthday());
+					//System.out.println(indi.getBirthday());
 					
 					Date bdate = dateFormatGiven.parse(indi.getBirthday());
 					String birth = dateFormat.format(bdate);
@@ -1267,7 +1264,7 @@ public class GenerateOutput {
 			
 			us02_birth_b4_marriage();           //KD
 			us04_marriage_b4_divorce();         //KD
-			us22_unique_ids(); 					//VS No Error
+			us22_unique_ids(); 					//VS
 			us16_Male_last_name(); 				//NP
 			us18_siblings_should_not_marry(); 	//NP No Error
 			us03_birth_before_death(); 			//DT
@@ -1278,7 +1275,7 @@ public class GenerateOutput {
 			//=====================================Sprint - 2 USER STORIES==================================
 			us06_divorce_b4_death(); 			//KD	
 			us10_marriage_after_14(); 			//KD
-			us_35_recentbirth();				//VS No Error
+			us_35_recentbirth();				//VS
 			us_38_upcomingbirthdays(); 			//VS
 			us13_sibling_spacing(); 			//NP
 			us14_multiple_births();				//NP No Error
