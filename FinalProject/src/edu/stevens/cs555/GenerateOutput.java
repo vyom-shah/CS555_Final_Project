@@ -741,10 +741,7 @@ public class GenerateOutput {
 			}
 			
 			
-			if(flag)
-				return true;
-			else
-				return false;
+			return flag;
 		}
 
 		/**
@@ -772,7 +769,7 @@ public class GenerateOutput {
 				int birthdate=0;
 				if(indi.getBirthday() != null)
 				{	
-					System.out.println(indi.getBirthday());
+					//System.out.println(indi.getBirthday());
 					
 					Date bdate = dateFormatGiven.parse(indi.getBirthday());
 					String birth = dateFormat.format(bdate);
@@ -955,6 +952,7 @@ public class GenerateOutput {
 							    if(diff<2) {
 							    	count+=1;
 							    	if(count>5) {
+							    		flag=false;
 							    		String failStr =  "ERROR: FAMILY: US14: More than five children were born at same time in family: "+famMapElement.getKey();
 							    		failures.add(failStr);
 									failuresFlag = true;
@@ -970,8 +968,35 @@ public class GenerateOutput {
 			return flag;
 		}
 		
-		
-
+		public static boolean us17_no_marriage_to_children() throws ParseException
+		{
+			boolean flag=true;
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+				Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+				FamilyEntry famValue = famMapElement.getValue();
+				String H_id=famValue.getH_id().trim();
+				String W_id=famValue.getW_id().trim();
+				if(famValue.getChild().contains(famValue.getH_id()) || famValue.getChild().contains(famValue.getW_id())) {
+					flag=false;
+					String failStr =  "ERROR: FAMILY: "+famMapElement.getKey()+" parent can not merry child";
+		    		failures.add(failStr);
+				    failuresFlag = true;
+					continue;
+				}
+				if(hind.get(H_id).getChild().size()!=0 && hind.get(W_id).getChild().size()!=0) {
+					if(hind.get(H_id).getSpous().contains(hind.get(H_id).getChild()) || hind.get(W_id).getSpous().contains(hind.get(W_id).getChild())) {
+						flag=false;
+						String failStr =  "ERROR: FAMILY: "+famMapElement.getKey()+" parent can not merry child";
+			    		failures.add(failStr);
+					    failuresFlag = true;
+						continue;
+					}
+					
+				}
+			}
+			
+			return flag;
+		}
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -1267,7 +1292,8 @@ public class GenerateOutput {
 			
 			us02_birth_b4_marriage();           //KD
 			us04_marriage_b4_divorce();         //KD
-			us22_unique_ids(); 					//VS No Error
+			us22_unique_ids(); 					//VS
+			
 			us16_Male_last_name(); 				//NP
 			us18_siblings_should_not_marry(); 	//NP No Error
 			us03_birth_before_death(); 			//DT
@@ -1278,7 +1304,7 @@ public class GenerateOutput {
 			//=====================================Sprint - 2 USER STORIES==================================
 			us06_divorce_b4_death(); 			//KD	
 			us10_marriage_after_14(); 			//KD
-			us_35_recentbirth();				//VS No Error
+			us_35_recentbirth();				//VS
 			us_38_upcomingbirthdays(); 			//VS
 			us13_sibling_spacing(); 			//NP
 			us14_multiple_births();				//NP No Error

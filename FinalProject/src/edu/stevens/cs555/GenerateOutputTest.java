@@ -37,7 +37,7 @@ class GenerateOutputTest {
 	@Test
 	void test_us22_unique_id() {
 		try {
-			assertEquals(true,GenerateOutput.us22_unique_ids(),"User story 22 failed!");
+			assertEquals(true,GenerateOutput.us20_aunts_and_uncles(),"User story 22 failed!");
 		}
 		catch( ParseException e) {
 			e.printStackTrace();
@@ -129,11 +129,18 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+//	@Test
+//	void test_getAge()  {
+//		try {
+//			assertEquals(true, GenerateOutput.getAge(), "User story 27 failed!");
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	@Test
-
 	void test_us_35_recentbirth()  {
 		try {
-			assertEquals(true, GenerateOutput.us_35_recentbirth(), "User story 20 failed!");
+			assertEquals(true, GenerateOutput.us_35_recentbirth(), "User story 35 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -141,7 +148,7 @@ class GenerateOutputTest {
 		@Test
 	void test_us_38_upcomingbirthdays() {
 		try {
-			assertEquals(true, GenerateOutput.us_38_upcomingbirthdays(), "User story 20 failed!");
+			assertEquals(true, GenerateOutput.us_38_upcomingbirthdays(), "User story 38 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -172,5 +179,9 @@ class GenerateOutputTest {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+		}
+	  @Test
+		void test_us27individualAge() {
+			assertEquals(true,GenerateOutput.getAge(),"User story 27 failed!");
 		}
 }
