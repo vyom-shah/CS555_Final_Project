@@ -969,7 +969,6 @@ public class GenerateOutput {
 		}
 		
 		
-
 //====================================================== End of user stories ======================================================
 		public static Object getAge() {
 			return null;
