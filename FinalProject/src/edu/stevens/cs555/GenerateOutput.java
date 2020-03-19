@@ -997,6 +997,63 @@ public class GenerateOutput {
 			
 			return flag;
 		}
+
+		public static boolean us12_parents_not_too_old() throws NumberFormatException, ParseException
+		{
+			boolean flag = true;
+			String fatherID, motherID;
+			Set<String> childrenSet = new HashSet<String>();
+			int childAge = 0, fatherAge = 0, motherAge = 0;
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				String keyFam = mapElement.getKey();
+				FamilyEntry valueFam = mapElement.getValue();
+				fatherID = valueFam.getH_id();
+				motherID = valueFam.getW_id();
+				childrenSet = valueFam.getChild();
+				
+				for(String childID : childrenSet)
+				{
+					for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+							.hasNext();) {
+						Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
+						String indId = mapElement1.getKey();
+
+						IndividualEntry indValue = mapElement1.getValue();
+						
+						if(childID.equals(indId+" ") && !indValue.getAge().equals("NA"))
+						{
+							childAge = Integer.parseInt(indValue.getAge());
+						}
+						else if(fatherID.equals(indId+" ") && !indValue.getAge().equals("NA"))
+						{
+							fatherAge = Integer.parseInt(indValue.getAge());
+						}
+						else if(motherID.equals(indId+" ") && !indValue.getAge().equals("NA"))
+						{
+							motherAge = Integer.parseInt(indValue.getAge());
+						}
+					}
+					
+					if(((childAge + 60) <= motherAge) || ((childAge + 80) <= fatherAge))
+					{
+						String failStr = "ERROR: FAMILY: US12: "+ keyFam  +": Parents are too old for "+childID;
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					}
+				}
+				
+				
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;
+
+		}
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -1313,7 +1370,7 @@ public class GenerateOutput {
 			
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
-
+			us12_parents_not_too_old(); 		//KD
 			if(failuresFlag)
 			 {
 				 for(String failString: failures)
