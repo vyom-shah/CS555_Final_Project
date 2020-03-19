@@ -968,12 +968,37 @@ public class GenerateOutput {
 			return flag;
 		}
 		
-		
-
-//====================================================== End of user stories ======================================================
-		public static Object getAge() {
-			return null;
+		public static boolean us17_no_marriage_to_children() throws ParseException
+		{
+			boolean flag=true;
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+				Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+				FamilyEntry famValue = famMapElement.getValue();
+				String H_id=famValue.getH_id().trim();
+				String W_id=famValue.getW_id().trim();
+				if(famValue.getChild().contains(famValue.getH_id()) || famValue.getChild().contains(famValue.getW_id())) {
+					flag=false;
+					String failStr =  "ERROR: FAMILY: "+famMapElement.getKey()+" parent can not merry child";
+		    		failures.add(failStr);
+				    failuresFlag = true;
+					continue;
+				}
+				if(hind.get(H_id).getChild().size()!=0 && hind.get(W_id).getChild().size()!=0) {
+					if(hind.get(H_id).getSpous().contains(hind.get(H_id).getChild()) || hind.get(W_id).getSpous().contains(hind.get(W_id).getChild())) {
+						flag=false;
+						String failStr =  "ERROR: FAMILY: "+famMapElement.getKey()+" parent can not merry child";
+			    		failures.add(failStr);
+					    failuresFlag = true;
+						continue;
+					}
+					
+				}
+			}
+			
+			return flag;
 		}
+//====================================================== End of user stories ======================================================
+
 	/**
 	 * Please update the GEDCOM file path at line number: 310
 	 * Please update the .txt file path at line number: 312 and 354	
@@ -1228,7 +1253,6 @@ public class GenerateOutput {
 					}
 			}
 			*/
-			
 			System.out.println();
 			System.out.println("Family");
 			System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", "ID", "Married", "Divorced", "Husband ID",
