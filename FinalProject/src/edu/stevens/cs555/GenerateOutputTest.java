@@ -180,4 +180,8 @@ class GenerateOutputTest {
 				e.printStackTrace();
 			}
 		}
+	  @Test
+		void test_us27individualAge() {
+			assertEquals(true,GenerateOutput.getAge(),"User story 27 failed!");
+		}
 }

@@ -971,7 +971,9 @@ public class GenerateOutput {
 		
 
 //====================================================== End of user stories ======================================================
-
+		public static Object getAge() {
+			return null;
+		}
 	/**
 	 * Please update the GEDCOM file path at line number: 310
 	 * Please update the .txt file path at line number: 312 and 354	
@@ -1226,6 +1228,7 @@ public class GenerateOutput {
 					}
 			}
 			*/
+			
 			System.out.println();
 			System.out.println("Family");
 			System.out.format("%-10s%-15s%-15s%-15s%-25s%-10s%-20s%-15s\n", "ID", "Married", "Divorced", "Husband ID",
