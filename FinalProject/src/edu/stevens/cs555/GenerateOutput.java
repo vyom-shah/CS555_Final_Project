@@ -973,7 +973,7 @@ public class GenerateOutput {
 //====================================================== End of user stories ======================================================
 		public static Object getAge() {
 			return null;
-
+		}
 		public static boolean us17_no_marriage_to_children() throws ParseException
 		{
 			boolean flag=true;
