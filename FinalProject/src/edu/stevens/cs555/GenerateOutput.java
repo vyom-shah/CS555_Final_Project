@@ -1013,7 +1013,7 @@ public class GenerateOutput {
 				}
 				if (parents.contains(spouse_id)) {
 					flag = false;
-					String failStr = "ERROR: FAMILY : " + id + ", parent can not marry their child";
+					String failStr = "ERROR: FAMILY: US17: " + id + ", parent can not marry their child";
 					failures.add(failStr);
 					failuresFlag = true;
 					continue;
