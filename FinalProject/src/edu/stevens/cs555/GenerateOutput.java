@@ -968,56 +968,6 @@ public class GenerateOutput {
 			return flag;
 		}
 		
-/**
-	 * 
-	 * Author: Yash Navadiya ID: US17 Name: No marriage to children Description:
-	 * Parent should not marry either of their children Date created: Mar 18, 2020
-	 * 7:54:08 PM
-	 * 
-	 * @throws ParseException
-	 */
-
-	public static boolean us17_no_marriage_to_children() throws ParseException {
-		boolean flag = true;
-		Map<String, FamilyEntry> fam_map = new HashMap<String, FamilyEntry>(hfam);
-		Map<String, IndividualEntry> map = new HashMap<String, IndividualEntry>(hind);
-		Iterator<Map.Entry<String, IndividualEntry>> entries = map.entrySet().iterator();
-		while (entries.hasNext()) {
-			Map.Entry<String, IndividualEntry> entry = entries.next();
-			IndividualEntry indi = entry.getValue();
-
-			Set<String> parents = new HashSet<String>();
-			Set<String> c_set = indi.getChild();
-			for (String id : c_set) {
-				id = id.trim();
-				FamilyEntry fam_object = hfam.get(id);
-				parents.add(fam_object.getH_id());
-				parents.add(fam_object.getW_id());
-			}
-
-			Set<String> family_set = indi.getSpous();
-
-			for (String id : family_set) {
-				id = id.trim();
-				FamilyEntry fam_object = hfam.get(id);
-				String spouse_id = "";
-				if (indi.getGender().equals("M")) {
-					spouse_id = fam_object.getW_id();
-				} else {
-					spouse_id = fam_object.getH_id();
-				}
-				if (parents.contains(spouse_id)) {
-					flag = false;
-					String failStr = "ERROR: FAMILY : " + id + ", parent can not marry their child";
-					failures.add(failStr);
-					failuresFlag = true;
-					continue;
-					// throw error
-				}
-			}
-		}
-		return flag;
-	}
 		
 //====================================================== End of user stories ======================================================
 		public static Object getAge() {
