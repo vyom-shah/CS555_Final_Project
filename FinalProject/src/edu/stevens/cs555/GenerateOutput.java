@@ -1003,7 +1003,7 @@ public class GenerateOutput {
 			boolean flag = true;
 			String fatherID, motherID;
 			Set<String> childrenSet = new HashSet<String>();
-			int childAge = 0, fatherAge = 0, motherAge = 0;
+			int childAge = -1, fatherAge = -1, motherAge = -1;
 			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
@@ -1036,13 +1036,16 @@ public class GenerateOutput {
 						}
 					}
 					
-					if(((childAge + 60) <= motherAge) || ((childAge + 80) <= fatherAge))
+					if(fatherAge != -1 && motherAge != -1 && childAge != -1)
 					{
-						String failStr = "ERROR: FAMILY: US12: "+ keyFam  +": Parents are too old for "+childID;
-						failures.add(failStr);
-						flag = false;
-						failuresFlag = true;
-					}
+						if(((motherAge - childAge) > 60) || ((fatherAge - childAge) > 80))
+						{
+							String failStr = "ERROR: FAMILY: US12: "+ keyFam  +": Parents are too old for "+childID;
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
+						}
+					}				
 				}
 				
 				
