@@ -968,6 +968,7 @@ public class GenerateOutput {
 			return flag;
 		}
 		
+
 		public static Object getAge() {
 			return null;
 		}
@@ -1382,7 +1383,7 @@ public class GenerateOutput {
 			us14_multiple_births();				//NP No Error
 			us15_fewer_than_15_siblings(); 		//DT
 			us20_aunts_and_uncles(); 			//DT
-			
+			us17_no_marriage_to_children();     //YN
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
