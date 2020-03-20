@@ -968,6 +968,9 @@ public class GenerateOutput {
 			return flag;
 		}
 		
+		public static Object getAge() {
+			return null;
+		}
 		public static boolean us17_no_marriage_to_children() throws ParseException
 		{
 			boolean flag=true;
@@ -996,6 +999,7 @@ public class GenerateOutput {
 			}
 			
 			return flag;
+
 		}
 
 		public static boolean us12_parents_not_too_old() throws NumberFormatException, ParseException
