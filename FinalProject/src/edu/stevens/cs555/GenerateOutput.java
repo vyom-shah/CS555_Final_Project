@@ -968,9 +968,6 @@ public class GenerateOutput {
 			return flag;
 		}
 		
-
-		
-//====================================================== End of user stories ======================================================
 		public static Object getAge() {
 			return null;
 		}
