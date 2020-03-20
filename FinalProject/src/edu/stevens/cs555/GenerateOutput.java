@@ -1002,6 +1002,14 @@ public class GenerateOutput {
 
 		}
 
+		/**
+		 * 
+			 * Author: Kunj Desai
+			 * ID: US12
+			 * Name: Parents not too old
+			 * Description: Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
+			 * Date created: Mar 19, 202010:53:49 PM
+		 */
 		public static boolean us12_parents_not_too_old() throws NumberFormatException, ParseException
 		{
 			boolean flag = true;
