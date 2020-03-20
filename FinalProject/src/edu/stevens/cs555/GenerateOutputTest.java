@@ -203,4 +203,13 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void test_us21_correctgender_for_role() {
+		try {
+			assertEquals(true, GenerateOutput.us21_correctgender_for_role(), "User story 21 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
