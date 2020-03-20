@@ -194,4 +194,13 @@ class GenerateOutputTest {
 		void test_us27individualAge() {
 			assertEquals(true,GenerateOutput.getAge(),"User story 27 failed!");
 		}
+
+		@Test
+	void test_us17no_marriage_to_children() {
+		try {
+			assertEquals(true, GenerateOutput.us17_no_marriage_to_children(), "User story 17 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
