@@ -968,10 +968,107 @@ public class GenerateOutput {
 			return flag;
 		}
 		
-		
-//====================================================== End of user stories ======================================================
+
 		public static Object getAge() {
 			return null;
+		}
+		public static boolean us17_no_marriage_to_children() throws ParseException
+		{
+			boolean flag=true;
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+				Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+				FamilyEntry famValue = famMapElement.getValue();
+				String H_id=famValue.getH_id().trim();
+				String W_id=famValue.getW_id().trim();
+				if(famValue.getChild().contains(famValue.getH_id()) || famValue.getChild().contains(famValue.getW_id())) {
+					flag=false;
+					String failStr =  "ERROR: FAMILY: "+famMapElement.getKey()+" parent can not merry child";
+		    		failures.add(failStr);
+				    failuresFlag = true;
+					continue;
+				}
+				if(hind.get(H_id).getChild().size()!=0 && hind.get(W_id).getChild().size()!=0) {
+					if(hind.get(H_id).getSpous().contains(hind.get(H_id).getChild()) || hind.get(W_id).getSpous().contains(hind.get(W_id).getChild())) {
+						flag=false;
+						String failStr =  "ERROR: FAMILY: "+famMapElement.getKey()+" parent can not merry child";
+			    		failures.add(failStr);
+					    failuresFlag = true;
+						continue;
+					}
+					
+				}
+			}
+			
+			return flag;
+
+		}
+
+		/**
+		 * 
+			 * Author: Kunj Desai
+			 * ID: US12
+			 * Name: Parents not too old
+			 * Description: Mother should be less than 60 years older than her children and father should be less than 80 years older than his children
+			 * Date created: Mar 19, 202010:53:49 PM
+		 */
+		public static boolean us12_parents_not_too_old() throws NumberFormatException, ParseException
+		{
+			boolean flag = true;
+			String fatherID, motherID;
+			Set<String> childrenSet = new HashSet<String>();
+			int childAge = -1, fatherAge = -1, motherAge = -1;
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				String keyFam = mapElement.getKey();
+				FamilyEntry valueFam = mapElement.getValue();
+				fatherID = valueFam.getH_id();
+				motherID = valueFam.getW_id();
+				childrenSet = valueFam.getChild();
+				
+				for(String childID : childrenSet)
+				{
+					for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+							.hasNext();) {
+						Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
+						String indId = mapElement1.getKey();
+
+						IndividualEntry indValue = mapElement1.getValue();
+						
+						if(childID.equals(indId+" ") && !indValue.getAge().equals("NA"))
+						{
+							childAge = Integer.parseInt(indValue.getAge());
+						}
+						else if(fatherID.equals(indId+" ") && !indValue.getAge().equals("NA"))
+						{
+							fatherAge = Integer.parseInt(indValue.getAge());
+						}
+						else if(motherID.equals(indId+" ") && !indValue.getAge().equals("NA"))
+						{
+							motherAge = Integer.parseInt(indValue.getAge());
+						}
+					}
+					
+					if(fatherAge != -1 && motherAge != -1 && childAge != -1)
+					{
+						if(((motherAge - childAge) > 60) || ((fatherAge - childAge) > 80))
+						{
+							String failStr = "ERROR: FAMILY: US12: "+ keyFam  +": Parents are too old for "+childID;
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
+						}
+					}				
+				}
+				
+				
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;
+
 		}
 //====================================================== End of user stories ======================================================
 
@@ -1289,7 +1386,7 @@ public class GenerateOutput {
 			us17_no_marriage_to_children();     //YN
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
-
+			us12_parents_not_too_old(); 		//KD
 			if(failuresFlag)
 			 {
 				 for(String failString: failures)

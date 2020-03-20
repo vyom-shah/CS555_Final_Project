@@ -180,6 +180,16 @@ class GenerateOutputTest {
 				e.printStackTrace();
 			}
 		}
+	  
+	  @Test    
+	  void test_us12_parents_not_too_old()  {
+			try {
+				assertEquals(true, GenerateOutput.us11_no_bigamy(), "User story 12 failed!");
+	
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+	  }
 	  @Test
 		void test_us27individualAge() {
 			assertEquals(true,GenerateOutput.getAge(),"User story 27 failed!");
