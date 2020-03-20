@@ -975,10 +975,11 @@ public class GenerateOutput {
 	
 	/**
 	 * 
-	 * Author: Yash Navadiya ID: US17 Name: No marriage to children Description:
-	 * Parent should not marry either of their children Date created: Mar 18, 2020
-	 * 7:54:08 PM
-	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US17 
+	 * Name: No marriage to children 
+	 * Description: Parent should not marry either of their children 
+	 * Date created: Mar 18, 20209:22:08 PM
 	 * @throws ParseException
 	 */
 
@@ -1019,6 +1020,39 @@ public class GenerateOutput {
 					continue;
 					// throw error
 				}
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US21 
+	 * Name: Correct gender for role 
+	 * Description: Husband should be male and wife should be female 
+	 * Date created: Mar 19, 202010:43:08 PM
+	 * @throws ParseException
+	 */
+
+	public static boolean us21_correctgender_for_role() throws ParseException {
+		boolean flag = true;
+		for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+			Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+			String keyFam = famMapElement.getKey().trim();
+			FamilyEntry famValue = famMapElement.getValue();
+			String H_id = famValue.getH_id().trim();
+			String W_id = famValue.getW_id().trim();
+
+			if (!hind.get(H_id).getGender().trim().equals("M")) {
+				String failStr = "ERROR: FAMILY: US21: " + hind.get(H_id).getId() + "  Husband is not male ";
+				failures.add(failStr);
+				failuresFlag = true;
+
+			} else if (!hind.get(W_id).getGender().trim().equals("F")) {
+				String failStr = "ERROR: FAMILY: US21: " + hind.get(W_id).getId() + "  wife is not female ";
+				failures.add(failStr);
+				failuresFlag = true;
 			}
 		}
 		return flag;
@@ -1406,6 +1440,7 @@ public class GenerateOutput {
 			us15_fewer_than_15_siblings(); 		//DT
 			us20_aunts_and_uncles(); 			//DT
 			us17_no_marriage_to_children();     //YN
+			us21_correctgender_for_role();      //YN
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
