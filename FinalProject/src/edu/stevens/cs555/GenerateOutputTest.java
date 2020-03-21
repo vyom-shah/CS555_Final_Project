@@ -138,7 +138,7 @@ class GenerateOutputTest {
 //		}
 //	}
 	@Test
-	void test_us_35_recentbirth()  {
+	void test_us35_recentbirth()  {
 		try {
 			assertEquals(true, GenerateOutput.us_35_recentbirth(), "User story 35 failed!");
 		} catch (ParseException e) {
@@ -146,7 +146,7 @@ class GenerateOutputTest {
 		}
 	}
 		@Test
-	void test_us_38_upcomingbirthdays() {
+	void test_us38_upcomingbirthdays() {
 		try {
 			assertEquals(true, GenerateOutput.us_38_upcomingbirthdays(), "User story 38 failed!");
 		} catch (ParseException e) {
