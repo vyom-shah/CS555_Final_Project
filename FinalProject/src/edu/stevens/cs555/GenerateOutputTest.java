@@ -184,7 +184,7 @@ class GenerateOutputTest {
 	  @Test    
 	  void test_us12_parents_not_too_old()  {
 			try {
-				assertEquals(true, GenerateOutput.us11_no_bigamy(), "User story 12 failed!");
+				assertEquals(true, GenerateOutput.us12_parents_not_too_old(), "User story 12 failed!");
 	
 			} catch (ParseException e) {
 				e.printStackTrace();
