@@ -608,10 +608,7 @@ public class GenerateOutput {
 				}
 			}
 			
-			if(flag)
-				return true;
-			else
-				return false;			
+			return flag;		
 		}
 
 
@@ -677,10 +674,7 @@ public class GenerateOutput {
 				
 			}
 			
-			if(flag)
-				return true;
-			else
-				return false;			
+			return flag;			
 		}
 
 		/**
@@ -865,10 +859,7 @@ public class GenerateOutput {
 			
 			}
 
-			if(flag)
-				return true;
-			else
-				return false;
+			return flag;
 		}
 
 		/**
@@ -1053,6 +1044,7 @@ public class GenerateOutput {
 				String failStr = "ERROR: FAMILY: US21: " + hind.get(W_id).getId() + "  wife is not female ";
 				failures.add(failStr);
 				failuresFlag = true;
+				flag = false;
 			}
 		}
 		return flag;
@@ -1120,10 +1112,7 @@ public class GenerateOutput {
 				
 			}
 			
-			if(flag)
-				return true;
-			else
-				return false;
+			return flag;
 
 		}
 //====================================================== End of user stories ======================================================
@@ -1444,6 +1433,7 @@ public class GenerateOutput {
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
+			
 			if(failuresFlag)
 			 {
 				 for(String failString: failures)
@@ -1456,9 +1446,7 @@ public class GenerateOutput {
 				 System.out.println("All user stories passed successfully!");
          
 			 }
-			  
-			//======================================================   End of all user stories   ======================================================
-			
+		
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
