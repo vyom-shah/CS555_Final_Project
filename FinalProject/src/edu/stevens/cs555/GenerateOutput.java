@@ -393,7 +393,6 @@ public class GenerateOutput {
 	 * 
 	 * @throws ParseException
 	 */
-
 	public static boolean us07_less_than_150yrs() throws ParseException {
 		boolean flag = true;
 		Map<String, IndividualEntry> map = new HashMap<String, IndividualEntry>(hind);
@@ -457,7 +456,6 @@ public class GenerateOutput {
 	 * 
 	 * @throws ParseException
 	 */
-
 	public static boolean us08_birth_before_marriage() throws ParseException {
 		boolean flag = true;
 
