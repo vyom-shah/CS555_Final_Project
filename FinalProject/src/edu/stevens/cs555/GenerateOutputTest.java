@@ -37,7 +37,7 @@ class GenerateOutputTest {
 	@Test
 	void test_us22_unique_id() {
 		try {
-			assertEquals(true,GenerateOutput.us22_unique_ids(),"User story 22 failed!");
+			assertEquals(true,GenerateOutput.us20_aunts_and_uncles(),"User story 22 failed!");
 		}
 		catch( ParseException e) {
 			e.printStackTrace();
@@ -109,6 +109,105 @@ class GenerateOutputTest {
 	void test_us18_siblings_should_not_marry() {
 		try {
 			assertEquals(true, GenerateOutput.us18_siblings_should_not_marry(), "User story 18 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us15_fewer_than_15_siblings() {
+		try {
+			assertEquals(true, GenerateOutput.us15_fewer_than_15_siblings(), "User story 15 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us20_aunts_and_uncles()  {
+		try {
+			assertEquals(true, GenerateOutput.us20_aunts_and_uncles(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+//	@Test
+//	void test_getAge()  {
+//		try {
+//			assertEquals(true, GenerateOutput.getAge(), "User story 27 failed!");
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	@Test
+	void test_us35_recentbirth()  {
+		try {
+			assertEquals(true, GenerateOutput.us_35_recentbirth(), "User story 35 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+		@Test
+	void test_us38_upcomingbirthdays() {
+		try {
+			assertEquals(true, GenerateOutput.us_38_upcomingbirthdays(), "User story 38 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+		@Test
+		void test_us13_sibling_spacing() {
+			try {
+				assertEquals(true, GenerateOutput.us13_sibling_spacing(), "User story 13 failed!");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		@Test
+		void test_us14_multiple_births() {
+			try {
+				assertEquals(true, GenerateOutput.us14_multiple_births(), "User story 14 failed!");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+      
+      
+	  @Test    
+	  void test_us11_no_bigamy()  {
+			try {
+				assertEquals(true, GenerateOutput.us11_no_bigamy(), "User story 11 failed!");
+	
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	  
+	  @Test    
+	  void test_us12_parents_not_too_old()  {
+			try {
+				assertEquals(true, GenerateOutput.us12_parents_not_too_old(), "User story 12 failed!");
+	
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+	  }
+	  @Test
+		void test_us27individualAge() {
+			assertEquals(true,GenerateOutput.getAge(),"User story 27 failed!");
+		}
+
+		@Test
+	void test_us17no_marriage_to_children() {
+		try {
+			assertEquals(true, GenerateOutput.us17_no_marriage_to_children(), "User story 17 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void test_us21_correctgender_for_role() {
+		try {
+			assertEquals(true, GenerateOutput.us21_correctgender_for_role(), "User story 21 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
