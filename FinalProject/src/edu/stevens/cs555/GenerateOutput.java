@@ -66,7 +66,7 @@ public class GenerateOutput {
 							birthDate = dateFormat.format(birt);
 						}
 						
-						if(keyFam.equals(spouseID) && (marriageDate.compareTo(birthDate) < 0 || marriageDate == null || birthDate == null))
+						if(keyFam.equals(spouseID) && (marriageDate == null || birthDate == null || marriageDate.compareTo(birthDate) < 0 ))
 						{
 							String failStr = "ERROR: INDIVIDUAL: US02: "+keyInd+": Birth date "+birthDate+" occurs after marriage date "+marriageDate;
 							failures.add(failStr);
@@ -261,7 +261,7 @@ public class GenerateOutput {
 						String keyFam = famMapElement.getKey();
 						FamilyEntry valueFam = famMapElement.getValue();
 						int years = 0;
-						if (valueFam.getMarried() != null || indValue.getBirthday() != null) {
+						if (valueFam.getMarried() != null && indValue.getBirthday() != null) {
 							Date marriageD = dateFormatGiven.parse(valueFam.getMarried());
 							long diffInMillies = Math.abs(marriageD.getTime() - birt.getTime());
 							long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -422,7 +422,7 @@ public class GenerateOutput {
 				int year = ca.get(Calendar.YEAR);
 				int diff = year - birthyear;
 				if (diff > 150) {
-					String failStr =  "ERROR: Individual: US07: "+ indi.getId() + " - " + indi.getName()
+					String failStr =  "ERROR: INDIVIDUAL: US07: "+ indi.getId() + " - " + indi.getName()
 							+ " is greater than 150 years old.DOB: " + indi.getBirthday();
 					failures.add(failStr);
 					flag = false;
@@ -435,7 +435,7 @@ public class GenerateOutput {
 				int deathyear = Integer.parseInt(deat.split("-")[0]);
 				int diff = deathyear - birthyear;
 				if (diff > 150) {
-					String failStr = "ERROR: Individual: US07: " + indi.getId() + ": " + indi.getName()
+					String failStr = "ERROR: INDIVIDUAL: US07: " + indi.getId() + ": " + indi.getName()
 							+ " The difference between their birthdate and the death is greater than 150 years. DOB: "
 							+ indi.getBirthday() + " DOD: " + indi.getDeath();
 					failures.add(failStr);
@@ -480,7 +480,7 @@ public class GenerateOutput {
 					if(indi.getBirthday() != null)
 						birthDate = dateFormatGiven.parse(indi.getBirthday());
 					if (birthDate.before(marriageDate)) {
-						String failStr = "ERROR: Family: US08: " + fam.getId() + ": Individual: " + indi.getId() + ": "
+						String failStr = "ERROR: FAMILY: US08: " + fam.getId() + ": Individual: " + indi.getId() + ": "
 								+ indi.getName() + " Has been born before parents' marriage DOB: " + indi.getBirthday()
 								+ " Parents Marriage Date: " + fam.getMarried();
 						failures.add(failStr);
@@ -490,7 +490,7 @@ public class GenerateOutput {
 					if (fam.getDivorced() != null) {
 						divorceDate = dateFormatGiven.parse(fam.getDivorced());
 						if (birthDate.after(divorceDate)) {
-							String failStr =  "ERROR: Family: US08: "+"Family ID: " + fam.getId() + "Individual: " + indi.getId() + ": "
+							String failStr =  "ERROR: FAMILY: US08: "+"Family ID: " + fam.getId() + " Individual: " + indi.getId() + ": "
 									+ indi.getName() + " Has been born after parents' divorce";
 									
 							failures.add(failStr);
@@ -521,7 +521,7 @@ public class GenerateOutput {
 			if(hind.get(H_id).getChild().size()!=0 && hind.get(W_id).getChild().size()!=0) {
 				if(hind.get(H_id).getChild().equals(hind.get(W_id).getChild())) {
 					flag=false;
-					String failStr = "ERROR: Family: US18: "+hind.get(H_id).getName().trim()+" should not marry his sibling "+hind.get(W_id).getName().trim();
+					String failStr = "ERROR: FAMILY: US18: "+hind.get(H_id).getName().trim()+" should not marry his sibling "+hind.get(W_id).getName().trim();
 					failures.add(failStr);
 					failuresFlag = true;
 				}
@@ -561,7 +561,7 @@ public class GenerateOutput {
 				
 				if(indValue.getGender().trim().equals("M") && !indlastname.equals(famlastname)) {
 					flag=false;
-					String failStr =  "ERROR: Family: US16: "+indValue.getName().trim()+"  and "+hind.get(famValue.getH_id().trim()).getName()+" does not have same last name!";
+					String failStr =  "ERROR: FAMILY: US16: "+famValue.getId()+": "+indValue.getName().trim()+"  and "+hind.get(famValue.getH_id().trim()).getName()+" does not have same last name!";
 					failures.add(failStr);
 					failuresFlag = true;
 				}
@@ -571,6 +571,163 @@ public class GenerateOutput {
 		return flag;
 		
 	}
+
+					
+		/**
+		 * Author: Dhruval Thakkar
+			 * ID: US15
+			 * Name: Fewer than 15 siblings
+			 * Description: There should be fewer than 15 siblings in a family 
+			 * Date created: March 04, 2020 05:10:52 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us15_fewer_than_15_siblings() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+
+				int sibling_Count = 0;
+				
+				if (valueFam.getChild() != null) {
+					for (String var : valueFam.getChild()) {
+						sibling_Count += 1;
+					}
+				}				
+				
+				if(sibling_Count >= 15)
+				{
+					String failStr = "ERROR: FAMILY: US15: "+valueFam.getId()+ ": has "+sibling_Count+ " number of siblings in the family";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
+		/**
+		 * Author: Dhruval Thakkar
+			 * ID: US20
+			 * Name: Aunts and uncles
+			 * Description: Aunts and uncles should not marry their nieces or nephews 
+			 * Date created: March 07, 2020 12:00:04 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us20_aunts_and_uncles() throws ParseException
+		{
+			boolean flag = true;
+					
+			for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+				.hasNext();) {
+				Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+				IndividualEntry valueInd = mapElement.getValue(); 
+				
+				for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+				.hasNext();) {
+					Entry<String, FamilyEntry> mapElement1 = iteratorFam.next();
+					FamilyEntry valueFam = mapElement1.getValue(); 
+
+					for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
+					.hasNext();) {
+						Entry<String, FamilyEntry> mapElement2 = iteratorFam1.next();
+						FamilyEntry valueFam1 = mapElement2.getValue();	
+						
+						String child1 = null;
+						
+						for (String child : valueInd.getChild()) {
+							child1 = child.replaceAll("\\s", "");;
+						}
+							String fam_id = valueFam.getId();
+							if(valueInd.getSpous() != null && fam_id.equals(child1)){
+								for (String vari : valueInd.getSpous()) {
+									String var = vari.replaceAll("\\s", "");
+					
+										if(valueFam.child.contains(valueFam1.getH_id()) && valueFam1.getId().equals(var)){
+											String failStr = "ERROR: FAMILY: US20: "+valueInd.getId()+ ": can not marry "+ valueInd.getSpous();
+											failures.add(failStr);
+											flag = false;
+											failuresFlag = true;
+										}
+
+										else if(valueFam.child.contains(valueFam1.getW_id()) && valueFam1.getId().equals(var) ){
+											String failStr = "ERROR: FAMILY: US20: "+valueInd.getId()+ ": can not marry "+ valueInd.getSpous();
+											failures.add(failStr);
+											flag = false;
+											failuresFlag = true;
+										}
+									
+								}
+							}
+						
+					
+					}
+	
+				}
+
+				
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
+						/**
+		 * Author: Dhruval Thakkar
+			 * ID: US24
+			 * Name: Unique families by spouses
+			 * Description: No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file 
+			 * Date created: March 30, 2020 03:50:52 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us24_Unique_families_by_spouses() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+
+				for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement1 = iteratorFam1.next();
+				FamilyEntry valueFam1 = mapElement1.getValue();
+
+					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
+					String mage = dateFormat.format(marriageDate);
+
+					Date marriageDate1 = dateFormatGiven.parse(valueFam.getMarried());
+					String mage1 = dateFormat.format(marriageDate1);
+
+					if(((valueFam.getId() != valueFam1.getId() && mage.compareTo(mage1) == 0 )) && (valueFam.getW_id().equals(valueFam1.getW_id()) || valueFam.getH_id().equals(valueFam1.getH_id()))){
+						
+						String failStr = "ERROR: FAMILY: US24: "+valueFam.getId() + "and" + valueFam1.getId() + ": has same spouses";
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					
+					}	
+			
+				}
+			
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
 
 //====================================================== End of user stories ======================================================
 
@@ -604,9 +761,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint-1.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint-2.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
+			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -648,7 +805,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = System.getProperty("user.dir")+"/GEDCOM/sprint.txt";
+			String textInputFile = System.getProperty("user.dir")+"/FinalProject/GEDCOM/sprint.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
@@ -872,11 +1029,15 @@ public class GenerateOutput {
 
 			us07_less_than_150yrs();
 			us08_birth_before_marriage();
-
+			
 			us03_birth_before_death();
 			us05_marriage_before_death();
 			us16_Male_last_name();
 			us18_siblings_should_not_marry();
+			us15_fewer_than_15_siblings();
+			us20_aunts_and_uncles();
+
+			us24_Unique_families_by_spouses();
 
 			if(failuresFlag)
 			 {

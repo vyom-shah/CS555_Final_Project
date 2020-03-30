@@ -113,4 +113,28 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us15_fewer_than_15_siblings() {
+		try {
+			assertEquals(true, GenerateOutput.us15_fewer_than_15_siblings(), "User story 15 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us20_aunts_and_uncles()  {
+		try {
+			assertEquals(true, GenerateOutput.us20_aunts_and_uncles(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us24_Unique_families_by_spouses()  {
+		try {
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
