@@ -208,6 +208,12 @@ class GenerateOutputTest {
 	void test_us21_correctgender_for_role() {
 		try {
 			assertEquals(true, GenerateOutput.us21_correctgender_for_role(), "User story 21 failed!");
+
+	@Test
+	void test_us24_Unique_families_by_spouses()  {
+		try {
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 20 failed!");
+
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
