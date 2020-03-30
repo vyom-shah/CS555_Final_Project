@@ -1113,6 +1113,54 @@ public class GenerateOutput {
 			return flag;
 
 		}
+  
+  		/**
+		 * Author: Dhruval Thakkar
+			 * ID: US24
+			 * Name: Unique families by spouses
+			 * Description: No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file 
+			 * Date created: March 30, 2020 03:50:52 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us24_Unique_families_by_spouses() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+
+				for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement1 = iteratorFam1.next();
+				FamilyEntry valueFam1 = mapElement1.getValue();
+
+					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
+					String mage = dateFormat.format(marriageDate);
+
+					Date marriageDate1 = dateFormatGiven.parse(valueFam.getMarried());
+					String mage1 = dateFormat.format(marriageDate1);
+
+					if(((valueFam.getId() != valueFam1.getId() && mage.compareTo(mage1) == 0 )) && (valueFam.getW_id().equals(valueFam1.getW_id()) || valueFam.getH_id().equals(valueFam1.getH_id()))){
+						
+						String failStr = "ERROR: FAMILY: US24: "+valueFam.getId() + "and" + valueFam1.getId() + ": has same spouses";
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					
+					}	
+			
+				}
+			
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -1431,7 +1479,8 @@ public class GenerateOutput {
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
-			
+			us24_Unique_families_by_spouses(); //DT
+
 			if(failuresFlag)
 			 {
 				 for(String failString: failures)
