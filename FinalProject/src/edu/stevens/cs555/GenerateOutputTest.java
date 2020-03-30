@@ -129,4 +129,12 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us24_Unique_families_by_spouses()  {
+		try {
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
