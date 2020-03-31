@@ -150,9 +150,10 @@ class GenerateOutputTest {
 	void test_us32_list_multiple_births()  {
 		try {
 			assertEquals(true, GenerateOutput.us32_list_multiple_births(), "User story 32 failed!");
-} catch (ParseException e) {
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
 		@Test
 	void test_us38_upcomingbirthdays() {
 		try {
