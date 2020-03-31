@@ -1028,7 +1028,6 @@ public class GenerateOutput {
 		boolean flag = true;
 		for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
 			Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
-			String keyFam = famMapElement.getKey().trim();
 			FamilyEntry famValue = famMapElement.getValue();
 			String H_id = famValue.getH_id().trim();
 			String W_id = famValue.getW_id().trim();
@@ -1113,6 +1112,103 @@ public class GenerateOutput {
 			return flag;
 
 		}
+		
+		
+
+		/**
+		 * Author: Vyom Shah
+			 * ID: US09
+			 * Name: birth before death of parents
+			 * Description:Child should be born before death of mother and before 9 months after death of father 
+			 * Date created: March 18, 2020 02:22:34 AM
+			 * @throws ParseException 
+		 */
+		public static boolean us09_birthbeforedeathofparents() throws ParseException
+		{
+			boolean flag = true;
+			Map<String,IndividualEntry> indMap=new HashMap<String,IndividualEntry>(hind);
+			//Map<String, FamilyEntry> indFam=new Hashmap<String,FamilyEntry>(hfam);
+			Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+			
+			Iterator<Map.Entry<String, IndividualEntry>> indEntries=indMap.entrySet().iterator();
+			String BirthDate= null;
+			String deathofMom= null;
+			Date deathofDad= null;// 9months after father's death
+			while(indEntries.hasNext())
+			{
+				Map.Entry<String, IndividualEntry> indEntry=indEntries.next();
+				IndividualEntry indi=indEntry.getValue();
+				
+				Set<String> parents = new HashSet<String>();
+				Set<String> c_set = indi.getChild();
+				for (String id : c_set) {
+					id = id.trim();
+					FamilyEntry fam_object = hfam.get(id);
+					//System.out.println(fam_object);
+					parents.add(fam_object.getH_id());
+					//System.out.println(fam_object.getH_id());
+					parents.add(fam_object.getW_id());//value here is fine! parents are not used anywhere.
+					//System.out.println(fam_object.getW_id());
+				
+				//IndividualEntry indValue = mapElement.getValue()
+				IndividualEntry dad=indMap.get(fam_object.getH_id());//throwing null pointer exception
+				//System.out.println(dad);
+				IndividualEntry mom=indMap.get(fam_object.getW_id());//throwing null pointer exception
+				//System.out.println(mom);
+				
+				if(indEntry.getValue().getBirthday() != null)
+				{
+					Date birt = dateFormatGiven.parse(indEntry.getValue().getBirthday());
+					BirthDate = dateFormat.format(birt);
+				}
+				
+					Date deat = dateFormatGiven.parse(mom.getDeath());
+					deathofMom = dateFormat.format(deat);
+					
+					if(BirthDate.compareTo(deathofMom)<0)
+					{
+						String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of mother";
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					}
+					
+					Calendar c = Calendar.getInstance();
+					c.setTime(dateFormatGiven.parse(dad.getDeath()));
+					c.add(Calendar.MONTH, 9);
+					deathofDad=c.getTime();
+					String deathofDad1 = dateFormat.format(deathofDad);
+						
+					if(BirthDate.compareTo(deathofDad1)<0) 
+					{
+						String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of father";
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					}
+				}
+				
+			}
+			return flag;
+		}
+		
+		
+		/**
+		 * Author: Vyom Shah
+			 * ID: US28
+			 * Name: Order siblings by age
+			 * Description:List siblings in families by decreasing age, i.e. oldest siblings first 
+			 * Date created: March 18, 2020 02:22:34 AM
+			 * @throws ParseException 
+		 */
+		public static boolean us28_orderbyage() throws ParseException
+		{
+			boolean flag = true;
+			
+			return flag;
+		}
+		
+
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -1431,6 +1527,17 @@ public class GenerateOutput {
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
+			us09_birthbeforedeathofparents();   //VS
+			us28_orderbyage();
+			
+			//=====================================Sprint - 4 USER STORIES==================================
+			
+			//us31_listLivingSingle();			//VS
+			//us01_datesBeforeCurrentdate();		//VS
+			
+			
+			
+			
 			
 			if(failuresFlag)
 			 {
