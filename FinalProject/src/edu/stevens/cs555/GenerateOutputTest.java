@@ -129,6 +129,7 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
 //	@Test
 //	void test_getAge()  {
 //		try {
@@ -141,6 +142,14 @@ class GenerateOutputTest {
 	void test_us35_recentbirth()  {
 		try {
 			assertEquals(true, GenerateOutput.us_35_recentbirth(), "User story 35 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us32_list_multiple_births()  {
+		try {
+			assertEquals(true, GenerateOutput.us32_list_multiple_births(), "User story 32 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -212,10 +221,33 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
 	@Test
 	void test_us09_birthbeforedeathofparents() {
 		try {
 			assertEquals(true, GenerateOutput.us09_birthbeforedeathofparents(), "User story 09 failed!");
+  	@Test
+	void test_us24_Unique_families_by_spouses()  {
+		try {
+		assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 24 failed!");
+    }catch (ParseException e) {
+			e.printStackTrace();
+		}
+  }
+
+  @Test
+	void test_us36_recentdeaths() {
+		try {
+			assertEquals(true, GenerateOutput.us_36_recentdeaths(), "User story 36 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void test_us_39_upcominganniversaries() {
+		try {
+			assertEquals(true, GenerateOutput.us_39_upcominganniversaries(), "User story 39 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

@@ -1112,6 +1112,7 @@ public class GenerateOutput {
 			return flag;
 
 		}
+
 		
 		
 
@@ -1208,6 +1209,203 @@ public class GenerateOutput {
 			return flag;
 		}
 		
+
+  
+  		/**
+		 * Author: Dhruval Thakkar
+			 * ID: US24
+			 * Name: Unique families by spouses
+			 * Description: No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file 
+			 * Date created: March 30, 2020 03:50:52 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us24_Unique_families_by_spouses() throws ParseException
+		{
+			boolean flag = true;
+			
+			for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+
+				for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement1 = iteratorFam1.next();
+				FamilyEntry valueFam1 = mapElement1.getValue();
+
+					Date marriageDate = dateFormatGiven.parse(valueFam.getMarried());
+					String mage = dateFormat.format(marriageDate);
+
+					Date marriageDate1 = dateFormatGiven.parse(valueFam1.getMarried());
+					String mage1 = dateFormat.format(marriageDate1);
+
+					if(((valueFam.getId() != valueFam1.getId() && mage.compareTo(mage1) == 0 )) && (valueFam.getW_id().equals(valueFam1.getW_id()) || valueFam.getH_id().equals(valueFam1.getH_id()))){
+						
+						String failStr = "ERROR: FAMILY: US24: "+valueFam.getId() + "and" + valueFam1.getId() + ": has same spouses";
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					
+					}	
+			
+				}
+			
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
+								/**
+		 * Author: Dhruval Thakkar
+			 * ID: US32
+			 * Name: List multiple births
+			 * Description: List all multiple births in a GEDCOM file 
+			 * Date created: March 30, 2020 09:13:22 PM
+			 * @throws ParseException 
+		 */
+		public static boolean us32_list_multiple_births() throws ParseException
+		{
+			boolean flag = true;
+			String m_birth = null;
+
+			for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+					.hasNext();) {
+				Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+				IndividualEntry valueInd = mapElement.getValue();
+
+				String bd = null;
+				String bd1 = null;
+				int change = 0;	
+				String s_birth = valueInd.getName();	
+
+				if(valueInd.getBirthday() != null){	
+					Date birthDate = dateFormatGiven.parse(valueInd.getBirthday());
+					bd = dateFormat.format(birthDate);
+				}
+
+				for (Iterator<Entry<String, IndividualEntry>> iteratorInd1 = hind.entrySet().iterator(); iteratorInd1
+					.hasNext();) {
+				Entry<String, IndividualEntry> mapElement1 = iteratorInd1.next();
+				IndividualEntry valueInd1 = mapElement1.getValue();
+
+				if(valueInd1.getBirthday() != null){
+					Date birthDate1 = dateFormatGiven.parse(valueInd1.getBirthday());
+					bd1 = dateFormat.format(birthDate1);
+				}
+
+					if(bd != null && bd1 != null){
+
+						if(m_birth == null){
+							m_birth = valueInd.getName();
+						}
+
+						if(!valueInd.getId().equals(valueInd1.getId()) && (bd.compareTo(bd1) == 0) && valueInd.getChild().equals(valueInd1.getChild())){					
+							s_birth += ", " + valueInd1.getName();
+							if(!m_birth.contains(s_birth)){
+								m_birth += ", " + valueInd1.getName();
+								change = 1;
+							}
+						}	
+
+					}
+				}
+
+				if(change == 1){
+					String failStr = "ERROR: INDIVIDUAL: US32: "+ s_birth + "have same birthdate";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			
+			}
+			
+			if(flag)
+				return true;
+			else
+				return false;			
+		}
+
+		/**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US36 
+	 * Name: List Recent deaths 
+	 * Description: List all people in a GEDCOM file who died in the last 30 days 
+	 * Date created: Mar 27, 20203:28:15 PM
+	 * @throws ParseException
+	 */
+
+	public static boolean us_36_recentdeaths() throws ParseException {
+		boolean flag = true;
+		Map<String, IndividualEntry> map = new HashMap<String, IndividualEntry>(hind);
+		Iterator<Map.Entry<String, IndividualEntry>> entries = map.entrySet().iterator();
+
+		while (entries.hasNext()) {
+			Map.Entry<String, IndividualEntry> entry = entries.next();
+			IndividualEntry indi = entry.getValue();
+			Date date_of_death = null;
+			if (indi.getDeath() != null) {
+
+				date_of_death = dateFormatGiven.parse(indi.getDeath());
+				long diffInMillies = Math.abs(new Date().getTime() - date_of_death.getTime());
+				long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+				if (diff > 0 && diff <= 30) {
+					String failStr = "ERROR: INDIVIDUAL: US36: " + indi.getId() + " - " + indi.getName()
+							+ "had death less than 30 days from today";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US39 
+	 * Name: List upcoming anniversaries 
+	 * Description: List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days 
+	 * Date created: Mar 27, 20205:25:45 PM
+	 * @throws ParseException
+	 *
+	 */
+
+	public static boolean us_39_upcominganniversaries() throws ParseException {
+		boolean flag = true;
+		Map<String, FamilyEntry> map = new HashMap<String, FamilyEntry>(hfam);
+		Iterator<Map.Entry<String, FamilyEntry>> entries = map.entrySet().iterator();
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DATE, 30);
+		Date nextDate = c.getTime();
+		Date currentdate = Calendar.getInstance().getTime();
+
+		while (entries.hasNext()) {
+			Map.Entry<String, FamilyEntry> entry = entries.next();
+			FamilyEntry fam = entry.getValue();
+			Date date_of_marriage = null;
+			date_of_marriage = dateFormatGiven.parse(fam.getMarried());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date_of_marriage);
+			cal.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+
+			Date marriageDate = cal.getTime();
+			if (nextDate.after(marriageDate) && currentdate.before(marriageDate)) {
+				String failStr = "ERROR: FAMILY: US39: " + fam.getId() + " - has an anniversary in upcoming 30 days ";
+				failures.add(failStr);
+				flag = false;
+				failuresFlag = true;
+			}
+		}
+		return flag;
+	}
+
+
 
 //====================================================== End of user stories ======================================================
 
@@ -1501,7 +1699,7 @@ public class GenerateOutput {
 			System.out.println("");
 			
 			//=====================================Sprint - 1 USER STORIES==================================
-			
+
 			us02_birth_b4_marriage();           //KD
 			us04_marriage_b4_divorce();         //KD
 			us22_unique_ids(); 					//VS
@@ -1527,6 +1725,7 @@ public class GenerateOutput {
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
+
 			us09_birthbeforedeathofparents();   //VS
 			us28_orderbyage();
 			
@@ -1539,6 +1738,12 @@ public class GenerateOutput {
 			
 			
 			
+
+			us24_Unique_families_by_spouses();  //DT
+			us_36_recentdeaths();				//YN
+			us_39_upcominganniversaries();		//YN
+
+
 			if(failuresFlag)
 			 {
 				 for(String failString: failures)
