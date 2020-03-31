@@ -1231,6 +1231,83 @@ public class GenerateOutput {
 				return false;			
 		}
 
+		/**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US36 
+	 * Name: List Recent deaths 
+	 * Description: List all people in a GEDCOM file who died in the last 30 days 
+	 * Date created: Mar 27, 20203:28:15 PM
+	 * @throws ParseException
+	 */
+
+	public static boolean us_36_recentdeaths() throws ParseException {
+		boolean flag = true;
+		Map<String, IndividualEntry> map = new HashMap<String, IndividualEntry>(hind);
+		Iterator<Map.Entry<String, IndividualEntry>> entries = map.entrySet().iterator();
+
+		while (entries.hasNext()) {
+			Map.Entry<String, IndividualEntry> entry = entries.next();
+			IndividualEntry indi = entry.getValue();
+			Date date_of_death = null;
+			if (indi.getDeath() != null) {
+
+				date_of_death = dateFormatGiven.parse(indi.getDeath());
+				long diffInMillies = Math.abs(new Date().getTime() - date_of_death.getTime());
+				long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+				if (diff > 0 && diff <= 30) {
+					String failStr = "ERROR: INDIVIDUAL: US36: " + indi.getId() + " - " + indi.getName()
+							+ "had death less than 30 days from today";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US39 
+	 * Name: List upcoming anniversaries 
+	 * Description: List all living couples in a GEDCOM file whose marriage anniversaries occur in the next 30 days 
+	 * Date created: Mar 27, 20205:25:45 PM
+	 * @throws ParseException
+	 *
+	 */
+
+	public static boolean us_39_upcominganniversaries() throws ParseException {
+		boolean flag = true;
+		Map<String, FamilyEntry> map = new HashMap<String, FamilyEntry>(hfam);
+		Iterator<Map.Entry<String, FamilyEntry>> entries = map.entrySet().iterator();
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DATE, 30);
+		Date nextDate = c.getTime();
+		Date currentdate = Calendar.getInstance().getTime();
+
+		while (entries.hasNext()) {
+			Map.Entry<String, FamilyEntry> entry = entries.next();
+			FamilyEntry fam = entry.getValue();
+			Date date_of_marriage = null;
+			date_of_marriage = dateFormatGiven.parse(fam.getMarried());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date_of_marriage);
+			cal.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+
+			Date marriageDate = cal.getTime();
+			if (nextDate.after(marriageDate) && currentdate.before(marriageDate)) {
+				String failStr = "ERROR: FAMILY: US39: " + fam.getId() + " - has an anniversary in upcoming 30 days ";
+				failures.add(failStr);
+				flag = false;
+				failuresFlag = true;
+			}
+		}
+		return flag;
+	}
+
 
 //====================================================== End of user stories ======================================================
 
@@ -1550,7 +1627,9 @@ public class GenerateOutput {
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
-			us24_Unique_families_by_spouses(); //DT
+			us24_Unique_families_by_spouses();  //DT
+			us_36_recentdeaths();				//YN
+			us_39_upcominganniversaries();		//YN
 
 
 			if(failuresFlag)
