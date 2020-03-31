@@ -212,4 +212,12 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us09_birthbeforedeathofparents() {
+		try {
+			assertEquals(true, GenerateOutput.us09_birthbeforedeathofparents(), "User story 09 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
