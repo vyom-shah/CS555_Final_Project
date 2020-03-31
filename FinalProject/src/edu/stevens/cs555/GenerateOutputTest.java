@@ -132,7 +132,15 @@ class GenerateOutputTest {
 	@Test
 	void test_us24_Unique_families_by_spouses()  {
 		try {
-			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 20 failed!");
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 24 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us32_list_multiple_births()  {
+		try {
+			assertEquals(true, GenerateOutput.us32_list_multiple_births(), "User story 32 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
