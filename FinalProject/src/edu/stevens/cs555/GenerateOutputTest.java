@@ -221,6 +221,11 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void test_us09_birthbeforedeathofparents() {
+		try {
+			assertEquals(true, GenerateOutput.us09_birthbeforedeathofparents(), "User story 09 failed!");
   	@Test
 	void test_us24_Unique_families_by_spouses()  {
 		try {
@@ -247,5 +252,4 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
-
 }
