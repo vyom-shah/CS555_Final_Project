@@ -1129,7 +1129,7 @@ public class GenerateOutput {
 			boolean flag = true;
 			Map<String,IndividualEntry> indMap=new HashMap<String,IndividualEntry>(hind);
 			//Map<String, FamilyEntry> indFam=new Hashmap<String,FamilyEntry>(hfam);
-			Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+	//		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
 			
 			Iterator<Map.Entry<String, IndividualEntry>> indEntries=indMap.entrySet().iterator();
 			String BirthDate= null;
@@ -1161,11 +1161,12 @@ public class GenerateOutput {
 					Date birt = dateFormatGiven.parse(indEntry.getValue().getBirthday());
 					BirthDate = dateFormat.format(birt);
 				}
-				if(indEntry.getValue().getDeath() != null)
+				if(mom.getDeath() != null)
 				{
 					Date deat = dateFormatGiven.parse(mom.getDeath());
 					deathofMom = dateFormat.format(deat);
-				}	
+				}
+				
 					if((BirthDate != null && deathofMom != null) && (BirthDate.compareTo(deathofMom)<0))
 					{
 						String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of mother";
@@ -1173,19 +1174,29 @@ public class GenerateOutput {
 						flag = false;
 						failuresFlag = true;
 					}
-					
+				
+				String deathofDad1 = null;
+				if(dad.getDeath() != null)
+				{
 					Calendar c = Calendar.getInstance();
 					c.setTime(dateFormatGiven.parse(dad.getDeath()));
 					c.add(Calendar.MONTH, 9);
 					deathofDad=c.getTime();
-					String deathofDad1 = dateFormat.format(deathofDad);
+					deathofDad1= dateFormat.format(deathofDad);
+				}
+					
+					
 						
-					if(BirthDate.compareTo(deathofDad1)<0) 
+					if(BirthDate != null && deathofDad1 != null) 
 					{
-						String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of father";
-						failures.add(failStr);
-						flag = false;
-						failuresFlag = true;
+						if(BirthDate.compareTo(deathofDad1)<0)
+						{
+							String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of father";
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
+						}
+						
 					}
 				}
 				
@@ -1384,6 +1395,62 @@ public class GenerateOutput {
 				failuresFlag = true;
 			}
 		}
+		return flag;
+	}
+	/**
+	 * Author: Vyom Shah
+		 * ID: US31
+		 * Name: List living single
+		 * Description: List all living people over 30 who have never been married in a GEDCOM file 
+		 * Date created: March 18, 2020 02:22:34 AM
+		 * @throws ParseException 
+	 */
+	
+	public static boolean us31_listLivingSingle() throws ParseException
+	{
+		boolean flag=true;
+		Map<String, IndividualEntry> indMap = new HashMap<String, IndividualEntry>(hind);
+		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+		
+		Iterator<Map.Entry<String, IndividualEntry>> indEntries = indMap.entrySet().iterator();
+		System.out.println("ERROR: INDIVIDUAL: US31: ");
+		while (indEntries.hasNext()) 
+		{
+			Map.Entry<String, IndividualEntry> indEntry = indEntries.next();
+			IndividualEntry ind = indEntry.getValue();
+			Iterator<Map.Entry<String, FamilyEntry>> famEntries = famMap.entrySet().iterator();
+			int exists = 0;
+			while (famEntries.hasNext())
+			{
+				Map.Entry<String, FamilyEntry> famEntry = famEntries.next();
+				FamilyEntry fam = famEntry.getValue();
+				if(ind.getId().equals(fam.getH_id()) || ind.getId().equals(fam.getW_id())) 
+				{
+					exists = 1;
+					break;
+				}
+					
+			}	
+			Date nowTime=new Date(System.currentTimeMillis());
+			Calendar cal2=Calendar.getInstance();
+			int diffYear=0;
+			int birthyear=0;
+			if(ind.getBirthday() != null)
+			{	
+				Date bdate = dateFormatGiven.parse(ind.getBirthday());
+				String birth = dateFormat.format(bdate);
+				birthyear = Integer.parseInt(birth.split("-")[0]);
+			}
+			cal2.setTime(nowTime);
+			diffYear=cal2.get(Calendar.YEAR)-birthyear;
+			if(exists == 0 && diffYear >= 30) 
+			{	
+				String failStr = "ERROR: INDIVIDUAL: US31: "+ ind.getName()+" is a living Single";
+				failures.add(failStr);
+				failuresFlag = true;
+				//System.out.println(ind.getName() + "\n");
+			}	
+		}	
 		return flag;
 	}
 
@@ -1709,7 +1776,10 @@ public class GenerateOutput {
 			us12_parents_not_too_old(); 		//KD
 
 			us09_birthbeforedeathofparents();   //VS
-			//us28_orderbyage();
+			us24_Unique_families_by_spouses();  //DT
+			us_36_recentdeaths();				//YN
+			us_39_upcominganniversaries();		//YN
+			us31_listLivingSingle();			//VS
 			
 			//=====================================Sprint - 4 USER STORIES==================================
 			
@@ -1721,9 +1791,6 @@ public class GenerateOutput {
 			
 			
 
-			us24_Unique_families_by_spouses();  //DT
-			us_36_recentdeaths();				//YN
-			us_39_upcominganniversaries();		//YN
 
 
 			if(failuresFlag)

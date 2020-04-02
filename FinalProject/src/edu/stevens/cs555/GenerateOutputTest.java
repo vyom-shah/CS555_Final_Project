@@ -257,4 +257,12 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us31_listLivingSingle() {
+		try {
+			assertEquals(true, GenerateOutput.us_36_recentdeaths(), "User story 39 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
