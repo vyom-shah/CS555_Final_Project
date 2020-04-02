@@ -1193,24 +1193,6 @@ public class GenerateOutput {
 			return flag;
 		}
 		
-		
-		/**
-		 * Author: Vyom Shah
-			 * ID: US28
-			 * Name: Order siblings by age
-			 * Description:List siblings in families by decreasing age, i.e. oldest siblings first 
-			 * Date created: March 18, 2020 02:22:34 AM
-			 * @throws ParseException 
-		 */
-		public static boolean us28_orderbyage() throws ParseException
-		{
-			boolean flag = true;
-			
-			return flag;
-		}
-		
-
-  
   		/**
 		 * Author: Dhruval Thakkar
 			 * ID: US24
