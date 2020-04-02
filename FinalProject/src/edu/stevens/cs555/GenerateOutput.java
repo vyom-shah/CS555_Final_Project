@@ -1129,7 +1129,7 @@ public class GenerateOutput {
 			boolean flag = true;
 			Map<String,IndividualEntry> indMap=new HashMap<String,IndividualEntry>(hind);
 			//Map<String, FamilyEntry> indFam=new Hashmap<String,FamilyEntry>(hfam);
-			Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+	//		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
 			
 			Iterator<Map.Entry<String, IndividualEntry>> indEntries=indMap.entrySet().iterator();
 			String BirthDate= null;
@@ -1161,11 +1161,12 @@ public class GenerateOutput {
 					Date birt = dateFormatGiven.parse(indEntry.getValue().getBirthday());
 					BirthDate = dateFormat.format(birt);
 				}
-				if(indEntry.getValue().getDeath() != null)
+				if(mom.getDeath() != null)
 				{
 					Date deat = dateFormatGiven.parse(mom.getDeath());
 					deathofMom = dateFormat.format(deat);
-				}	
+				}
+				
 					if((BirthDate != null && deathofMom != null) && (BirthDate.compareTo(deathofMom)<0))
 					{
 						String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of mother";
@@ -1173,19 +1174,29 @@ public class GenerateOutput {
 						flag = false;
 						failuresFlag = true;
 					}
-					
+				
+				String deathofDad1 = null;
+				if(dad.getDeath() != null)
+				{
 					Calendar c = Calendar.getInstance();
 					c.setTime(dateFormatGiven.parse(dad.getDeath()));
 					c.add(Calendar.MONTH, 9);
 					deathofDad=c.getTime();
-					String deathofDad1 = dateFormat.format(deathofDad);
+					deathofDad1= dateFormat.format(deathofDad);
+				}
+					
+					
 						
-					if(BirthDate.compareTo(deathofDad1)<0) 
+					if(BirthDate != null && deathofDad1 != null) 
 					{
-						String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of father";
-						failures.add(failStr);
-						flag = false;
-						failuresFlag = true;
+						if(BirthDate.compareTo(deathofDad1)<0)
+						{
+							String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of father";
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
+						}
+						
 					}
 				}
 				
