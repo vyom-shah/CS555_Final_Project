@@ -1397,6 +1397,62 @@ public class GenerateOutput {
 		}
 		return flag;
 	}
+	/**
+	 * Author: Vyom Shah
+		 * ID: US31
+		 * Name: List living single
+		 * Description: List all living people over 30 who have never been married in a GEDCOM file 
+		 * Date created: March 18, 2020 02:22:34 AM
+		 * @throws ParseException 
+	 */
+	
+	public static boolean us31_listLivingSingle() throws ParseException
+	{
+		boolean flag=true;
+		Map<String, IndividualEntry> indMap = new HashMap<String, IndividualEntry>(hind);
+		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+		
+		Iterator<Map.Entry<String, IndividualEntry>> indEntries = indMap.entrySet().iterator();
+		System.out.println("ERROR: INDIVIDUAL: US31: ");
+		while (indEntries.hasNext()) 
+		{
+			Map.Entry<String, IndividualEntry> indEntry = indEntries.next();
+			IndividualEntry ind = indEntry.getValue();
+			Iterator<Map.Entry<String, FamilyEntry>> famEntries = famMap.entrySet().iterator();
+			int exists = 0;
+			while (famEntries.hasNext())
+			{
+				Map.Entry<String, FamilyEntry> famEntry = famEntries.next();
+				FamilyEntry fam = famEntry.getValue();
+				if(ind.getId().equals(fam.getH_id()) || ind.getId().equals(fam.getW_id())) 
+				{
+					exists = 1;
+					break;
+				}
+					
+			}	
+			Date nowTime=new Date(System.currentTimeMillis());
+			Calendar cal2=Calendar.getInstance();
+			int diffYear=0;
+			int birthyear=0;
+			if(ind.getBirthday() != null)
+			{	
+				Date bdate = dateFormatGiven.parse(ind.getBirthday());
+				String birth = dateFormat.format(bdate);
+				birthyear = Integer.parseInt(birth.split("-")[0]);
+			}
+			cal2.setTime(nowTime);
+			diffYear=cal2.get(Calendar.YEAR)-birthyear;
+			if(exists == 0 && diffYear >= 30) 
+			{	
+				String failStr = "ERROR: INDIVIDUAL: US31: "+ ind.getName()+" is a living Single";
+				failures.add(failStr);
+				failuresFlag = true;
+				//System.out.println(ind.getName() + "\n");
+			}	
+		}	
+		return flag;
+	}
 
 
 
@@ -1720,7 +1776,10 @@ public class GenerateOutput {
 			us12_parents_not_too_old(); 		//KD
 
 			us09_birthbeforedeathofparents();   //VS
-			//us28_orderbyage();
+			us24_Unique_families_by_spouses();  //DT
+			us_36_recentdeaths();				//YN
+			us_39_upcominganniversaries();		//YN
+			us31_listLivingSingle();			//VS
 			
 			//=====================================Sprint - 4 USER STORIES==================================
 			
@@ -1732,9 +1791,6 @@ public class GenerateOutput {
 			
 			
 
-			us24_Unique_families_by_spouses();  //DT
-			us_36_recentdeaths();				//YN
-			us_39_upcominganniversaries();		//YN
 
 
 			if(failuresFlag)
