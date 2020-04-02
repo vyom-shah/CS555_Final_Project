@@ -1150,11 +1150,10 @@ public class GenerateOutput {
 					//System.out.println(fam_object.getH_id());
 					parents.add(fam_object.getW_id());//value here is fine! parents are not used anywhere.
 					//System.out.println(fam_object.getW_id());
-				
 				//IndividualEntry indValue = mapElement.getValue()
-				IndividualEntry dad=indMap.get(fam_object.getH_id());//throwing null pointer exception
+				IndividualEntry dad=indMap.get(fam_object.getH_id().replaceAll("\\s", ""));//throwing null pointer exception
 				//System.out.println(dad);
-				IndividualEntry mom=indMap.get(fam_object.getW_id());//throwing null pointer exception
+				IndividualEntry mom=indMap.get(fam_object.getW_id().replaceAll("\\s", ""));//throwing null pointer exception
 				//System.out.println(mom);
 				
 				if(indEntry.getValue().getBirthday() != null)
@@ -1162,11 +1161,12 @@ public class GenerateOutput {
 					Date birt = dateFormatGiven.parse(indEntry.getValue().getBirthday());
 					BirthDate = dateFormat.format(birt);
 				}
-				
+				if(indEntry.getValue().getDeath() != null)
+				{
 					Date deat = dateFormatGiven.parse(mom.getDeath());
 					deathofMom = dateFormat.format(deat);
-					
-					if(BirthDate.compareTo(deathofMom)<0)
+				}	
+					if((BirthDate != null && deathofMom != null) && (BirthDate.compareTo(deathofMom)<0))
 					{
 						String failStr = "ERROR: INDIVIDUAL: US09: "+indi.getId()+" - "+ indi.getName()+ "was born after death of mother";
 						failures.add(failStr);
@@ -1709,7 +1709,7 @@ public class GenerateOutput {
 			us12_parents_not_too_old(); 		//KD
 
 			us09_birthbeforedeathofparents();   //VS
-			us28_orderbyage();
+			//us28_orderbyage();
 			
 			//=====================================Sprint - 4 USER STORIES==================================
 			
