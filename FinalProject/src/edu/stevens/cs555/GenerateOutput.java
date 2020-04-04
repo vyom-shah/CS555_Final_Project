@@ -1454,7 +1454,74 @@ public class GenerateOutput {
 		return flag;
 	}
 
-
+	/**
+	 * 
+		 * Author: Nihir Patel
+		 * ID: US30
+		 * Name: List Living married
+		 * Description: No more than five siblings should be born at the same time
+		 * Date created: Apr 02, 2020 1:54:08 PM
+	 * @throws ParseException 
+	 */
+	public static ArrayList<String> us30_list_living_married() throws ParseException
+	{
+		ArrayList<String> ans=new ArrayList<>();
+		System.out.println("US30: List of all Living Married People");
+		for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+			Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+			FamilyEntry famValue = famMapElement.getValue();
+			if(famValue.getDivorced()==null) {
+				if(hind.get(famValue.getH_id().trim()).getDeath()==null) {
+					ans.add(famValue.getH_id().trim());
+					System.out.println(hind.get(famValue.getH_id().trim()).getName());
+				}
+				if(hind.get(famValue.getW_id().trim()).getDeath()==null) {
+					ans.add(famValue.getW_id().trim());
+					System.out.println(hind.get(famValue.getW_id().trim()).getName());
+				}
+			}
+		}
+		return ans;
+	}
+	/**
+	 * 
+		 * Author: Nihir Patel
+		 * ID: US34
+		 * Name: List large age differences
+		 * Description: No more than five siblings should be born at the same time
+		 * Date created: Apr 02, 2020 2:54:08 PM
+	 * @throws ParseException 
+	 */
+	
+	public static ArrayList<String> us34_list_living_married() throws ParseException
+	{
+		ArrayList<String> ans=new ArrayList<>();
+		for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam.hasNext();) {
+			Entry<String, FamilyEntry> famMapElement = iteratorFam.next();
+			FamilyEntry famValue = famMapElement.getValue();
+			IndividualEntry hus=hind.get(famValue.getH_id().trim());
+			IndividualEntry wif=hind.get(famValue.getW_id().trim());
+			long hage,wage;
+			if(hus.getBirthday()!=null && wif.getBirthday()!=null) {
+				Date hus1=dateFormatGiven.parse(hus.getBirthday());
+				Date wif1=dateFormatGiven.parse(wif.getBirthday());
+				Date mar=dateFormatGiven.parse(famValue.getMarried());
+				long diffInMillies1 = Math.abs(mar.getTime() - hus1.getTime());
+				long diffInMillies2 = Math.abs(mar.getTime() - wif1.getTime());
+			    hage = TimeUnit.DAYS.convert(diffInMillies1, TimeUnit.MILLISECONDS);
+			    wage= TimeUnit.DAYS.convert(diffInMillies2, TimeUnit.MILLISECONDS);
+			    if(hage>=(2*wage) || wage>=(2*hage)) {
+			    	System.out.println("US34 Large Age difference between couple "+hus.getName()+" "+wif.getName());
+			    	ans.add(famValue.getH_id().trim());
+			    	ans.add(famValue.getW_id().trim());
+			    }
+			    
+			}
+			
+			}
+		
+		return ans;
+	}
 
 //====================================================== End of user stories ======================================================
 
@@ -1780,7 +1847,8 @@ public class GenerateOutput {
 			us_36_recentdeaths();				//YN
 			us_39_upcominganniversaries();		//YN
 			us31_listLivingSingle();			//VS
-			
+			us30_list_living_married();         //NP
+			us34_list_living_married(); 		//NP
 			//=====================================Sprint - 4 USER STORIES==================================
 			
 			//us31_listLivingSingle();			//VS
