@@ -276,7 +276,8 @@ class GenerateOutputTest {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-	}@Test
+	}
+	@Test
 	void test_us34_list_living_married()  {
 		try {
 			String expectedId="@I35@";
