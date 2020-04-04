@@ -3,6 +3,8 @@ package edu.stevens.cs555;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -208,7 +210,10 @@ class GenerateOutputTest {
 	void test_us21_correctgender_for_role() {
 		try {
 			assertEquals(true, GenerateOutput.us21_correctgender_for_role(), "User story 21 failed!");
-
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 	@Test
 	void test_us24_Unique_families_by_spouses()  {
 		try {
@@ -218,4 +223,24 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us30_list_living_married()  {
+		try {
+			String expectedId="@I2@";
+			ArrayList<String> ans=GenerateOutput.us30_list_living_married();   
+			assertEquals(true, ans.contains(expectedId), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}@Test
+	void test_us34_list_living_married()  {
+		try {
+			String expectedId="@I35@";
+			ArrayList<String> ans=GenerateOutput.us34_list_living_married();   
+			assertEquals(true, ans.contains(expectedId), "User story 20 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
