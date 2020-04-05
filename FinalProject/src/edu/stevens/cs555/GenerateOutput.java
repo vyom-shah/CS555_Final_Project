@@ -1413,7 +1413,6 @@ public class GenerateOutput {
 		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
 		
 		Iterator<Map.Entry<String, IndividualEntry>> indEntries = indMap.entrySet().iterator();
-		System.out.println("ERROR: INDIVIDUAL: US31: ");
 		while (indEntries.hasNext()) 
 		{
 			Map.Entry<String, IndividualEntry> indEntry = indEntries.next();
