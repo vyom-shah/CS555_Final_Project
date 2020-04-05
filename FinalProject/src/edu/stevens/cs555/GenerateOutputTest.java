@@ -262,7 +262,7 @@ class GenerateOutputTest {
 	@Test
 	void test_us31_listLivingSingle() {
 		try {
-			assertEquals(true, GenerateOutput.us_36_recentdeaths(), "User story 39 failed!");
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 31 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
