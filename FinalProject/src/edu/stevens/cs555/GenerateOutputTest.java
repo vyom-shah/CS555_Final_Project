@@ -272,7 +272,7 @@ class GenerateOutputTest {
 		try {
 			String expectedId="@I2@";
 			ArrayList<String> ans=GenerateOutput.us30_list_living_married();   
-			assertEquals(true, ans.contains(expectedId), "User story 20 failed!");
+			assertEquals(true, ans.contains(expectedId), "User story 30 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -282,7 +282,7 @@ class GenerateOutputTest {
 		try {
 			String expectedId="@I35@";
 			ArrayList<String> ans=GenerateOutput.us34_list_living_married();   
-			assertEquals(true, ans.contains(expectedId), "User story 20 failed!");
+			assertEquals(true, ans.contains(expectedId), "User story 34 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
