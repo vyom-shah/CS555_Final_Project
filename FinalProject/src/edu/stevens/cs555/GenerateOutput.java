@@ -1841,7 +1841,7 @@ public class GenerateOutput {
 			//=====================================Sprint - 3 USER STORIES==================================
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
-
+			us32_list_multiple_births();		//DT
 			us09_birthbeforedeathofparents();   //VS
 			us24_Unique_families_by_spouses();  //DT
 			us_36_recentdeaths();				//YN
