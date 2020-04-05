@@ -1555,9 +1555,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint-1.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint-1.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
+			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -1599,7 +1599,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = System.getProperty("user.dir")+"/GEDCOM/sprint.txt";
+			String textInputFile = System.getProperty("user.dir")+"/FinalProject/GEDCOM/sprint.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
