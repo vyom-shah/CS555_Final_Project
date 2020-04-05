@@ -1551,7 +1551,7 @@ public class GenerateOutput {
 			us11_no_bigamy(); 					//KD
 			us12_parents_not_too_old(); 		//KD
 			us24_Unique_families_by_spouses(); //DT
-
+			us32_list_multiple_births();
 
 			if(failuresFlag)
 			 {
