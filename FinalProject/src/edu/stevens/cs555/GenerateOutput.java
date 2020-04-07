@@ -1521,6 +1521,34 @@ public class GenerateOutput {
 		
 		return ans;
 	}
+	
+	/**
+	 * 
+		 * Author: Kunj Desai
+		 * ID: US29
+		 * Name: List deceased
+		 * Description: List all deceased individuals in a GEDCOM file
+		 * Date created: Apr 7, 20206:36:24 PM
+		 * @return ArrayList<String>  id_of_deceased ID's of people who are deceased.
+	 */
+	public static ArrayList<String> us29_list_deceased() throws ParseException {
+		// TODO Auto-generated method stub
+		ArrayList<String> id_of_deceased = new ArrayList<String>();
+		System.out.println("\nUS29: List of all deceased people\n");
+		for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+				.hasNext();) {
+			Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+			IndividualEntry indValue = mapElement.getValue();
+			String indId = mapElement.getKey();
+			if (indValue.getDeath() != null) {
+				id_of_deceased.add(indId);
+				System.out.println(indId+": "+indValue.getName());
+			}
+		}
+		System.out.println("\n");
+		return id_of_deceased; 
+		
+	}
 
 //====================================================== End of user stories ======================================================
 
@@ -1852,14 +1880,8 @@ public class GenerateOutput {
 			
 			//us31_listLivingSingle();			//VS
 			//us01_datesBeforeCurrentdate();	//VS
+			us29_list_deceased();				//KD
 			
-			
-			
-			
-			
-
-
-
 			if(failuresFlag)
 			 {
 				 for(String failString: failures)
