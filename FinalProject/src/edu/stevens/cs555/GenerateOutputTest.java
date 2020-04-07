@@ -287,4 +287,15 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us29_list_deceased()
+	{
+		try {
+			String id_of_libving="@I19@";
+			ArrayList<String> id_of_deceased = GenerateOutput.us29_list_deceased();   
+			assertEquals(true, id_of_deceased.contains(id_of_libving), "User story 29 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
