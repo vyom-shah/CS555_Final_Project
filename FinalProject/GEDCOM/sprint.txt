@@ -390,7 +390,24 @@
 1|SEX|Y|F 
 1|BIRT|Y|
 2|DATE|Y|6 SEP 1996 
-1|FAMS|Y|@F14@ 
+0|INDI|Y|@I41@
+1|NAME|Y|Chase /Linus/ 
+2|GIVN|N|Chase 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|M 
+1|BIRT|Y|
+2|DATE|Y|17 JAN 2009 
+1|FAMS|Y|@F8@ 
+1|FAMC|Y|@F7@ 
+0|INDI|Y|@I42@
+1|NAME|Y|Chen /Linus/ 
+2|GIVN|N|Chen 
+2|SURN|N|Linus 
+2|_MARNM|N|Linus 
+1|SEX|Y|F 
+1|BIRT|Y|
+2|DATE|Y|6 SEP 1996 
 0|FAM|Y|@F1@
 1|HUSB|Y|@I1@ 
 1|WIFE|Y|@I2@ 

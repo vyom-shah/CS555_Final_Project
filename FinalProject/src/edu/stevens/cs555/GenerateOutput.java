@@ -1549,6 +1549,44 @@ public class GenerateOutput {
 		return id_of_deceased; 
 		
 	}
+	
+	public static boolean us23_unique_name_and_birth_date() throws ParseException
+	{
+		boolean flag = true;
+		Set<String> sameID = new HashSet<String>();			
+		for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+				.hasNext();) {
+			Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+			IndividualEntry indValue = mapElement.getValue();
+			String indId = mapElement.getKey();
+			String birthdate = "NA";
+			if(indValue.getBirthday() != null)
+			{
+				Date birt = dateFormatGiven.parse(indValue.getBirthday());
+				birthdate = dateFormat.format(birt);
+			}
+			for (Iterator<Entry<String, IndividualEntry>> iteratorInd1 = hind.entrySet().iterator(); iteratorInd1
+					.hasNext();) {
+				Entry<String, IndividualEntry> mapElement1 = iteratorInd1.next();
+				IndividualEntry indValue1 = mapElement1.getValue();
+				String indId1 = mapElement1.getKey();
+				String birthdate1 = "NA";
+				if(indValue1.getBirthday() != null)
+				{
+					Date birt = dateFormatGiven.parse(indValue1.getBirthday());
+					birthdate1 = dateFormat.format(birt);
+				}
+				if(!(indId1.equals(indId)) && indValue.getName().equals(indValue1.getName()) && birthdate.equals(birthdate1) && !(birthdate.equals("NA")))
+				{
+					String failStr = "ERROR: INDIVIDUAL: US23: "+indId+" and "+indId1+" have same name and birthday";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+		}
+		return flag;
+	}
 
 //====================================================== End of user stories ======================================================
 
@@ -1582,7 +1620,7 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint-1.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint.ged";
 			File outputFile = new File(intitalInputFile);
 			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
 
@@ -1881,6 +1919,7 @@ public class GenerateOutput {
 			//us31_listLivingSingle();			//VS
 			//us01_datesBeforeCurrentdate();	//VS
 			us29_list_deceased();				//KD
+			us23_unique_name_and_birth_date();	//KD
 			
 			if(failuresFlag)
 			 {
