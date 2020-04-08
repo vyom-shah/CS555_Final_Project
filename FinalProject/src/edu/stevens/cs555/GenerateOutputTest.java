@@ -298,4 +298,14 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	void test_us23_unique_name_and_birth_date()
+	{
+		try {
+			assertEquals(true, GenerateOutput.us23_unique_name_and_birth_date(), "User story 23 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
