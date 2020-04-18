@@ -1588,6 +1588,47 @@ public class GenerateOutput {
 		return flag;
 	}
 
+	/**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US25 
+	 * Name: Unique first names in families
+	 * Description: No more than one child with the same name and birth date should appear in a family 
+	 * Date created: Apr 16, 20208:12:24 PM
+	 * 
+	 * @return
+	 */
+
+	public static boolean us25_unique_firstnames_infamilies() throws ParseException {
+		boolean flag = true;
+		for (Map.Entry<String, FamilyEntry> fam : hfam.entrySet()) {
+			FamilyEntry famValue = fam.getValue();
+			HashMap<ChildrenEntry, String> cmap = new HashMap<>();
+			if (famValue.getChild().size() > 0) {
+				Set<String> s1 = famValue.getChild();
+				for (String x : s1) {
+					IndividualEntry inddata = hind.get(x.trim());
+					String name = inddata.getName();
+					String bday = inddata.getBirthday();
+					ChildrenEntry child = new ChildrenEntry(name, bday);
+					String Id;
+					if (cmap.containsKey(child)) {
+						Id = cmap.get(child);
+						System.out.println();
+						String failStr = "ERROR: FAMILY: US25: " + Id + " and " + x.trim()
+								+ " have same name and birthday in family " + famValue.getId();
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					}
+					cmap.put(child, x);
+				}
+			}
+		}
+		return flag;
+	}
+
+
 //====================================================== End of user stories ======================================================
 
 	/**
@@ -1920,6 +1961,7 @@ public class GenerateOutput {
 			//us01_datesBeforeCurrentdate();	//VS
 			us29_list_deceased();				//KD
 			us23_unique_name_and_birth_date();	//KD
+			us25_unique_firstnames_infamilies();//YN
 			
 			if(failuresFlag)
 			 {
