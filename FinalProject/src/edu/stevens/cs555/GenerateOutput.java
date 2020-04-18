@@ -1413,7 +1413,6 @@ public class GenerateOutput {
 		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
 		
 		Iterator<Map.Entry<String, IndividualEntry>> indEntries = indMap.entrySet().iterator();
-		System.out.println("ERROR: INDIVIDUAL: US31: ");
 		while (indEntries.hasNext()) 
 		{
 			Map.Entry<String, IndividualEntry> indEntry = indEntries.next();
@@ -1522,6 +1521,113 @@ public class GenerateOutput {
 		
 		return ans;
 	}
+	
+	/**
+	 * 
+		 * Author: Kunj Desai
+		 * ID: US29
+		 * Name: List deceased
+		 * Description: List all deceased individuals in a GEDCOM file
+		 * Date created: Apr 7, 20206:36:24 PM
+		 * @return ArrayList<String>  id_of_deceased ID's of people who are deceased.
+	 */
+	public static ArrayList<String> us29_list_deceased() throws ParseException {
+		// TODO Auto-generated method stub
+		ArrayList<String> id_of_deceased = new ArrayList<String>();
+		System.out.println("\nUS29: List of all deceased people\n");
+		for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+				.hasNext();) {
+			Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+			IndividualEntry indValue = mapElement.getValue();
+			String indId = mapElement.getKey();
+			if (indValue.getDeath() != null) {
+				id_of_deceased.add(indId);
+				System.out.println(indId+": "+indValue.getName());
+			}
+		}
+		System.out.println("\n");
+		return id_of_deceased; 
+		
+	}
+	
+	public static boolean us23_unique_name_and_birth_date() throws ParseException
+	{
+		boolean flag = true;
+		Set<String> sameID = new HashSet<String>();			
+		for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+				.hasNext();) {
+			Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+			IndividualEntry indValue = mapElement.getValue();
+			String indId = mapElement.getKey();
+			String birthdate = "NA";
+			if(indValue.getBirthday() != null)
+			{
+				Date birt = dateFormatGiven.parse(indValue.getBirthday());
+				birthdate = dateFormat.format(birt);
+			}
+			for (Iterator<Entry<String, IndividualEntry>> iteratorInd1 = hind.entrySet().iterator(); iteratorInd1
+					.hasNext();) {
+				Entry<String, IndividualEntry> mapElement1 = iteratorInd1.next();
+				IndividualEntry indValue1 = mapElement1.getValue();
+				String indId1 = mapElement1.getKey();
+				String birthdate1 = "NA";
+				if(indValue1.getBirthday() != null)
+				{
+					Date birt = dateFormatGiven.parse(indValue1.getBirthday());
+					birthdate1 = dateFormat.format(birt);
+				}
+				if(!(indId1.equals(indId)) && indValue.getName().equals(indValue1.getName()) && birthdate.equals(birthdate1) && !(birthdate.equals("NA")))
+				{
+					String failStr = "ERROR: INDIVIDUAL: US23: "+indId+" and "+indId1+" have same name and birthday";
+					failures.add(failStr);
+					flag = false;
+					failuresFlag = true;
+				}
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US25 
+	 * Name: Unique first names in families
+	 * Description: No more than one child with the same name and birth date should appear in a family 
+	 * Date created: Apr 16, 20208:12:24 PM
+	 * 
+	 * @return
+	 */
+
+	public static boolean us25_unique_firstnames_infamilies() throws ParseException {
+		boolean flag = true;
+		for (Map.Entry<String, FamilyEntry> fam : hfam.entrySet()) {
+			FamilyEntry famValue = fam.getValue();
+			HashMap<ChildrenEntry, String> cmap = new HashMap<>();
+			if (famValue.getChild().size() > 0) {
+				Set<String> s1 = famValue.getChild();
+				for (String x : s1) {
+					IndividualEntry inddata = hind.get(x.trim());
+					String name = inddata.getName();
+					String bday = inddata.getBirthday();
+					ChildrenEntry child = new ChildrenEntry(name, bday);
+					String Id;
+					if (cmap.containsKey(child)) {
+						Id = cmap.get(child);
+						System.out.println();
+						String failStr = "ERROR: FAMILY: US25: " + Id + " and " + x.trim()
+								+ " have same name and birthday in family " + famValue.getId();
+						failures.add(failStr);
+						flag = false;
+						failuresFlag = true;
+					}
+					cmap.put(child, x);
+				}
+			}
+		}
+		return flag;
+	}
+
 
 //====================================================== End of user stories ======================================================
 
@@ -1555,9 +1661,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint-1.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
+			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -1599,7 +1705,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = System.getProperty("user.dir")+"/FinalProject/GEDCOM/sprint.txt";
+			String textInputFile = System.getProperty("user.dir")+"/GEDCOM/sprint.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
@@ -1853,14 +1959,10 @@ public class GenerateOutput {
 			
 			//us31_listLivingSingle();			//VS
 			//us01_datesBeforeCurrentdate();	//VS
+			us29_list_deceased();				//KD
+			us23_unique_name_and_birth_date();	//KD
+			us25_unique_firstnames_infamilies();//YN
 			
-			
-			
-			
-			
-
-
-
 			if(failuresFlag)
 			 {
 				 for(String failString: failures)

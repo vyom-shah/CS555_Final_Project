@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class IndividualEntry {
 	
-	private String id,name,gender,birthday,age,death;
+	private String id,name,gender,birthday,age,death,childOf;
 	Set<String> child = new HashSet<String>(); 
 	Set<String> spous= new HashSet<String>(); 
 	
@@ -85,6 +85,13 @@ public class IndividualEntry {
 		    this.age =""+years+"";
 		}
 		
+	}
+	
+	public String getChildOf() {
+		return childOf;
+	}
+	public void setChildOf(String childOf) {
+		this.childOf = childOf;
 	}
 	public String getAlive() {
 		if(this.death == null)

@@ -3,6 +3,8 @@ package edu.stevens.cs555;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -221,6 +223,16 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void test_us09_birthbeforedeathofparents() {
+		try {
+			assertEquals(true, GenerateOutput.us09_birthbeforedeathofparents(), "User story 09 failed!");
+		}
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
+  }
   	@Test
 	void test_us24_Unique_families_by_spouses()  {
 		try {
@@ -229,4 +241,80 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
   }
+
+  @Test
+	void test_us36_recentdeaths() {
+		try {
+			assertEquals(true, GenerateOutput.us_36_recentdeaths(), "User story 36 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void test_us_39_upcominganniversaries() {
+		try {
+			assertEquals(true, GenerateOutput.us_39_upcominganniversaries(), "User story 39 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us31_listLivingSingle() {
+		try {
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 31 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us30_list_living_married()  {
+		try {
+			String expectedId="@I2@";
+			ArrayList<String> ans=GenerateOutput.us30_list_living_married();   
+			assertEquals(true, ans.contains(expectedId), "User story 30 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us34_list_living_married()  {
+		try {
+			String expectedId="@I35@";
+			ArrayList<String> ans=GenerateOutput.us34_list_living_married();   
+			assertEquals(true, ans.contains(expectedId), "User story 34 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us29_list_deceased()
+	{
+		try {
+			String id_of_libving="@I19@";
+			ArrayList<String> id_of_deceased = GenerateOutput.us29_list_deceased();   
+			assertEquals(true, id_of_deceased.contains(id_of_libving), "User story 29 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void test_us23_unique_name_and_birth_date()
+	{
+		try {
+			assertEquals(true, GenerateOutput.us23_unique_name_and_birth_date(), "User story 23 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void test_us25_unique_firstnames_infamilies() {
+		try {
+			assertEquals(true, GenerateOutput.us25_unique_firstnames_infamilies(), "User story 25 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
