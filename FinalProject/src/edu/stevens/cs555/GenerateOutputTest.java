@@ -308,4 +308,13 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void test_us25_unique_firstnames_infamilies() {
+		try {
+			assertEquals(true, GenerateOutput.us25_unique_firstnames_infamilies(), "User story 25 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
