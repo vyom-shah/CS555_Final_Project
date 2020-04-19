@@ -317,4 +317,21 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us37_listrecent_survivors() {
+		try {
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 37 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	@Test
+//	void test_us01_datesBeforeCurrentdate() {
+//		try {
+//			assertEquals(true, GenerateOutput.us01_datesBeforeCurrentdate(), "User story 01 failed!");
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
