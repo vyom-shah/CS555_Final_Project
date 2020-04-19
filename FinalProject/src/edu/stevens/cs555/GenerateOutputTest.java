@@ -325,7 +325,14 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
-	
+	@Test
+	void test_us42_reject_illegitimate_dates(){
+		try {
+			assertEquals(true, GenerateOutput.us42_reject_illegitimate_dates(), "User story 42 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 //	@Test
 //	void test_us01_datesBeforeCurrentdate() {
 //		try {

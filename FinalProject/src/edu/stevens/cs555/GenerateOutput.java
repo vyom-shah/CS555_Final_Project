@@ -1786,7 +1786,6 @@ public class GenerateOutput {
 	public static boolean us42_reject_illegitimate_dates() throws ParseException
 	{
 		boolean flag=true;
-		System.out.println("\n   Userstory 42 \n");
 		HashMap<String,Integer> md=new HashMap<>();
 		md.put("JAN", 31);md.put("FEB", 28);md.put("MAR", 31);md.put("APR", 30);md.put("MAY", 31);md.put("JUN", 30);md.put("JUL", 31);
 		md.put("AUG", 31);md.put("SEP", 30);md.put("OCT", 31);md.put("NOV", 30);md.put("DEC", 31);
