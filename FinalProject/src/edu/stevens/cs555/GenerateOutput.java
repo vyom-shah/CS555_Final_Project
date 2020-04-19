@@ -1776,8 +1776,105 @@ public class GenerateOutput {
 		}	
 		return flag;
 	}
-	
-
+	/**
+	 * Author: Nihir Patel
+		 * ID: US42
+		 * Name:Reject illegitimate dates
+		 * Description:All dates should be legitimate dates for the months specified (e.g., 2/30/2015 is not legitimate)
+		 * @throws ParseException 
+	 */
+	public static boolean us42_reject_illegitimate_dates() throws ParseException
+	{
+		boolean flag=true;
+		System.out.println("\n   Userstory 42 \n");
+		HashMap<String,Integer> md=new HashMap<>();
+		md.put("JAN", 31);md.put("FEB", 28);md.put("MAR", 31);md.put("APR", 30);md.put("MAY", 31);md.put("JUN", 30);md.put("JUL", 31);
+		md.put("AUG", 31);md.put("SEP", 30);md.put("OCT", 31);md.put("NOV", 30);md.put("DEC", 31);
+		for (Map.Entry<String, IndividualEntry> ind : hind.entrySet()) {
+			IndividualEntry indValue = ind.getValue();
+			if(indValue.getBirthday()!=null) {
+				if(!(indValue.getBirthday().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(indValue.getBirthday().split(" ")[0]))>md.get(indValue.getBirthday().split(" ")[1]) || (Integer.parseInt(indValue.getBirthday().split(" ")[0]))<1) {
+					String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"birthdate does not have legitimate date for the month:"+indValue.getBirthday();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(indValue.getBirthday().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(indValue.getBirthday().split(" ")[0])>days || Integer.parseInt(indValue.getBirthday().split(" ")[0])<1) {
+						String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"birthdate does not have legitimate date for the month:"+indValue.getBirthday();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}
+			if(indValue.getDeath()!=null) {
+				if(!(indValue.getDeath().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(indValue.getDeath().split(" ")[0]))>md.get(indValue.getDeath().split(" ")[1]) || (Integer.parseInt(indValue.getDeath().split(" ")[0]))<1) {
+					String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"deathdate does not have legitimate date for the month:"+indValue.getDeath();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(indValue.getDeath().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(indValue.getDeath().split(" ")[0])>days || Integer.parseInt(indValue.getDeath().split(" ")[0])<1) {
+						String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"deathdate does not have legitimate date for the month:"+indValue.getDeath();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}	
+		}
+		for (Map.Entry<String, FamilyEntry> fam : hfam.entrySet()) {
+			FamilyEntry famValue = fam.getValue();
+			if(famValue.getMarried()!=null) {
+				if(!(famValue.getMarried().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(famValue.getMarried().split(" ")[0]))>md.get(famValue.getMarried().split(" ")[1]) || (Integer.parseInt(famValue.getMarried().split(" ")[0]))<1) {
+					String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" marriage date does not have legitimate date for the month:"+famValue.getMarried();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(famValue.getMarried().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(famValue.getMarried().split(" ")[0])>days || Integer.parseInt(famValue.getMarried().split(" ")[0])<1) {
+						String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" marriage date does not have legitimate date for the month:"+famValue.getMarried();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}
+			if(famValue.getDivorced()!=null) {
+				if(!(famValue.getDivorced().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(famValue.getDivorced().split(" ")[0]))>md.get(famValue.getDivorced().split(" ")[1]) || (Integer.parseInt(famValue.getDivorced().split(" ")[0]))<1) {
+					String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" Divorce date does not have legitimate date for the month:"+famValue.getDivorced();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(famValue.getDivorced().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(famValue.getDivorced().split(" ")[0])>days || Integer.parseInt(famValue.getDivorced().split(" ")[0])<1) {
+						String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" divorce date does not have legitimate date for the month:"+famValue.getDivorced();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}
+		}
+		
+		return flag;
+	}
 
 //====================================================== End of user stories ======================================================
 
@@ -2112,6 +2209,7 @@ public class GenerateOutput {
 			us25_unique_firstnames_infamilies();//YN
 			us37_listrecent_survivors();		//VS
 			//us01_datesBeforeCurrentdate();	//VS
+			us42_reject_illegitimate_dates();
 			
 			if(failuresFlag)
 			 {
