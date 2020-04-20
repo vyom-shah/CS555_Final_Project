@@ -2005,65 +2005,48 @@ public class GenerateOutput {
 	public static boolean us19_First_cousins_should_not_marry() throws ParseException {
 		boolean flag = true;
 
+		for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+				.hasNext();) {
+				Entry<String, IndividualEntry> mapElement = iteratorInd.next();
+				IndividualEntry valueInd = mapElement.getValue(); 
+				
+				for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+				.hasNext();) {
+					Entry<String, FamilyEntry> mapElement1 = iteratorFam.next();
+					FamilyEntry valueFam = mapElement1.getValue(); 
 
-		for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
-							.hasNext();) {
-						Entry<String, FamilyEntry> mapElement = iteratorFam.next();
-						FamilyEntry valueFam = mapElement.getValue();
+					for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
+					.hasNext();) {
+						Entry<String, FamilyEntry> mapElement2 = iteratorFam1.next();
+						FamilyEntry valueFam1 = mapElement2.getValue();	
 						
-				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
-							.hasNext();) {
-						Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
-						IndividualEntry valueInd = mapElement1.getValue();
-		
-						Set<String> sib1_id = null;
-						Set<String> sib2_id = null;	
-
-							String husbandID = valueFam.getH_id().replaceAll("\\s", "");				
-							String wifeID = valueFam.getW_id().replaceAll("\\s", "");
-
-							for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
-									.hasNext();) {
-								Entry<String, FamilyEntry> mapElement2 = iteratorFam1.next();
-								FamilyEntry valueFam1 = mapElement2.getValue();
-
-									for (Iterator<Entry<String, IndividualEntry>> iteratorInd1 = hind.entrySet().iterator(); iteratorInd1
-											.hasNext();) {
-										Entry<String, IndividualEntry> mapElement3 = iteratorInd1.next();
-										IndividualEntry valueInd1 = mapElement3.getValue();
-
-										String husbID = valueFam1.getH_id().replaceAll("\\s", "");				
-
-										String chld = "";		
-										for (String var : valueInd.child) {
-											chld = var.replaceAll("\\s","");	
-										}		
-
-										if(valueInd.getId().equals(husbandID) && chld.equals(valueFam.getId())){
-											if(valueInd1.getId().equals(husbID)){
-												sib1_id = valueInd1.getChild();
-											}
-										}	
-
-										if(valueInd.getId().equals(wifeID) && chld.equals(valueFam.getId())){
-											if(valueInd1.getId().equals(husbID)){
-												sib2_id = valueInd1.getChild();
-											}
-										}	
-
-										if(sib1_id != null && sib2_id != null && sib1_id.equals(sib2_id)){
-											String failStr = "ERROR: INDIVIDUAL: US19: First cousins should not marry one another";
+						String child1 = null;
+						
+						for (String child : valueInd.getChild()) {
+							child1 = child.replaceAll("\\s", "");;
+						}
+							String fam_id = valueFam.getId();
+							if(valueInd.getSpous() != null && fam_id.equals(child1)){
+								for (String vari : valueInd.getSpous()) {
+									String var = vari.replaceAll("\\s", "");
+					
+										if(valueFam.child.contains(valueFam1.getH_id()) && valueFam1.getId().equals(var)){
+											String failStr = "ERROR: INDIVIDUAL: US19: First cousins " + valueFam1.getW_id() + "should not marry first cousin " + valueFam1.getH_id();
 											failures.add(failStr);
 											flag = false;
 											failuresFlag = true;
 										}
-
+									
 								}
-						}
-
-
+							}
+						
+					
+					}
+	
 				}
-		}
+
+				
+			}
 
 		return flag;
 	}	
