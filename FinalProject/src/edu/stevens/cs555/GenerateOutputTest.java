@@ -369,4 +369,13 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	void test_us26_corresponding_entries() {
+		try {
+			assertEquals(true, GenerateOutput.us26_corresponding_entries(), "User story 26 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 }
