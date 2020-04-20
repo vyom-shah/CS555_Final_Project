@@ -1886,34 +1886,35 @@ public class GenerateOutput {
 	 * ID: US33 
 	 * Name: List Orphans
 	 * Description: List all orphaned children (both parents dead and child < 18 years old) in a GEDCOM file 
-	 * Date created: Apr 20, 20208:00:10 AM
+	 * Date created: Apr 20, 20208:00:10 PM
 	 * 
 	 * @return
 	 */
 
 	public static boolean us33_List_Orphans() throws ParseException {
 		boolean flag = true;
-
+		
 		for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
 					.hasNext();) {
 				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
 				FamilyEntry valueFam = mapElement.getValue();
-
-				
-				String husband_status = "Alive";
-				String wife_status = "Alive";	
+			
 				String husbandID = valueFam.getH_id().replaceAll("\\s", "");
-				String wifeID = valueFam.getW_id().replaceAll("\\s", "");					
+				String wifeID = valueFam.getW_id().replaceAll("\\s", "");			
+
+				String husband_status = "Alive";
+				String wife_status = "Alive";		
+
 				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
 					.hasNext();) {
 				Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
 				IndividualEntry valueInd = mapElement1.getValue();
-				int age = 0;
+	
 					Boolean adult = true;	
-					if(valueInd.getBirthday() != null){
-						age = Integer.parseInt(valueInd.getAge());
-					}
-					if(age < 18){
+
+					int age = Integer.parseInt(valueInd.getAge());
+
+					if(age > 18){
 						adult = false;
 					}
 					if(husbandID.equals(valueInd.getId()) && valueInd.getDeath() != null){
@@ -1922,21 +1923,19 @@ public class GenerateOutput {
 					if(wifeID.equals(valueInd.getId()) && valueInd.getDeath() != null){
 						wife_status = "Dead";
 					}	
-						for (String one_child : valueFam.getChild()) {
-							one_child = one_child.replaceAll("\\s", "");
-							if((husband_status == "Dead" && wife_status == "Dead") && (valueInd.getId().equals(one_child) && adult == false)){
-								String failStr = "ERROR: INDIVIDUAL: US33: "+valueInd.getId()+" is an orphan";
-								failures.add(failStr);
-								flag = false;
-								failuresFlag = true;
-							}
+					for (String one_child : valueFam.getChild()) {
+						if((husband_status == "Dead" && wife_status == "Dead") && (valueInd.getId().equals(one_child) && adult == false)){
+							String failStr = "ERROR: INDIVIDUAL: US33: "+valueInd.getId()+" is an orphan";
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
 						}
+					}
 				}
 		}
 
 		return flag;
 	}
-
 	/**
 	 * Author: Nihir Patel
 		 * ID: US28
@@ -1991,84 +1990,6 @@ public class GenerateOutput {
 		}
 		return true;
 	}
-  
-  	/**
-	 * 
-	 * Author: Dhruval Thakkar 
-	 * ID: US19 
-	 * Name: First cousins should not marry
-	 * Description: First cousins should not marry one another
-	 * Date created: Apr 20, 20205:20:40 PM
-	 * 
-	 * @return
-	 */
-
-	public static boolean us19_First_cousins_should_not_marry() throws ParseException {
-		boolean flag = true;
-		
-		
-
-		for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
-					.hasNext();) {
-				Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
-				IndividualEntry valueInd = mapElement1.getValue();
-
-				for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
-							.hasNext();) {
-						Entry<String, FamilyEntry> mapElement = iteratorFam.next();
-						FamilyEntry valueFam = mapElement.getValue();
-			
-						String husbandID = valueFam.getH_id().replaceAll("\\s", "");				
-						String wifeID = valueFam.getW_id().replaceAll("\\s", "");
-				
-						for (Iterator<Entry<String, IndividualEntry>> iteratorInd1 = hind.entrySet().iterator(); iteratorInd1
-											.hasNext();) {
-										Entry<String, IndividualEntry> mapElement3 = iteratorInd1.next();
-										IndividualEntry valueInd1 = mapElement3.getValue();
-										
-								for (Iterator<Entry<String, FamilyEntry>> iteratorFam1 = hfam.entrySet().iterator(); iteratorFam1
-											.hasNext();) {
-										Entry<String, FamilyEntry> mapElement2 = iteratorFam1.next();
-										FamilyEntry valueFam1 = mapElement2.getValue();
-		
-										String husbID = valueFam1.getH_id().replaceAll("\\s", "");				
-				
-										Set<String> sib1_id = null;
-										Set<String> sib2_id = null;	
-
-										String chld = "";		
-										for (String var : valueInd.child) {
-											chld = var;	
-										}		
-
-										if(valueInd.getId().equals(husbandID) && chld.equals(valueFam1.getId())){
-											if(valueInd1.getId().equals(husbID)){
-												sib1_id = valueInd1.getChild();
-											}
-										}	
-										
-										if(valueInd.getId().equals(wifeID) && valueInd.child.contains(valueFam1.getId())){
-											if(valueInd1.getId().equals(husbID)){
-												sib2_id = valueInd1.getChild();
-											}
-										}	
-
-										if(sib1_id != null && sib2_id != null && sib1_id.equals(sib2_id)){
-											String failStr = "ERROR: INDIVIDUAL: US19: 1st cousins should not marry one another";
-											failures.add(failStr);
-											flag = false;
-											failuresFlag = true;
-										}
-					
-								}
-						}
-						
-						
-				}
-		}
-
-		return flag;
-	}	
 
 //====================================================== End of user stories ======================================================
 
@@ -2102,9 +2023,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
+			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -2146,7 +2067,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = System.getProperty("user.dir")+"/FinalProject/GEDCOM/sprint.txt";
+			String textInputFile = System.getProperty("user.dir")+"/GEDCOM/sprint.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
@@ -2406,9 +2327,8 @@ public class GenerateOutput {
 			//us01_datesBeforeCurrentdate();	//VS
 			us42_reject_illegitimate_dates();
 			us28_order_siblings_by_age();
-      us33_List_Orphans();				//DT
-			us19_First_cousins_should_not_marry()();//DT
-
+    //  us33_List_Orphans();				//DT
+			//us40_Include_input_line_numbers();//DT
 			
 			if(failuresFlag)
 			 {
