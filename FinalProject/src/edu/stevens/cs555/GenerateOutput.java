@@ -2401,13 +2401,11 @@ public class GenerateOutput {
 			us29_list_deceased();				//KD
 			us23_unique_name_and_birth_date();	//KD
 			us25_unique_firstnames_infamilies();//YN
-
 			us37_listrecent_survivors();		//VS
 			//us01_datesBeforeCurrentdate();	//VS
-			us42_reject_illegitimate_dates();
-			us28_order_siblings_by_age();
-
-      us33_List_Orphans();				//DT
+			us42_reject_illegitimate_dates();   //NP
+			us28_order_siblings_by_age();		//NP	
+			us33_List_Orphans();				//DT
 			us19_First_cousins_should_not_marry();//DT
 
 			
