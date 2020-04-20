@@ -317,14 +317,13 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+
 	@Test
 	void test_us37_listrecent_survivors() {
 		try {
 			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 37 failed!");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	}
+
+=======
 	@Test
 	void test_us42_reject_illegitimate_dates(){
 		try {
@@ -333,6 +332,7 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
+  
 //	@Test
 //	void test_us01_datesBeforeCurrentdate() {
 //		try {
@@ -341,4 +341,23 @@ class GenerateOutputTest {
 //			e.printStackTrace();
 //		}
 //	}
+
+  	
+   @Test
+	void test_us33_List_Orphans() {
+		try {
+			assertEquals(true, GenerateOutput.us33_List_Orphans(), "User story 33 failed!");
+      		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+      
+	// @Test
+	// void test_us40_Include_input_line_numbers() {
+	// 	try {
+	// 		assertEquals(true, GenerateOutput.us40_Include_input_line_numbers(), "User story 40 failed!");
+	// 	} catch (ParseException e) {
+	// 		e.printStackTrace();
+	// 	}
+	// }
 }
