@@ -2407,7 +2407,7 @@ public class GenerateOutput {
 			us42_reject_illegitimate_dates();
 			us28_order_siblings_by_age();
       us33_List_Orphans();				//DT
-			us19_First_cousins_should_not_marry()();//DT
+			us19_First_cousins_should_not_marry();//DT
 
 			
 			if(failuresFlag)
