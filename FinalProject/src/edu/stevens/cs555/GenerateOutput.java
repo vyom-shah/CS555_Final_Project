@@ -1901,20 +1901,20 @@ public class GenerateOutput {
 			
 				String husbandID = valueFam.getH_id().replaceAll("\\s", "");
 				String wifeID = valueFam.getW_id().replaceAll("\\s", "");			
-
+				
 				String husband_status = "Alive";
-				String wife_status = "Alive";		
+				String wife_status = "Alive";	
 
 				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
 					.hasNext();) {
 				Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
 				IndividualEntry valueInd = mapElement1.getValue();
-	
-					Boolean adult = true;	
-
-					int age = Integer.parseInt(valueInd.getAge());
-
-					if(age > 18){
+				int age = 100;	
+				Boolean adult = true;	
+					if(valueInd.getBirthday() != null){
+						age = Integer.parseInt(valueInd.getAge());
+					}
+					if(age < 18){
 						adult = false;
 					}
 					if(husbandID.equals(valueInd.getId()) && valueInd.getDeath() != null){
@@ -1923,7 +1923,7 @@ public class GenerateOutput {
 					if(wifeID.equals(valueInd.getId()) && valueInd.getDeath() != null){
 						wife_status = "Dead";
 					}	
-					for (String one_child : valueFam.getChild()) {
+					for (String one_child : valueFam.getChild()) {  one_child = one_child.replaceAll("\\s","");
 						if((husband_status == "Dead" && wife_status == "Dead") && (valueInd.getId().equals(one_child) && adult == false)){
 							String failStr = "ERROR: INDIVIDUAL: US33: "+valueInd.getId()+" is an orphan";
 							failures.add(failStr);
@@ -2037,7 +2037,7 @@ public class GenerateOutput {
 
 										String chld = "";		
 										for (String var : valueInd.child) {
-											chld = var;	
+											chld = var.replaceAll("\\s","");	
 										}		
 
 										if(valueInd.getId().equals(husbandID) && chld.equals(valueFam1.getId())){
@@ -2102,9 +2102,9 @@ public class GenerateOutput {
 			tagsmap.put("2", two);
 			tagsmap.put("3", three);
 			tagsmap.put("4", four);
-			String intitalInputFile = System.getProperty("user.dir")+ "/GEDCOM/sprint.ged";
+			String intitalInputFile = System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.ged";
 			File outputFile = new File(intitalInputFile);
-			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/GEDCOM/sprint.txt");
+			FileWriter fw = new FileWriter(System.getProperty("user.dir")+ "/FinalProject/GEDCOM/sprint.txt");
 
 			BufferedReader br = new BufferedReader(new FileReader(outputFile));
 			String contentLine = br.readLine();
@@ -2146,7 +2146,7 @@ public class GenerateOutput {
 			}
 			fw.close();
 
-			String textInputFile = System.getProperty("user.dir")+"/GEDCOM/sprint.txt";
+			String textInputFile = System.getProperty("user.dir")+"/FinalProject/GEDCOM/sprint.txt";
 			File validatedFile = new File(textInputFile);
 
 			IndividualEntry curI = null;
