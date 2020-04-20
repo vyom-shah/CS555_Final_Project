@@ -1627,8 +1627,253 @@ public class GenerateOutput {
 		}
 		return flag;
 	}
+	
+	/**
+	 * Author: Vyom Shah
+		 * ID: US01
+		 * Name:Dates before current date
+		 * Description:Dates (birth, marriage, divorce, death) should not be after the current date
+		 * @throws ParseException 
+	 */
+	public static boolean us01_datesBeforeCurrentdate() throws ParseException{
+		boolean flag=true;
+		Date nowTime = new Date(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("E MMM dd hh:mm:ss Z yyyy ");
+		String nowdate1 = sdf.format(nowTime);
+		Date nowdate = null;
+		Date marriageDate = null;
+		Date divorceDate = null;
+		Date birthDate = null;
+		Date deathDate = null;
+		try {
+			nowdate = sdf.parse(nowdate1);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Map<String, IndividualEntry> indMap = new HashMap<String, IndividualEntry>(hind);
+		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+		Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator();
+		//Iterator<Map.Entry<String, FamilyEntry>> famEntries = famMap.entrySet().iterator();
+		Entry<String, IndividualEntry> indMapElement = iteratorInd.next();
+		String keyInd = indMapElement.getKey();
+		IndividualEntry indValue = indMapElement.getValue();
+		//Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
 
-		/**
+
+		Iterator<Map.Entry<String, FamilyEntry>> famEntries = famMap.entrySet().iterator();
+
+		// List<String> children = new ArrayList<String>();
+		while (famEntries.hasNext()) {
+			Map.Entry<String, FamilyEntry> famEntry = famEntries.next();
+			FamilyEntry fam = famEntry.getValue();
+			
+			if (fam.getMarried() != null) {
+				marriageDate = sdf.parse(fam.getMarried());
+			}
+			if (fam.getDivorced() != null) {
+				divorceDate = sdf.parse(fam.getDivorced());
+			}
+			
+			IndividualEntry ind = hind.get(fam.getH_id());
+			IndividualEntry ind2 = hind.get(fam.getW_id());
+			if (marriageDate.after(nowdate)) {
+				String failStr = "ERROR: INDIVIDUAL: US01: "+ fam.getId() +"Individual:" + ind.getId() + " - " + ind.getName() + " Married Individual: " + ind2.getId() + " - " + ind2.getName();
+				failures.add(failStr);
+				failuresFlag = true;					
+			}
+			if (fam.getDivorced() != null) {
+				if (divorceDate.after(nowdate)) {
+					String failStr = "ERROR: INDIVIDUAL: US01: "+ fam.getId() +"Individual:" + ind.getId() + " - " + ind.getName() + " Divorced Individual: " + ind2.getId() + " - " + ind2.getName();
+					failures.add(failStr);
+					failuresFlag = true;
+				}
+			}
+		}
+		Iterator<Map.Entry<String, IndividualEntry>> entries = indMap.entrySet().iterator();
+		while (entries.hasNext()) {
+			Map.Entry<String, IndividualEntry> entry = entries.next();
+			IndividualEntry indi = entry.getValue();
+			
+				if (indi.getBirthday() != null) {
+					//Date birt = dateFormatGiven.parse(indValue.getBirthday());
+					//birthDate = dateFormat.format(birt);
+					birthDate = sdf.parse(indi.getBirthday());
+					
+				}
+				if (indi.getDeath() != null) {
+					deathDate = sdf.parse(indi.getDeath());
+				}
+				nowdate = sdf.parse(nowdate1);
+				if (indi.getBirthday() != null && indi.getDeath() != null) {
+					if (birthDate.compareTo(nowdate)<0) {
+						
+						String failStr = "ERROR: INDIVIDUAL: US01: "+ indi.getId() +"Individual: "+ indi.getName() + "Was born after the current date";
+						failures.add(failStr);
+						failuresFlag = true;
+					}
+					if (deathDate.after(nowdate)) {
+						String failStr = "ERROR: INDIVIDUAL: US01: "+ indi.getId() +"Individual: "+ indi.getName() + "Died after the current date";
+						failures.add(failStr);
+						failuresFlag = true;
+					}
+				}	 
+		}
+		return flag;
+	}
+	
+	/**
+	 * 
+		 * Author: Vyom Shah
+		 * ID: US37
+		 * Name: List recent survivors
+		 * Description: List all living spouses and descendants of people in a GEDCOM file who died in the last 30 days
+		 * Date created: Apr 15, 2020 10:36:32 PM
+		 * @return ArrayList<String>  id_of_deceased ID's of people who are deceased.
+	 */
+	public static boolean us37_listrecent_survivors() throws ParseException,IOException,FileNotFoundException{
+					
+		boolean flag=true;
+		Map<String, IndividualEntry> indMap = new HashMap<String, IndividualEntry>(hind);
+		Map<String, FamilyEntry> famMap = new HashMap<String, FamilyEntry>(hfam);
+		String failStr1 = "ERROR : INDIVIDUAL: US37: List of Recent Survivors:\n";
+		failures.add(failStr1);
+		Iterator<Map.Entry<String, IndividualEntry>> indEntries = indMap.entrySet().iterator();
+		while (indEntries.hasNext()) 
+		{
+			Map.Entry<String, IndividualEntry> indEntry = indEntries.next();
+			IndividualEntry ind = indEntry.getValue();
+			Iterator<Map.Entry<String, FamilyEntry>> famEntries = famMap.entrySet().iterator();
+			int exists = 0;
+			while (famEntries.hasNext())
+			{
+				Map.Entry<String, FamilyEntry> famEntry = famEntries.next();
+				FamilyEntry fam = famEntry.getValue();
+				if(ind.getId().equals(fam.getH_id()) || ind.getId().equals(fam.getW_id())) 
+				{
+					exists = 1;
+					break;
+				}
+						
+			}	
+			Date nowTime=new Date(System.currentTimeMillis());
+			Calendar cal2=Calendar.getInstance();
+			int diffYear=0;
+			int deathyear=0;
+			if(ind.getBirthday() != null)
+			{	
+				Date bdate = dateFormatGiven.parse(ind.getBirthday());
+				String death = dateFormat.format(bdate);
+				deathyear = Integer.parseInt(death.split("-")[0]);
+			}
+			cal2.setTime(nowTime);
+			diffYear=cal2.get(Calendar.YEAR)-deathyear;
+			if(exists == 0 && diffYear < 30) 
+			{	
+				String failStr = ind.getName();
+				failures.add(failStr);
+				failuresFlag = true;
+			}	
+		}	
+		return flag;
+	}
+	/**
+	 * Author: Nihir Patel
+		 * ID: US42
+		 * Name:Reject illegitimate dates
+		 * Description:All dates should be legitimate dates for the months specified (e.g., 2/30/2015 is not legitimate)
+		 * @throws ParseException 
+	 */
+	public static boolean us42_reject_illegitimate_dates() throws ParseException
+	{
+		boolean flag=true;
+		HashMap<String,Integer> md=new HashMap<>();
+		md.put("JAN", 31);md.put("FEB", 28);md.put("MAR", 31);md.put("APR", 30);md.put("MAY", 31);md.put("JUN", 30);md.put("JUL", 31);
+		md.put("AUG", 31);md.put("SEP", 30);md.put("OCT", 31);md.put("NOV", 30);md.put("DEC", 31);
+		for (Map.Entry<String, IndividualEntry> ind : hind.entrySet()) {
+			IndividualEntry indValue = ind.getValue();
+			if(indValue.getBirthday()!=null) {
+				if(!(indValue.getBirthday().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(indValue.getBirthday().split(" ")[0]))>md.get(indValue.getBirthday().split(" ")[1]) || (Integer.parseInt(indValue.getBirthday().split(" ")[0]))<1) {
+					String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"birthdate does not have legitimate date for the month:"+indValue.getBirthday();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(indValue.getBirthday().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(indValue.getBirthday().split(" ")[0])>days || Integer.parseInt(indValue.getBirthday().split(" ")[0])<1) {
+						String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"birthdate does not have legitimate date for the month:"+indValue.getBirthday();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}
+			if(indValue.getDeath()!=null) {
+				if(!(indValue.getDeath().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(indValue.getDeath().split(" ")[0]))>md.get(indValue.getDeath().split(" ")[1]) || (Integer.parseInt(indValue.getDeath().split(" ")[0]))<1) {
+					String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"deathdate does not have legitimate date for the month:"+indValue.getDeath();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(indValue.getDeath().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(indValue.getDeath().split(" ")[0])>days || Integer.parseInt(indValue.getDeath().split(" ")[0])<1) {
+						String failStr = "ERROR: INDIVIDUAL: US42: " +indValue.getName()+"deathdate does not have legitimate date for the month:"+indValue.getDeath();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}	
+		}
+		for (Map.Entry<String, FamilyEntry> fam : hfam.entrySet()) {
+			FamilyEntry famValue = fam.getValue();
+			if(famValue.getMarried()!=null) {
+				if(!(famValue.getMarried().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(famValue.getMarried().split(" ")[0]))>md.get(famValue.getMarried().split(" ")[1]) || (Integer.parseInt(famValue.getMarried().split(" ")[0]))<1) {
+					String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" marriage date does not have legitimate date for the month:"+famValue.getMarried();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(famValue.getMarried().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(famValue.getMarried().split(" ")[0])>days || Integer.parseInt(famValue.getMarried().split(" ")[0])<1) {
+						String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" marriage date does not have legitimate date for the month:"+famValue.getMarried();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}
+			if(famValue.getDivorced()!=null) {
+				if(!(famValue.getDivorced().split(" ")[1].equals("FEB"))) {
+				if((Integer.parseInt(famValue.getDivorced().split(" ")[0]))>md.get(famValue.getDivorced().split(" ")[1]) || (Integer.parseInt(famValue.getDivorced().split(" ")[0]))<1) {
+					String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" Divorce date does not have legitimate date for the month:"+famValue.getDivorced();
+			        failures.add(failStr);
+			        flag = false;
+					failuresFlag = true;
+				}
+				}
+				else {
+					int days=(Integer.parseInt(famValue.getDivorced().split(" ")[2])%4==0)?29:28;
+					if(Integer.parseInt(famValue.getDivorced().split(" ")[0])>days || Integer.parseInt(famValue.getDivorced().split(" ")[0])<1) {
+						String failStr = "ERROR: FAMILY: US42: " +famValue.getId()+" divorce date does not have legitimate date for the month:"+famValue.getDivorced();
+				        failures.add(failStr);
+				        flag = false;
+						failuresFlag = true;
+					}	
+				}
+			}
+		}
+		
+	/**
 	 * 
 	 * Author: Dhruval Thakkar 
 	 * ID: US33 
@@ -2013,12 +2258,15 @@ public class GenerateOutput {
 			us34_list_living_married(); 		//NP
 			//=====================================Sprint - 4 USER STORIES==================================
 			
-			//us31_listLivingSingle();			//VS
-			//us01_datesBeforeCurrentdate();	//VS
 			us29_list_deceased();				//KD
 			us23_unique_name_and_birth_date();	//KD
 			us25_unique_firstnames_infamilies();//YN
-			us33_List_Orphans();				//DT
+
+			us37_listrecent_survivors();		//VS
+			//us01_datesBeforeCurrentdate();	//VS
+			us42_reject_illegitimate_dates();
+
+      us33_List_Orphans();				//DT
 			//us40_Include_input_line_numbers();//DT
 			
 			if(failuresFlag)

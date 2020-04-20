@@ -319,14 +319,39 @@ class GenerateOutputTest {
 	}
 
 	@Test
-	void test_us33_List_Orphans() {
+	void test_us37_listrecent_survivors() {
 		try {
-			assertEquals(true, GenerateOutput.us33_List_Orphans(), "User story 33 failed!");
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 37 failed!");
+
+=======
+	@Test
+	void test_us42_reject_illegitimate_dates(){
+		try {
+			assertEquals(true, GenerateOutput.us42_reject_illegitimate_dates(), "User story 42 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
-	
+  
+//	@Test
+//	void test_us01_datesBeforeCurrentdate() {
+//		try {
+//			assertEquals(true, GenerateOutput.us01_datesBeforeCurrentdate(), "User story 01 failed!");
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
+  	
+   @Test
+	void test_us33_List_Orphans() {
+		try {
+			assertEquals(true, GenerateOutput.us33_List_Orphans(), "User story 33 failed!");
+      		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+      
 	// @Test
 	// void test_us40_Include_input_line_numbers() {
 	// 	try {
