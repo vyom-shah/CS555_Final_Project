@@ -334,7 +334,14 @@ class GenerateOutputTest {
 			e.printStackTrace();
 		}
 	}
-  
+	@Test
+	void test_us28_order_siblings_by_age() {
+		try {
+			assertEquals(true, GenerateOutput.us28_order_siblings_by_age(), "User story 28 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 //	@Test
 //	void test_us01_datesBeforeCurrentdate() {
 //		try {

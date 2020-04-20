@@ -11,10 +11,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -1931,7 +1936,60 @@ public class GenerateOutput {
 
 		return flag;
 	}
-
+	/**
+	 * Author: Nihir Patel
+		 * ID: US28
+		 * Name:List siblings by age
+		 * Description: List siblings in families by decreasing age, i.e. oldest siblings first
+		 * @throws ParseException 
+	 */
+	public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) 
+    { 
+        // Create a list from elements of HashMap 
+        List<Map.Entry<String, Integer> > list = 
+               new LinkedList<Map.Entry<String, Integer> >(hm.entrySet()); 
+  
+        // Sort the list 
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() { 
+            public int compare(Map.Entry<String, Integer> o1,  
+                               Map.Entry<String, Integer> o2) 
+            { 
+                return 0-(o1.getValue()).compareTo(o2.getValue()); 
+            } 
+        }); 
+          
+        // put data from sorted list to hashmap  
+        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>(); 
+        for (Map.Entry<String, Integer> aa : list) { 
+            temp.put(aa.getKey(), aa.getValue()); 
+        } 
+        return temp; 
+    } 
+	public static boolean us28_order_siblings_by_age() throws ParseException
+	{
+		System.out.println("US 28: List sibling by the age ");
+		for (Map.Entry<String, FamilyEntry> fam : hfam.entrySet()) {
+			FamilyEntry famValue = fam.getValue();
+			 if(famValue.getChild().size()!=0) {
+				
+				 HashMap<String,Integer> ha=new HashMap<>();
+				 for(String s: famValue.getChild()) {
+					 if(hind.get(s.trim()).getBirthday()!=null) {
+						 int age=Integer.parseInt(hind.get(s.trim()).getAge());
+						 ha.put(s.trim(), age);
+					 }
+				 }
+				 HashMap<String,Integer> sorted=sortByValue(ha);
+				 if(sorted.size()!=0) {
+					  System.out.println("List of siblings in Family: "+fam.getKey());
+									 for(String key: sorted.keySet()) {
+											System.out.println(hind.get(key).getName()+"  age:"+hind.get(key).getAge());
+										 } 
+								 }
+			 }
+		}
+		return true;
+	}
 
 //====================================================== End of user stories ======================================================
 
@@ -2268,8 +2326,8 @@ public class GenerateOutput {
 			us37_listrecent_survivors();		//VS
 			//us01_datesBeforeCurrentdate();	//VS
 			us42_reject_illegitimate_dates();
-
-      us33_List_Orphans();				//DT
+			us28_order_siblings_by_age();
+    //  us33_List_Orphans();				//DT
 			//us40_Include_input_line_numbers();//DT
 			
 			if(failuresFlag)
