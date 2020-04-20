@@ -361,12 +361,12 @@ class GenerateOutputTest {
 		}
 	}
       
-	@Test
-	void test_us19_First_cousins_should_not_marry() {
-		try {
-			assertEquals(true, GenerateOutput.us19_First_cousins_should_not_marry(), "User story 19 failed!");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	}
+	// @Test
+	// void test_us40_Include_input_line_numbers() {
+	// 	try {
+	// 		assertEquals(true, GenerateOutput.us40_Include_input_line_numbers(), "User story 40 failed!");
+	// 	} catch (ParseException e) {
+	// 		e.printStackTrace();
+	// 	}
+	// }
 }
