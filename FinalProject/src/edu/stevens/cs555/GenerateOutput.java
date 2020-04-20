@@ -2051,6 +2051,75 @@ public class GenerateOutput {
 		return flag;
 	}	
 
+    /**
+	 * 
+	 * Author: Yash Navadiya 
+	 * ID: US26 
+	 * Name: Corresponding Entries 
+	 * Description: All family roles (spouse, child) specified in an individual record should have
+	 * corresponding entries in the corresponding family records. Likewise, all
+	 * individual roles (spouse, child) specified in family records should have
+	 * corresponding entries in the corresponding individual's records. I.e. the
+	 * information in the individual and family records should be consistent. 
+	 * Date created: Apr 20, 20203:52:24 PM
+	 * 
+	 * @return
+	 */
+
+	 public static boolean us26_corresponding_entries() throws ParseException {
+		boolean flag = true;
+		HashMap<String, String> childMap = new HashMap<>();
+		HashMap<String, String> spouseMap = new HashMap<>();
+
+		for (Map.Entry<String, IndividualEntry> entry : hind.entrySet()) {
+			Set<String> child = entry.getValue().getChild();
+			Set<String> spouse = entry.getValue().getSpous();
+
+			if (!child.isEmpty()) {
+				for (String c : child) {
+					c = c.trim();
+					childMap.put(entry.getKey(), c);
+					if (hfam.containsKey(c)) {
+						if (hfam.get(c).getChild().contains(entry.getKey() + " ")) {
+							childMap.remove(entry.getKey());
+						}
+					}
+				}
+			}
+
+			if (!spouse.isEmpty()) {
+				for (String s : spouse) {
+					s = s.trim();
+					spouseMap.put(entry.getKey(), s);
+					if (hfam.containsKey(s)) {
+						if (hfam.get(s).getH_id().contains(entry.getKey())
+								|| hfam.get(s).getW_id().contains(entry.getKey() + " ")) {
+							spouseMap.remove(entry.getKey());
+						}
+					}
+				}
+			}
+
+		}
+
+		for (Map.Entry<String, String> childerror : childMap.entrySet()) {
+			String failStr = "ERROR: INDIVIDUAL: US26: " + childerror.getKey()
+					+ " does match corresponding child entries for family " + childerror.getValue();
+			failures.add(failStr);
+			flag = false;
+			failuresFlag = true;
+		}
+
+		for (Map.Entry<String, String> spouseerror : spouseMap.entrySet()) {
+			String failStr = "ERROR: INDIVIDUAL: US26: " + spouseerror.getKey()
+					+ " does match corresponding spouse entries for family " + spouseerror.getValue();
+			failures.add(failStr);
+			flag = false;
+			failuresFlag = true;
+		}
+
+		return flag;
+	}
 
 //====================================================== End of user stories ======================================================
 
@@ -2383,6 +2452,7 @@ public class GenerateOutput {
 			us29_list_deceased();				//KD
 			us23_unique_name_and_birth_date();	//KD
 			us25_unique_firstnames_infamilies();//YN
+			us26_corresponding_entries();       //YN
 			us37_listrecent_survivors();		//VS
 			//us01_datesBeforeCurrentdate();	//VS
 			us42_reject_illegitimate_dates();   //NP
