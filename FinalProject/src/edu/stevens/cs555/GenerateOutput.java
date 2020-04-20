@@ -1628,6 +1628,62 @@ public class GenerateOutput {
 		return flag;
 	}
 
+		/**
+	 * 
+	 * Author: Dhruval Thakkar 
+	 * ID: US33 
+	 * Name: List Orphans
+	 * Description: List all orphaned children (both parents dead and child < 18 years old) in a GEDCOM file 
+	 * Date created: Apr 20, 20208:00:10 PM
+	 * 
+	 * @return
+	 */
+
+	public static boolean us33_List_Orphans() throws ParseException {
+		boolean flag = true;
+		
+		for (Iterator<Entry<String, FamilyEntry>> iteratorFam = hfam.entrySet().iterator(); iteratorFam
+					.hasNext();) {
+				Entry<String, FamilyEntry> mapElement = iteratorFam.next();
+				FamilyEntry valueFam = mapElement.getValue();
+			
+				String husbandID = valueFam.getH_id().replaceAll("\\s", "");
+				String wifeID = valueFam.getW_id().replaceAll("\\s", "");			
+
+				String husband_status = "Alive";
+				String wife_status = "Alive";		
+
+				for (Iterator<Entry<String, IndividualEntry>> iteratorInd = hind.entrySet().iterator(); iteratorInd
+					.hasNext();) {
+				Entry<String, IndividualEntry> mapElement1 = iteratorInd.next();
+				IndividualEntry valueInd = mapElement1.getValue();
+	
+					Boolean adult = true;	
+
+					int age = Integer.parseInt(valueInd.getAge());
+
+					if(age > 18){
+						adult = false;
+					}
+					if(husbandID.equals(valueInd.getId()) && valueInd.getDeath() != null){
+						husband_status = "Dead";
+					}	
+					if(wifeID.equals(valueInd.getId()) && valueInd.getDeath() != null){
+						wife_status = "Dead";
+					}	
+					for (String one_child : valueFam.getChild()) {
+						if((husband_status == "Dead" && wife_status == "Dead") && (valueInd.getId().equals(one_child) && adult == false)){
+							String failStr = "ERROR: INDIVIDUAL: US33: "+valueInd.getId()+" is an orphan";
+							failures.add(failStr);
+							flag = false;
+							failuresFlag = true;
+						}
+					}
+				}
+		}
+
+		return flag;
+	}
 
 //====================================================== End of user stories ======================================================
 
@@ -1962,6 +2018,8 @@ public class GenerateOutput {
 			us29_list_deceased();				//KD
 			us23_unique_name_and_birth_date();	//KD
 			us25_unique_firstnames_infamilies();//YN
+			us33_List_Orphans();				//DT
+			//us40_Include_input_line_numbers();//DT
 			
 			if(failuresFlag)
 			 {
