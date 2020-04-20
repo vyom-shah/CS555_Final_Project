@@ -262,7 +262,7 @@ class GenerateOutputTest {
 	@Test
 	void test_us31_listLivingSingle() {
 		try {
-			assertEquals(true, GenerateOutput.us_36_recentdeaths(), "User story 39 failed!");
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 31 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -272,7 +272,7 @@ class GenerateOutputTest {
 		try {
 			String expectedId="@I2@";
 			ArrayList<String> ans=GenerateOutput.us30_list_living_married();   
-			assertEquals(true, ans.contains(expectedId), "User story 20 failed!");
+			assertEquals(true, ans.contains(expectedId), "User story 30 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -282,9 +282,63 @@ class GenerateOutputTest {
 		try {
 			String expectedId="@I35@";
 			ArrayList<String> ans=GenerateOutput.us34_list_living_married();   
-			assertEquals(true, ans.contains(expectedId), "User story 20 failed!");
+			assertEquals(true, ans.contains(expectedId), "User story 34 failed!");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	void test_us29_list_deceased()
+	{
+		try {
+			String id_of_libving="@I19@";
+			ArrayList<String> id_of_deceased = GenerateOutput.us29_list_deceased();   
+			assertEquals(true, id_of_deceased.contains(id_of_libving), "User story 29 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void test_us23_unique_name_and_birth_date()
+	{
+		try {
+			assertEquals(true, GenerateOutput.us23_unique_name_and_birth_date(), "User story 23 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void test_us25_unique_firstnames_infamilies() {
+		try {
+			assertEquals(true, GenerateOutput.us25_unique_firstnames_infamilies(), "User story 25 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us37_listrecent_survivors() {
+		try {
+			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 37 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	void test_us42_reject_illegitimate_dates(){
+		try {
+			assertEquals(true, GenerateOutput.us42_reject_illegitimate_dates(), "User story 42 failed!");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+//	@Test
+//	void test_us01_datesBeforeCurrentdate() {
+//		try {
+//			assertEquals(true, GenerateOutput.us01_datesBeforeCurrentdate(), "User story 01 failed!");
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
