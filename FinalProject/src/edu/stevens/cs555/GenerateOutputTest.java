@@ -322,8 +322,10 @@ class GenerateOutputTest {
 	void test_us37_listrecent_survivors() {
 		try {
 			assertEquals(true, GenerateOutput.us24_Unique_families_by_spouses(), "User story 37 failed!");
-
-=======
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 	@Test
 	void test_us42_reject_illegitimate_dates(){
 		try {

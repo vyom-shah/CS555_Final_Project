@@ -1872,6 +1872,8 @@ public class GenerateOutput {
 				}
 			}
 		}
+		return flag;
+	}
 		
 	/**
 	 * 
@@ -1929,6 +1931,7 @@ public class GenerateOutput {
 
 		return flag;
 	}
+
 
 //====================================================== End of user stories ======================================================
 
