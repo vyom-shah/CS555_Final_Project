@@ -875,6 +875,8 @@ ERROR: INDIVIDUAL: US23: @I19@ and @I41@ have same name and birthday
 ERROR: INDIVIDUAL: US23: @I41@ and @I19@ have same name and birthday
 ERROR: INDIVIDUAL: US23: @I40@ and @I42@ have same name and birthday
 ERROR: INDIVIDUAL: US23: @I42@ and @I40@ have same name and birthday
+ERROR: INDIVIDUAL: US26: @I41@ does match corresponding child entries for family @F7@
+ERROR: INDIVIDUAL: US26: @I41@ does match corresponding spouse entries for family @F8@
 ERROR : INDIVIDUAL: US37: List of Recent Survivors:
 
 Chase /Linus/ 
