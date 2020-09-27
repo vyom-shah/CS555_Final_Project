@@ -1,5 +1,4 @@
-# CS555_Final_Project
-## Output
+# Output
 
 0|HEAD|Y|
 1|SOUR|N|Family Echo 
@@ -166,8 +165,8 @@
 2|DATE|Y|5 AUG 2020 
 1|FAMS|Y|@F7@ 
 0|INDI|Y|@I1@
-1|NAME|Y|V /Linus/ 
-2|GIVN|N|V 
+1|NAME|Y|Vyom /Linus/ 
+2|GIVN|N|Vyom 
 2|SURN|N|Linus 
 2|_MARNM|N|Linus 
 1|SEX|Y|M 
@@ -639,7 +638,7 @@ ID        Name                Gender    Birthday       Age       Alive          
 @I14@     Killer /Linus/      M         2007-12-12     12        False          2020-08-05     [@F6@ ]             [@F7@ ]             
 @I36@     Susan /Desai/       M         1922-02-02     98        True           NA             NA                  [@F13@ ]            
 @I26@     Susane /Linus/      F         2014-07-07     5         True           NA             [@F7@ ]             NA                  
-@I16@     V /Linus/        M         2009-01-17     11        True           NA             [@F7@ ]             NA                  
+@I16@     Vyom /Linus/        M         2009-01-17     11        True           NA             [@F7@ ]             NA                  
 @I38@     Rosy /Patel/        F         1941-07-04     78        True           NA             [@F13@ ]            [@F12@ ]            
 @I28@     Voctoria /Linus/    F         2014-07-07     5         True           NA             [@F7@ ]             NA                  
 @I18@     Lina /Linus/        F         2022-08-08     NA        True           2022-09-09     [@F7@ ]             [@F8@ ]             
@@ -659,7 +658,7 @@ ID        Married        Divorced       Husband ID     Husband Name             
 @F6@      2004-10-14     2000-02-06     @I10@          Noops /Linus/            @I9@      Lorry /Linus/       [@I14@ ]       
 @F5@      1979-02-05     NA             @I7@           Llyod /Tatum/            @I6@      Sophie /Kyle/       [@I8@ ]        
 @F8@      2000-08-06     NA             @I19@          Chase /Linus/            @I18@     Lina /Linus/        NA             
-@F15@     1965-05-01     NA             @I16@          V /Linus/             @I45@     Chinki /Linus/      [@I43@ ]       
+@F15@     1965-05-01     NA             @I16@          Vyom /Linus/             @I45@     Chinki /Linus/      [@I43@ ]       
 @F7@      2010-02-06     NA             @I14@          Killer /Linus/           @I15@     Mitro /Linus/       [@I19@ , @I18@ , @I29@ , @I30@ , @I20@ , @I31@ , @I23@ , @I24@ , @I21@ , @I32@ , @I27@ , @I28@ , @I17@ , @I16@ , @I26@ ]
 @F14@     2019-11-03     NA             @I25@          Oppo /Linus/             @I40@     Chen /Linus/        NA             
 @F17@     1965-05-01     NA             @I44@          Bond /Linus/             @I43@     Balak /Linus/       NA             
@@ -726,7 +725,7 @@ Balak /Linus/   age:0
 List of siblings in Family: @F7@
 Chase /Linus/   age:11
 Chloe /Linus/   age:11
-V /Linus/   age:11
+Vyom /Linus/   age:11
 Drake /Linus/   age:11
 Brooke /Linus/   age:11
 Wuhan /Linus/   age:11
@@ -743,7 +742,7 @@ Bond /Linus/   age:0
 List of siblings in Family: @F13@
 Peter /Patel/   age:80
 Rosy /Patel/   age:78 
-ERROR: INDIVIDUAL: US22: @I1@: Ted /Monster/: has the same ID as @I1@: V /Linus/
+ERROR: INDIVIDUAL: US22: @I1@: Ted /Monster/: has the same ID as @I1@: Vyom /Linus/
 ERROR: INDIVIDUAL: US02: @I19@: Birth date 2009-01-17 occurs after marriage date 2000-08-06
 ERROR: INDIVIDUAL: US02: @I2@: Birth date 1989-05-14 occurs after marriage date 1988-05-07
 ERROR: INDIVIDUAL: US02: @I25@: Birth date 2020-03-07 occurs after marriage date 2019-11-03
@@ -780,7 +779,7 @@ ERROR: FAMILY: US08: @F7@: Individual: @I31@: Drake /Linus/  Has been born befor
 ERROR: FAMILY: US08: @F7@: Individual: @I24@: Chloe /Linus/  Has been born before parents' marriage DOB: 17 JAN 2009  Parents Marriage Date: 6 FEB 2010 
 ERROR: FAMILY: US08: @F7@: Individual: @I21@: Brooke /Linus/  Has been born before parents' marriage DOB: 17 JAN 2009  Parents Marriage Date: 6 FEB 2010 
 ERROR: FAMILY: US08: @F7@: Individual: @I32@: Wuhan /Linus/  Has been born before parents' marriage DOB: 17 JAN 2009  Parents Marriage Date: 6 FEB 2010 
-ERROR: FAMILY: US08: @F7@: Individual: @I16@: V /Linus/  Has been born before parents' marriage DOB: 17 JAN 2009  Parents Marriage Date: 6 FEB 2010 
+ERROR: FAMILY: US08: @F7@: Individual: @I16@: Vyom /Linus/  Has been born before parents' marriage DOB: 17 JAN 2009  Parents Marriage Date: 6 FEB 2010 
 ERROR: INDIVIDUAL: US06: @I2@: Divorce date 2002-09-08 occurs after death date 2000-03-01
 ERROR: INDIVIDUAL: US10: @I19@: Marrige occured before the age of 14.
 ERROR: INDIVIDUAL: US10: @I2@: Marrige occured before the age of 14.
@@ -833,20 +832,20 @@ ERROR: FAMILY: US11: @F11@: has conflicting marriage dates with @F14@
 ERROR: FAMILY: US11: @F12@: has conflicting marriage dates with @F13@
 ERROR: FAMILY: US12: @F4@: Parents are too old for @I5@ 
 ERROR: FAMILY: US12: @F5@: Parents are too old for @I8@ 
-ERROR: INDIVIDUAL: US32: Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , V /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
+ERROR: INDIVIDUAL: US32: Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , Vyom /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
 ERROR: INDIVIDUAL: US32: Hueng /Green/ , Cheng /Green/ have same birthdate
 ERROR: INDIVIDUAL: US32: House /Linus/ , Susane /Linus/ , Voctoria /Linus/ , Lina /Linus/ have same birthdate
 ERROR: INDIVIDUAL: US32: Wally /Linus/ , Misty /Linus/ have same birthdate
-ERROR: INDIVIDUAL: US32: Drake /Linus/ , Chase /Linus/ , Brooke /Linus/ , Chloe /Linus/ , V /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
-ERROR: INDIVIDUAL: US32: Brooke /Linus/ , Chase /Linus/ , Drake /Linus/ , Chloe /Linus/ , V /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
+ERROR: INDIVIDUAL: US32: Drake /Linus/ , Chase /Linus/ , Brooke /Linus/ , Chloe /Linus/ , Vyom /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
+ERROR: INDIVIDUAL: US32: Brooke /Linus/ , Chase /Linus/ , Drake /Linus/ , Chloe /Linus/ , Vyom /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
 ERROR: INDIVIDUAL: US32: Cheng /Green/ , Hueng /Green/ have same birthdate
-ERROR: INDIVIDUAL: US32: Chloe /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , V /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
+ERROR: INDIVIDUAL: US32: Chloe /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Vyom /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
 ERROR: INDIVIDUAL: US32: Susane /Linus/ , House /Linus/ , Voctoria /Linus/ , Lina /Linus/ have same birthdate
-ERROR: INDIVIDUAL: US32: V /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
+ERROR: INDIVIDUAL: US32: Vyom /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , Sabrina /Linus/ , Wuhan /Linus/ have same birthdate
 ERROR: INDIVIDUAL: US32: Voctoria /Linus/ , House /Linus/ , Susane /Linus/ , Lina /Linus/ have same birthdate
 ERROR: INDIVIDUAL: US32: Misty /Linus/ , Wally /Linus/ have same birthdate
-ERROR: INDIVIDUAL: US32: Sabrina /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , V /Linus/ , Wuhan /Linus/ have same birthdate
-ERROR: INDIVIDUAL: US32: Wuhan /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , V /Linus/ , Sabrina /Linus/ have same birthdate
+ERROR: INDIVIDUAL: US32: Sabrina /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , Vyom /Linus/ , Wuhan /Linus/ have same birthdate
+ERROR: INDIVIDUAL: US32: Wuhan /Linus/ , Chase /Linus/ , Drake /Linus/ , Brooke /Linus/ , Chloe /Linus/ , Vyom /Linus/ , Sabrina /Linus/ have same birthdate
 ERROR: INDIVIDUAL: US09: @I4@ - Violet /Green/ was born after death of father
 ERROR: INDIVIDUAL: US09: @I13@ - Blue /Green/ was born after death of father
 ERROR: INDIVIDUAL: US09: @I35@ - Joe /Green/ was born after death of father
@@ -901,7 +900,7 @@ Chloe /Linus/
 Dina /Linus/ 
 Killer /Linus/ 
 Susane /Linus/ 
-V /Linus/ 
+Vyom /Linus/ 
 Voctoria /Linus/ 
 Chen /Linus/ 
 Misty /Linus/ 
@@ -952,7 +951,7 @@ Balak /Linus/   age:0
 List of siblings in Family: @F7@
 Chase /Linus/   age:11
 Chloe /Linus/   age:11
-V /Linus/   age:11
+Vyom /Linus/   age:11
 Drake /Linus/   age:11
 Brooke /Linus/   age:11
 Wuhan /Linus/   age:11
@@ -991,7 +990,7 @@ Llyod /Tatum/
 Sophie /Kyle/ 
 Chase /Linus/ 
 Lina /Linus/ 
-V /Linus/ 
+Vyom /Linus/ 
 Chinki /Linus/ 
 Oppo /Linus/ 
 Chen /Linus/ 
